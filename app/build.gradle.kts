@@ -105,6 +105,7 @@ dependencies {
     // Dependency Injection (Dagger-Hilt)
     implementation(libs.hilt.android)
     implementation(libs.androidx.junit.ktx)
+    implementation(libs.androidx.ui.test.junit4.android)
     kapt(libs.hilt.android.compiler)
     kapt(libs.androidx.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
@@ -159,5 +160,8 @@ dependencies {
 
     // Additional Dependencies
     implementation(libs.androidx.multidex)
+
+    // Icons
+    implementation(libs.androidx.material.icons.extended.v161)
 
 }

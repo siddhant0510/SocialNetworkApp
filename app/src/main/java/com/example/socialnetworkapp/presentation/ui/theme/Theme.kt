@@ -1,4 +1,4 @@
-package com.example.socialnetworkapp.ui
+package com.example.socialnetworkapp.presentation.ui.theme
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -9,6 +9,7 @@ private val DarkColorScheme = darkColorScheme(
     background = DarkGray,
     onBackground = TextWhite,
     onPrimary = DarkGray,
+    surface = MediumGray,
     onSurface = LightGray
 )
 

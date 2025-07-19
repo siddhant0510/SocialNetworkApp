@@ -12,8 +12,11 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
-import com.example.socialnetworkapp.ui.SocialNetworkAppTheme
+import com.example.socialnetworkapp.presentation.ui.theme.SocialNetworkAppTheme
+import com.example.socialnetworkapp.presentation.util.Navigation
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +29,7 @@ class MainActivity : ComponentActivity() {
                         .padding(WindowInsets.systemBars.asPaddingValues())
                         .fillMaxSize()
                 ){
-
+                    Navigation()
                 }
             }
         }

@@ -1,4 +1,4 @@
-package com.example.socialnetworkapp.util
+package com.example.socialnetworkapp.presentation.util
 
 sealed class Screen (val route: String){
     object SplashScreen : Screen("splash_screen")
