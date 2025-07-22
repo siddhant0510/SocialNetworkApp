@@ -1,5 +1,6 @@
 package com.example.socialnetworkapp.login
 
+import android.graphics.Paint.Align
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -7,9 +8,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme 
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 //import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material3.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,6 +62,7 @@ fun LoginScreen(
                 onValueChange = {
                     viewModel.setUsernameText(it)
                 },
+                error = viewModel.userNameError.value,
                 hint = stringResource(id = R.string.login_hint)
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
@@ -68,8 +72,25 @@ fun LoginScreen(
                     viewModel.setPasswordText(it)
                 },
                 hint = stringResource(id = R.string.password_hint),
-                keyboardType = KeyboardType.Password
+                keyboardType = KeyboardType.Password,
+                error = viewModel.passwordError.value,
+                showPasswordToggle = viewModel.showPassword.value,
+                onPasswordToggleClick = {
+                    viewModel.setShowPassword(it)
+                }
             )
+            Spacer(modifier = Modifier.height(SpaceMedium))
+            Button(
+                onClick = { TODO() },
+                modifier = Modifier
+                    .align(Alignment.End),
+                shape = RoundedCornerShape(5.dp)
+            ){
+                Text(
+                    text = stringResource(id = R.string.login),
+                    color = MaterialTheme.colorScheme.onPrimary,
+                )
+            }
         }
         Text(
             text = buildAnnotatedString{

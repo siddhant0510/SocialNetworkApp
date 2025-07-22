@@ -35,7 +35,7 @@ val Typography = Typography(
         fontFamily = quicksand,
         fontWeight = FontWeight.Medium,
         fontSize = 24.sp,
-        color = Color(0xFFEEEEEE)
+        color = TextWhite
     ),
     bodyMedium = TextStyle( // replaces body2
         fontFamily = quicksand,
@@ -43,5 +43,4 @@ val Typography = Typography(
         fontSize = 12.sp,
         color = TextGray
     )
-
 )
