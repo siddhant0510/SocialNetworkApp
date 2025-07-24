@@ -1,4 +1,4 @@
-package com.example.socialnetworkapp.login
+package com.example.socialnetworkapp.presentation.register
 
 import android.graphics.Paint.Align
 import androidx.compose.foundation.clickable
@@ -31,12 +31,11 @@ import com.example.socialnetworkapp.presentation.login.LoginViewModel
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
-import com.example.socialnetworkapp.presentation.util.Screen
 
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
     navController: NavController,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: RegisterViewModel = hiltViewModel()
 ){
     Box(
         modifier = Modifier
@@ -55,8 +54,17 @@ fun LoginScreen(
                 .align(Alignment.Center)
         ){
             Text(
-                text = stringResource(id = R.string.login),
+                text = stringResource(id = R.string.register),
                 style = MaterialTheme.typography.displayLarge,
+            )
+            Spacer(modifier = Modifier.height(SpaceMedium))
+            StandardTextField(
+                text = viewModel.emailText.value,
+                onValueChange = {
+                    viewModel.setEmailText(it)
+                },
+                error = viewModel.emailError.value,
+                hint = stringResource(id = R.string.emil)
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
             StandardTextField(
@@ -64,8 +72,8 @@ fun LoginScreen(
                 onValueChange = {
                     viewModel.setUsernameText(it)
                 },
-                error = viewModel.userNameError.value,
-                hint = stringResource(id = R.string.login_hint)
+                error = viewModel.usernameError.value,
+                hint = stringResource(id = R.string.username)
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
             StandardTextField(
@@ -83,24 +91,22 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
             Button(
-                onClick = {
-                    navController.navigate(Screen.MainFeedScreen.route)
-                },
+                onClick = { TODO() },
                 modifier = Modifier
                     .align(Alignment.End),
                 shape = RoundedCornerShape(5.dp)
             ){
                 Text(
-                    text = stringResource(id = R.string.login),
+                    text = stringResource(id = R.string.register),
                     color = MaterialTheme.colorScheme.onPrimary,
                 )
             }
         }
         Text(
             text = buildAnnotatedString{
-                append(stringResource(id = R.string.dont_have_an_account_yet))
+                append(stringResource(id = R.string.already_have_an_account))
                 append(" ")
-                val signUpText = stringResource(id = R.string.sign_up)
+                val signUpText = stringResource(id = R.string.sign_in)
                 withStyle(
                     style = SpanStyle(
                         color = MaterialTheme.colorScheme.primary
@@ -114,9 +120,7 @@ fun LoginScreen(
                 .align(Alignment.BottomCenter)
                 .padding(bottom = SpaceMedium)
                 .clickable {
-                    navController.navigate(
-                        Screen.RegisterScreen.route
-                    )
+                    navController.popBackStack()
                 }
         )
     }

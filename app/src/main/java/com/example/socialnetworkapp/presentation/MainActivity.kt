@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import com.example.socialnetworkapp.presentation.ui.theme.SocialNetworkAppTheme
 import com.example.socialnetworkapp.presentation.util.Navigation
 import dagger.hilt.android.AndroidEntryPoint
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -26,7 +28,7 @@ class MainActivity : ComponentActivity() {
                 Surface (
                     color = MaterialTheme.colorScheme.background,
                     modifier = Modifier
-                        .padding(WindowInsets.systemBars.asPaddingValues())
+                        //.padding(WindowInsets.systemBars.asPaddingValues())
                         .fillMaxSize()
                 ){
                     Navigation()

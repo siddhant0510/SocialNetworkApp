@@ -164,4 +164,8 @@ dependencies {
     // Icons
     implementation(libs.androidx.material.icons.extended.v161)
 
+    // TopApp bar and bottom navigation bar
+    implementation(libs.accompanist.systemuicontroller)
+
+
 }
