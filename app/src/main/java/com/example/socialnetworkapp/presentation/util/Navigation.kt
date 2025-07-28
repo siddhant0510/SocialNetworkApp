@@ -12,6 +12,7 @@ import com.example.socialnetworkapp.presentation.main_feed.MainFeedScreen
 import com.example.socialnetworkapp.login.LoginScreen
 import com.example.socialnetworkapp.presentation.activity.ActivityScreen
 import com.example.socialnetworkapp.presentation.chat.ChatScreen
+import com.example.socialnetworkapp.presentation.post.CreatePostScreen
 import com.example.socialnetworkapp.presentation.profile.ProfileScreen
 import com.example.socialnetworkapp.presentation.register.RegisterScreen
 import com.example.socialnetworkapp.presentation.splash.SplashScreen
@@ -46,6 +47,9 @@ fun Navigation(
         }
         composable(Screen.ProfileScreen.route){
             ProfileScreen(navController = navController)
+        }
+        composable(Screen.CreatePostScreen.route){
+            CreatePostScreen(navController = navController)
         }
     }
 }

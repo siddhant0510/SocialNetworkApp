@@ -5,27 +5,25 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.DrawerDefaults.backgroundColor
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Doorbell
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.PersonOutline
+import androidx.compose.material3.FabPosition
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.BottomNavItem
 import com.example.socialnetworkapp.presentation.util.Screen
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -44,6 +42,7 @@ fun StandardScaffold(
             icon = Icons.Outlined.Message,
             contentDescription = "Message"
         ),
+        BottomNavItem(route = ""),
         BottomNavItem(
             route = Screen.ActivityScreen.route,
             icon = Icons.Outlined.Notifications,
@@ -55,6 +54,7 @@ fun StandardScaffold(
             contentDescription = "Person"
         )
     ),
+    onFabClick: () -> Unit = {},
     content: @Composable () -> Unit,
 ){
 
@@ -77,8 +77,11 @@ fun StandardScaffold(
                                 contentDescription = bottomNavItem.contentDescription,
                                 selected = bottomNavItem.route == navController.currentDestination?.route,
                                 alertCount = bottomNavItem.alertCount,
+                                enabled = bottomNavItem.icon != null
                             ) {
-                                navController.navigate(bottomNavItem.route)
+                                if(navController.currentDestination?.route != bottomNavItem.route){
+                                    navController.navigate(bottomNavItem.route)
+                                }
                             }
                         }
                     }
@@ -86,6 +89,22 @@ fun StandardScaffold(
             }
 
         },
+        floatingActionButton = {
+            if(showBottomBar){
+                FloatingActionButton(
+                    shape = CircleShape,
+                    backgroundColor = MaterialTheme.colorScheme.primary,
+                    onClick = onFabClick
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = stringResource(id = R.string.make_post)
+                    )
+                }
+            }
+        },
+        //isFloatingActionButtonDocked = true,
+        floatingActionButtonPosition = FabPosition.Center,
         modifier = modifier
     ){
         content()
