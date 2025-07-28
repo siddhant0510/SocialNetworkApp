@@ -5,19 +5,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.BottomAppBar
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.Scaffold
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material.Surface
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.socialnetworkapp.presentation.componenets.StandardScaffold
 import com.example.socialnetworkapp.presentation.ui.theme.SocialNetworkAppTheme
 import com.example.socialnetworkapp.presentation.util.Navigation
+import com.example.socialnetworkapp.presentation.util.Screen
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -30,10 +27,23 @@ class MainActivity : ComponentActivity() {
             SocialNetworkAppTheme {
                     Surface(
                         color = MaterialTheme.colorScheme.background,
-                        modifier = Modifier
-                            .fillMaxSize()
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        Navigation()
+                        val navController = rememberNavController()
+                        val navBackStackEntry by navController.currentBackStackEntryAsState()
+                        StandardScaffold(
+                            navController = navController,
+                            showBottomBar = navBackStackEntry?.destination?.route in listOf(
+                                Screen.MainFeedScreen.route,
+                                Screen.ChatScreen.route,
+                                Screen.ActivityScreen.route,
+                                Screen.ProfileScreen.route
+                            ),
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            Navigation(navController)
+                        }
+
                     }
 
             }
