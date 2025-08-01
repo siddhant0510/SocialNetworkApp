@@ -45,6 +45,7 @@ import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.presentation.ui.theme.HintGray
 import com.example.socialnetworkapp.presentation.ui.theme.MediumGray
+import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSize
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
 import com.example.socialnetworkapp.presentation.ui.theme.TextWhite
@@ -53,20 +54,28 @@ import com.example.socialnetworkapp.utli.Constants
 @Composable
 fun Post(
     post: Post,
-    profilePictureSize: Dp = 75.dp
+    onPostClick: () -> Unit = {}
 ){
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 48.dp, bottom = SpaceMedium, start = SpaceMedium, end = SpaceMedium)
+            .padding(
+                top = SpaceSmall,
+                bottom = SpaceMedium,
+                start = SpaceMedium,
+                end = SpaceMedium
+            )
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(y = profilePictureSize/2f)
+                .offset(y = -(ProfilePictureSize / 10f))
                 .clip(MaterialTheme.shapes.medium)
                 .shadow(5.dp)
                 .background(MediumGray)
+                .clickable {
+                    onPostClick()
+                }
         ){
             Image(
                 painterResource(id = R.drawable.kermit),
@@ -143,7 +152,8 @@ fun Post(
             painterResource(id = R.drawable.philipp),
             contentDescription = "Profile picture",
             modifier = Modifier
-                .size(profilePictureSize)
+                .offset(y = -(ProfilePictureSize / 2f))
+                .size(ProfilePictureSize)
                 .clip(CircleShape)
                 .align(Alignment.TopCenter)
         )

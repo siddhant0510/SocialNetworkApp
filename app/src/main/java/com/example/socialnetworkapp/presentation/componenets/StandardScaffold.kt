@@ -1,28 +1,43 @@
-package com.example.socialnetworkapp.presentation.componenets
+package com.example.socialnetworkapp.presentation.components
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.Message
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.PersonOutline
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.BottomNavItem
+import com.example.socialnetworkapp.presentation.componenets.StandardBottomNavItem
 import com.example.socialnetworkapp.presentation.util.Screen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -59,10 +74,13 @@ fun StandardScaffold(
 ){
 
     Scaffold(
+
         bottomBar = {
             if(showBottomBar){
                 BottomAppBar(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .navigationBarsPadding(),
                     backgroundColor = MaterialTheme.colorScheme.surface,
                     cutoutShape = CircleShape,
                     elevation = 5.dp
@@ -92,6 +110,10 @@ fun StandardScaffold(
         floatingActionButton = {
             if(showBottomBar){
                 FloatingActionButton(
+                    modifier = Modifier
+                        .navigationBarsPadding()
+                        .size(70.dp)
+                        .offset(y = 90.dp),
                     shape = CircleShape,
                     backgroundColor = MaterialTheme.colorScheme.primary,
                     onClick = onFabClick
@@ -105,6 +127,7 @@ fun StandardScaffold(
         },
         //isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
+        contentWindowInsets = WindowInsets.navigationBars,
         modifier = modifier
     ){
         content()

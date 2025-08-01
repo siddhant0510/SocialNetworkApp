@@ -9,9 +9,12 @@ import androidx.compose.material.Surface
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.socialnetworkapp.presentation.componenets.StandardScaffold
+import com.example.socialnetworkapp.R
+//import com.example.socialnetworkapp.presentation.componenets.StandardScaffold
+import com.example.socialnetworkapp.presentation.components.StandardScaffold
 import com.example.socialnetworkapp.presentation.ui.theme.SocialNetworkAppTheme
 import com.example.socialnetworkapp.presentation.util.Navigation
 import com.example.socialnetworkapp.presentation.util.Screen

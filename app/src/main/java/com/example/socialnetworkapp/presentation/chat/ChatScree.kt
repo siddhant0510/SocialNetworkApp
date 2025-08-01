@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.example.socialnetworkapp.presentation.componenets.StandardScaffold
+//import com.example.socialnetworkapp.presentation.componenets.StandardScaffold
 
 @Composable
 fun ChatScreen(navController: NavController){
