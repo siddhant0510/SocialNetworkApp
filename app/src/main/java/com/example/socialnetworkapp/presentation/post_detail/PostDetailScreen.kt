@@ -2,8 +2,6 @@ package com.example.socialnetworkapp.presentation.post_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,7 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.icons.Icons
@@ -42,7 +39,7 @@ import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.presentation.componenets.ActionRow
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.presentation.ui.theme.MediumGray
-import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSize
+import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeMedium
 import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeSmall
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
@@ -54,7 +51,7 @@ fun PostDetailScreen(
     post: Post
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxWidth().padding(top = 48.dp)
     ) {
         StandardToolbar(
             navController = navController,
@@ -139,8 +136,8 @@ fun PostDetailScreen(
                             painterResource(id = R.drawable.philipp),
                             contentDescription = "Profile picture",
                             modifier = Modifier
-                                .offset(y = -(ProfilePictureSize / 6f))
-                                .size(ProfilePictureSize)
+                                .offset(y = -(ProfilePictureSizeMedium / 6f))
+                                .size(ProfilePictureSizeMedium)
                                 .clip(CircleShape)
                                 .align(Alignment.TopCenter)
                         )

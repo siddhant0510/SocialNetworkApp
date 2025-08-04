@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.socialnetworkapp.R
@@ -38,19 +39,19 @@ fun ActivityScreen(
     viewModel: ActivityViewModel = hiltViewModel()
 ){
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxWidth().padding(top = 48.dp)
     ){
         StandardToolbar(
             navController = navController,
             title = {
                 Text(
-                    text = stringResource(id = R.string.your_feed),
+                    text = stringResource(id = R.string.your_activity),
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground
                 )
             },
             modifier = Modifier.fillMaxWidth(),
-            showBackArrow = true,
+            showBackArrow = false,
         )
         LazyColumn (
             modifier = Modifier

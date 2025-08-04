@@ -1,8 +1,10 @@
 package com.example.socialnetworkapp.presentation.componenets
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.MaterialTheme
@@ -30,7 +32,7 @@ fun StandardToolbar(
 ){
     TopAppBar(
         title = title,
-        modifier = modifier.padding(WindowInsets.systemBars.asPaddingValues()),
+        modifier = modifier,
         navigationIcon = if(showBackArrow){
             {
                 IconButton(onClick = {

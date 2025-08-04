@@ -45,7 +45,7 @@ import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.presentation.ui.theme.HintGray
 import com.example.socialnetworkapp.presentation.ui.theme.MediumGray
-import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSize
+import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeMedium
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
 import com.example.socialnetworkapp.presentation.ui.theme.TextWhite
@@ -54,6 +54,8 @@ import com.example.socialnetworkapp.utli.Constants
 @Composable
 fun Post(
     post: Post,
+    modifier: Modifier = Modifier,
+    showProfileImage: Boolean = true,
     onPostClick: () -> Unit = {}
 ){
     Box(
@@ -69,7 +71,7 @@ fun Post(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .offset(y = -(ProfilePictureSize / 10f))
+                .offset(y = if(showProfileImage) ProfilePictureSizeMedium / 2f else 0.dp)
                 .clip(MaterialTheme.shapes.medium)
                 .shadow(5.dp)
                 .background(MediumGray)
@@ -148,15 +150,17 @@ fun Post(
             }
 
         }
-        Image(
-            painterResource(id = R.drawable.philipp),
-            contentDescription = "Profile picture",
-            modifier = Modifier
-                .offset(y = -(ProfilePictureSize / 2f))
-                .size(ProfilePictureSize)
-                .clip(CircleShape)
-                .align(Alignment.TopCenter)
-        )
+        if(showProfileImage){
+            Image(
+                painterResource(id = R.drawable.philipp),
+                contentDescription = "Profile picture",
+                modifier = Modifier
+                    .offset(y = (ProfilePictureSizeMedium / 12f))
+                    .size(ProfilePictureSizeMedium)
+                    .clip(CircleShape)
+                    .align(Alignment.TopCenter)
+            )
+        }
     }
 }
 
