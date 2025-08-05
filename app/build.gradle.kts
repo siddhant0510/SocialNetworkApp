@@ -73,6 +73,8 @@ dependencies {
     implementation(libs.androidx.animation)
     implementation(libs.androidx.core.splashscreen)
 
+    implementation(libs.toolbar.compose)
+
     // Lottie animation compose
     implementation(libs.airbnb.lottie.compose)
 
