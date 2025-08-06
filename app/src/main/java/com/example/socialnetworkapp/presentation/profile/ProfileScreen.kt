@@ -1,5 +1,6 @@
 package com.example.socialnetworkapp.presentation.profile
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -8,7 +9,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
@@ -42,27 +43,55 @@ import com.example.socialnetworkapp.presentation.profile.components.ProfileHeade
 import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.util.Screen
+import com.example.socialnetworkapp.presentation.util.toPx
 
 //import com.example.socialnetworkapp.presentation.componenets.StandardScaffold
 
+@SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun ProfileScreen(navController: NavController){
     Column(modifier = Modifier.fillMaxWidth().padding(top = 48.dp)){
+        val lazyListState = rememberLazyListState()
         var toolbarOffSetY by remember {
             mutableStateOf(0f)
+        }
+        var totalToolbarOffsetY by remember {
+            mutableStateOf(0f)
+        }
+        val iconSizeExpanded = 40.dp
+        val toolbarHeightCollapsed = 75.dp
+        val imageCollapsedOffsetY = remember {
+            (toolbarHeightCollapsed - ProfilePictureSizeLarge / 2f) / 2f
+        }
+        val iconCollapsedOffsetY = remember {
+            (toolbarHeightCollapsed - iconSizeExpanded) / 2f
         }
         val bannerHeight = (LocalConfiguration.current.screenWidthDp / 2.5f).dp
         val toolbarHeightExpanded = remember {
             bannerHeight + ProfilePictureSizeLarge
         }
-        val toolbarHeightCollapsed = 56.dp
+
+        val maxOffset = remember {
+            toolbarHeightExpanded - toolbarHeightCollapsed
+        }
+        var expandedRatio by remember {
+            mutableStateOf(1f)
+        }
         val nestedScrollConnection = remember {
             object : NestedScrollConnection{
                 override fun onPreScroll(available: Offset, source: NestedScrollSource) : Offset{
                     val delta = available.y
+                    if(delta > 0f && lazyListState.firstVisibleItemIndex != 0){
+                        return Offset.Zero
+                    }
                     val newOffSet = toolbarOffSetY + delta
-
-                    return super.onPreScroll(available, source)
+                    toolbarOffSetY = newOffSet.coerceIn(
+                        minimumValue = -maxOffset.toPx(),
+                        maximumValue = 0f
+                    )
+                    totalToolbarOffsetY += toolbarOffSetY
+                    expandedRatio = ((toolbarOffSetY + maxOffset.toPx()) / maxOffset.toPx())
+                    return Offset.Zero
                 }
             }
         }
@@ -70,6 +99,7 @@ fun ProfileScreen(navController: NavController){
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .nestedScroll(nestedScrollConnection)
         ){
             LazyColumn (
                 modifier = Modifier
@@ -118,7 +148,23 @@ fun ProfileScreen(navController: NavController){
                     .align(Alignment.TopCenter)
             ){
                 BannerSection(
-                    modifier = Modifier.height(bannerHeight)
+                    modifier = Modifier
+                        .height(
+                            (bannerHeight * expandedRatio).coerceIn(
+                                minimumValue = toolbarHeightCollapsed,
+                                maximumValue = bannerHeight
+                            )
+                        ),
+                    leftIconModifier = Modifier
+                        .graphicsLayer {
+                            translationY = (1f - expandedRatio) *
+                                    -iconCollapsedOffsetY.toPx()
+                        },
+                    rightIconModifier = Modifier
+                        .graphicsLayer {
+                            translationY = (1f - expandedRatio) *
+                                    -iconCollapsedOffsetY.toPx()
+                        }
                 )
                 Image(
                     painter = painterResource(id = R.drawable.philipp),
@@ -126,12 +172,20 @@ fun ProfileScreen(navController: NavController){
                     modifier = Modifier
                         .align(CenterHorizontally)
                         .graphicsLayer {
-                            translationY = -ProfilePictureSizeLarge.toPx() / 2f
+                            translationY = -ProfilePictureSizeLarge.toPx() / 2f -
+                                    (1f - expandedRatio) * imageCollapsedOffsetY.toPx()
+                            transformOrigin = TransformOrigin(
+                                pivotFractionX = 0.5f,
+                                pivotFractionY = 0f
+                            )
+                            val scale = 0.5f + expandedRatio * 0.5f
+                            scaleX = scale
+                            scaleY = scale
                         }
                         .size(ProfilePictureSizeLarge)
                         .clip(CircleShape)
                         .border(
-                            width = 1.dp,
+                            width = 2.dp,
                             color = MaterialTheme.colorScheme.onSurface,
                             shape = CircleShape
                         )
