@@ -2,16 +2,14 @@ package com.example.socialnetworkapp.presentation.util
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.internal.composableLambda
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.presentation.main_feed.MainFeedScreen
 import com.example.socialnetworkapp.login.LoginScreen
+import com.example.socialnetworkapp.presentation.edit_profile.EditProfileScreen
 import com.example.socialnetworkapp.presentation.activity.ActivityScreen
 import com.example.socialnetworkapp.presentation.chat.ChatScreen
 import com.example.socialnetworkapp.presentation.post.CreatePostScreen
@@ -27,7 +25,7 @@ fun Navigation(
     //val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Screen.ProfileScreen.route,
+        startDestination = Screen.EditProfileScreen.route,
         modifier = Modifier.fillMaxSize()
     ) {
         composable(Screen.SplashScreen.route){
@@ -50,6 +48,9 @@ fun Navigation(
         }
         composable(Screen.ProfileScreen.route){
             ProfileScreen(navController = navController)
+        }
+        composable(Screen.EditProfileScreen.route){
+            EditProfileScreen(navController = navController)
         }
         composable(Screen.CreatePostScreen.route){
             CreatePostScreen(navController = navController)

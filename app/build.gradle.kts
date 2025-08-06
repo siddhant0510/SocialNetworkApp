@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
 
     implementation(libs.toolbar.compose)
+    implementation("com.google.accompanist:accompanist-flowlayout:0.17.0")
 
     // Lottie animation compose
     implementation(libs.airbnb.lottie.compose)
