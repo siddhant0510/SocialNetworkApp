@@ -12,10 +12,11 @@ import com.example.socialnetworkapp.login.LoginScreen
 import com.example.socialnetworkapp.presentation.edit_profile.EditProfileScreen
 import com.example.socialnetworkapp.presentation.activity.ActivityScreen
 import com.example.socialnetworkapp.presentation.chat.ChatScreen
-import com.example.socialnetworkapp.presentation.post.CreatePostScreen
+import com.example.socialnetworkapp.presentation.create_post.CreatePostScreen
 import com.example.socialnetworkapp.presentation.post_detail.PostDetailScreen
 import com.example.socialnetworkapp.presentation.profile.ProfileScreen
 import com.example.socialnetworkapp.presentation.register.RegisterScreen
+import com.example.socialnetworkapp.presentation.search.SearchScreen
 import com.example.socialnetworkapp.presentation.splash.SplashScreen
 
 @Composable
@@ -25,7 +26,7 @@ fun Navigation(
     //val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Screen.EditProfileScreen.route,
+        startDestination = Screen.LoginScreen.route,
         modifier = Modifier.fillMaxSize()
     ) {
         composable(Screen.SplashScreen.route){
@@ -54,6 +55,9 @@ fun Navigation(
         }
         composable(Screen.CreatePostScreen.route){
             CreatePostScreen(navController = navController)
+        }
+        composable(Screen.SearchScreen.route){
+            SearchScreen(navController = navController)
         }
         composable(Screen.PostDetailsScreen.route){
             PostDetailScreen(

@@ -40,7 +40,7 @@ import com.example.socialnetworkapp.presentation.componenets.ActionRow
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.presentation.ui.theme.MediumGray
 import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeMedium
-import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeSmall
+import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeExtraSmall
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
@@ -84,7 +84,7 @@ fun PostDetailScreen(
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .offset(y = ProfilePictureSizeSmall / 2f)
+                                .offset(y = ProfilePictureSizeExtraSmall / 2f)
                                 .clip(MaterialTheme.shapes.medium)
                                 .shadow(5.dp)
                                 .background(MediumGray)
@@ -199,7 +199,7 @@ fun Comment(
                         contentDescription = null,
                         modifier = Modifier
                             .clip(CircleShape)
-                            .size(ProfilePictureSizeSmall)
+                            .size(ProfilePictureSizeExtraSmall)
                     )
                     Spacer(modifier = Modifier.width(SpaceSmall))
                     Text(

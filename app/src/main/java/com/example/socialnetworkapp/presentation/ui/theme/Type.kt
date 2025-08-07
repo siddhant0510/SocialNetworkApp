@@ -23,7 +23,7 @@ val Typography = Typography(
         fontFamily = quicksand,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        color = TextGray
+        color = TextWhite
     ),
     displayLarge = TextStyle( // replaces h1
         fontFamily = quicksand,

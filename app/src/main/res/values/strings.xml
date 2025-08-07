@@ -47,4 +47,11 @@
     <string name="bio">Bio</string>
     <string name="select_top_3_skills">Select your top 3 skills</string>
     <string name="check_icon">Check</string>
+    <string name="search_for_users">Search for users</string>
+    <string name="search">Search...</string>
+    <string name="create_new_post">Crate new post</string>
+    <string name="create_post">Create post</string>
+    <string name="add">Add</string>
+    <string name="send">Send</string>
+    <string name="description">Description</string>
 </resources>
