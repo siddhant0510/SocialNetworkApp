@@ -13,6 +13,7 @@ import com.example.socialnetworkapp.presentation.edit_profile.EditProfileScreen
 import com.example.socialnetworkapp.presentation.activity.ActivityScreen
 import com.example.socialnetworkapp.presentation.chat.ChatScreen
 import com.example.socialnetworkapp.presentation.create_post.CreatePostScreen
+import com.example.socialnetworkapp.presentation.person_list.PersonListScreen
 import com.example.socialnetworkapp.presentation.post_detail.PostDetailScreen
 import com.example.socialnetworkapp.presentation.profile.ProfileScreen
 import com.example.socialnetworkapp.presentation.register.RegisterScreen
@@ -26,7 +27,7 @@ fun Navigation(
     //val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Screen.LoginScreen.route,
+        startDestination = Screen.PersonListScreen.route,
         modifier = Modifier.fillMaxSize()
     ) {
         composable(Screen.SplashScreen.route){
@@ -71,6 +72,9 @@ fun Navigation(
                     commentCount = 7
                 )
             )
+        }
+        composable(Screen.PersonListScreen.route){
+            PersonListScreen(navController = navController)
         }
     }
 }
