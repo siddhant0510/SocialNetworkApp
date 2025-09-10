@@ -27,7 +27,7 @@ fun Navigation(
     //val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Screen.PersonListScreen.route,
+        startDestination = Screen.SplashScreen.route,
         modifier = Modifier.fillMaxSize()
     ) {
         composable(Screen.SplashScreen.route){
