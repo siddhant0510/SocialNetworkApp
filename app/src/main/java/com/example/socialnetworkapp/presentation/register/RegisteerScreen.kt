@@ -1,6 +1,5 @@
 package com.example.socialnetworkapp.presentation.register
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,17 +25,21 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.socialnetworkapp.R
+import com.example.socialnetworkapp.domain.models.AuthError
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
-import com.example.socialnetworkapp.presentation.login.LoginViewModel
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
-import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
+import com.example.socialnetworkapp.utli.Constants
 
 @Composable
 fun RegisterScreen(
     navController: NavController,
     viewModel: RegisterViewModel = hiltViewModel()
 ){
+    val usernameState = viewModel.usernameState.value
+    val emailState = viewModel.emailState.value
+    val passwordState = viewModel.passwordState.value
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -59,40 +62,69 @@ fun RegisterScreen(
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
             StandardTextField(
-                text = viewModel.emailText.value,
+                text = emailState.text,
                 onValueChange = {
-                    viewModel.setEmailText(it)
+                    viewModel.onEvent(RegisterEvent.EnteredEmail(it))
                 },
                 keyboardType = KeyboardType.Email,
-                error = viewModel.emailError.value,
+                error = when(emailState.error) {
+                    is AuthError.FieldEmpty -> {
+                        stringResource(id = R.string.this_field_cant_be_empty)
+                    }
+                    is AuthError.InvalidEmail -> {
+                        stringResource(id = R.string.not_a_valid_email)
+                    }
+                    else -> ""
+                },
                 hint = stringResource(id = R.string.emil)
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
             StandardTextField(
-                text = viewModel.usernameText.value,
+                text = usernameState.text,
                 onValueChange = {
-                    viewModel.setUsernameText(it)
+                    viewModel.onEvent(RegisterEvent.EnteredUsername(it))
                 },
-                error = viewModel.usernameError.value,
+                error = when(viewModel.usernameState.value.error) {
+                    is AuthError.FieldEmpty -> {
+                        stringResource(id = R.string.this_field_cant_be_empty)
+                    }
+                    is AuthError.InputTooShort -> {
+                        stringResource(id = R.string.input_too_short, Constants.MIN_USERNAME_LENGTH)
+                    }
+                    else -> ""
+                },
                 hint = stringResource(id = R.string.username)
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
             StandardTextField(
-                text = viewModel.passwordText.value,
+                text = passwordState.text,
                 onValueChange = {
-                    viewModel.setPasswordText(it)
+                    viewModel.onEvent(RegisterEvent.EnteredPassword(it))
                 },
                 hint = stringResource(id = R.string.password_hint),
                 keyboardType = KeyboardType.Password,
-                error = viewModel.passwordError.value,
-                showPasswordToggle = viewModel.showPassword.value,
+                error = when(passwordState.error) {
+                    is AuthError.FieldEmpty -> {
+                        stringResource(id = R.string.this_field_cant_be_empty)
+                    }
+                    is AuthError.InputTooShort -> {
+                        stringResource(id = R.string.input_too_short)
+                    }
+                    is AuthError.InvalidPassword -> {
+                        stringResource(id = R.string.invalid_password)
+                    }
+                    else -> ""
+                },
+                isPasswordVisible = passwordState.isPasswordVisible,
                 onPasswordToggleClick = {
-                    viewModel.setShowPassword(it)
+                    viewModel.onEvent(RegisterEvent.TogglePasswordVisibility)
                 }
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
             Button(
-                onClick = { TODO() },
+                onClick = {
+                    viewModel.onEvent(RegisterEvent.Register)
+                },
                 modifier = Modifier
                     .align(Alignment.End),
                 shape = RoundedCornerShape(5.dp)

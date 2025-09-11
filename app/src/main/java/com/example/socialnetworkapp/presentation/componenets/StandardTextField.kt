@@ -15,21 +15,15 @@ import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.presentation.ui.theme.iconSizeMedium
 
@@ -47,7 +41,7 @@ fun StandardTextField(
     leadingIcon: ImageVector? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     isPasswordToggleDisplayed: Boolean = keyboardType == KeyboardType.Password,
-    showPasswordToggle: Boolean = false,
+    isPasswordVisible: Boolean = false,
     onPasswordToggleClick: (Boolean) -> Unit = {},
     onValueChange: (String) -> Unit
 ){
@@ -73,7 +67,7 @@ fun StandardTextField(
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,
             ),
-            visualTransformation = if (!showPasswordToggle && isPasswordToggleDisplayed){
+            visualTransformation = if (!isPasswordVisible && isPasswordToggleDisplayed){
                 PasswordVisualTransformation()
             } else {
                 VisualTransformation.None
@@ -94,16 +88,16 @@ fun StandardTextField(
                 val icon: @Composable () -> Unit = {
                     IconButton(
                         onClick = {
-                            onPasswordToggleClick(!showPasswordToggle)
+                            onPasswordToggleClick(!isPasswordVisible)
                         }
                     ) {
                         Icon(
-                            imageVector = if(showPasswordToggle){
+                            imageVector = if(isPasswordVisible){
                                 Icons.Filled.VisibilityOff
                             } else {
                                 Icons.Filled.Visibility
                             },
-                            contentDescription = if(showPasswordToggle){
+                            contentDescription = if(isPasswordVisible){
                                 stringResource(id = R.string.password_visible_content_description)
                             } else {
                                 stringResource(id = R.string.password_hidden_content_description)

@@ -32,6 +32,7 @@ import com.example.socialnetworkapp.presentation.componenets.UserProfileItem
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.ui.theme.iconSizeMedium
+import com.example.socialnetworkapp.presentation.util.EditProfileError
 import com.example.socialnetworkapp.presentation.util.states.StandardTextFieldState
 
 @Composable
@@ -63,7 +64,7 @@ fun SearchScreen(
                     .fillMaxWidth(),
                 text = viewModel.searchState.value.text,
                 hint = stringResource(id = R.string.search),
-                error = viewModel.searchState.value.error,
+                error = "",
                 singleLine = false,
                 leadingIcon = Icons.Default.Search,
                 onValueChange = {

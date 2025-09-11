@@ -47,8 +47,6 @@ import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.util.Screen
 import com.example.socialnetworkapp.presentation.util.toPx
 
-//import com.example.socialnetworkapp.presentation.componenets.StandardScaffold
-
 @SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun ProfileScreen(

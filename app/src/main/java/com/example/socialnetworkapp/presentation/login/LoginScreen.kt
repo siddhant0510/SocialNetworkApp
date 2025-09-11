@@ -1,6 +1,5 @@
 package com.example.socialnetworkapp.login
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -30,7 +29,6 @@ import com.example.socialnetworkapp.presentation.componenets.StandardTextField
 import com.example.socialnetworkapp.presentation.login.LoginViewModel
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
-import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
 import com.example.socialnetworkapp.presentation.util.Screen
 
 @Composable
@@ -77,7 +75,7 @@ fun LoginScreen(
                 hint = stringResource(id = R.string.password_hint),
                 keyboardType = KeyboardType.Password,
                 error = viewModel.passwordError.value,
-                showPasswordToggle = viewModel.showPassword.value,
+                isPasswordVisible = viewModel.showPassword.value,
                 onPasswordToggleClick = {
                     viewModel.setShowPassword(it)
                 }

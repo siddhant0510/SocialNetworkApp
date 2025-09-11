@@ -49,6 +49,7 @@ import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeLarg
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
+import com.example.socialnetworkapp.presentation.util.EditProfileError
 import com.example.socialnetworkapp.presentation.util.states.StandardTextFieldState
 import com.google.accompanist.flowlayout.MainAxisAlignment
 import kotlin.random.Random
@@ -103,7 +104,10 @@ fun EditProfileScreen(
                         .fillMaxWidth(),
                     text = viewModel.usernameState.value.text,
                     hint = stringResource(id = R.string.username),
-                    error = viewModel.usernameState.value.error,
+                    error = when(viewModel.usernameState.value.error) {
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.this_field_cant_be_empty)
+                        else -> ""
+                    },
                     leadingIcon = Icons.Default.Person,
                     onValueChange = {
                         viewModel.setUsernameState(
@@ -117,7 +121,10 @@ fun EditProfileScreen(
                         .fillMaxWidth(),
                     text = viewModel.githubTextFieldState.value.text,
                     hint = stringResource(id = R.string.git_hub_profile_url),
-                    error = viewModel.githubTextFieldState.value.error,
+                    error = when(viewModel.githubTextFieldState.value.error) {
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.this_field_cant_be_empty)
+                        else -> ""
+                    },
                     leadingIcon = ImageVector.vectorResource(id = R.drawable.github),
                     onValueChange = {
                         viewModel.setGithubTextFieldState(
@@ -131,7 +138,10 @@ fun EditProfileScreen(
                         .fillMaxWidth(),
                     text = viewModel.instagramTextFieldState.value.text,
                     hint = stringResource(id = R.string.instagram_profile_url),
-                    error = viewModel.instagramTextFieldState.value.error,
+                    error = when(viewModel.instagramTextFieldState.value.error) {
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.this_field_cant_be_empty)
+                        else -> ""
+                    },
                     leadingIcon = ImageVector.vectorResource(id = R.drawable.instagram),
                     onValueChange = {
                         viewModel.setInstagramTextFieldState(
@@ -145,7 +155,10 @@ fun EditProfileScreen(
                         .fillMaxWidth(),
                     text = viewModel.linkedInTextFiledState.value.text,
                     hint = stringResource(id = R.string.linked_in_profile_url),
-                    error = viewModel.linkedInTextFiledState.value.error,
+                    error = when(viewModel.linkedInTextFiledState.value.error) {
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.this_field_cant_be_empty)
+                        else -> ""
+                    },
                     leadingIcon = ImageVector.vectorResource(id = R.drawable.linkedin),
                     onValueChange = {
                         viewModel.setLinkedInTextFieldState(
@@ -159,7 +172,10 @@ fun EditProfileScreen(
                         .fillMaxWidth(),
                     text = viewModel.bioState.value.text,
                     hint = stringResource(id = R.string.bio),
-                    error = viewModel.bioState.value.error,
+                    error = when(viewModel.bioState.value.error) {
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.this_field_cant_be_empty)
+                        else -> ""
+                    },
                     singleLine = false,
                     leadingIcon = Icons.Default.Description,
                     onValueChange = {
