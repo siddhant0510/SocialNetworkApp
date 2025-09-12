@@ -9,13 +9,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.SnackbarDuration
 import androidx.compose.material3.MaterialTheme
 //import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -29,16 +35,33 @@ import com.example.socialnetworkapp.domain.models.AuthError
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.util.asString
 import com.example.socialnetworkapp.utli.Constants
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun RegisterScreen(
     navController: NavController,
+    scaffoldState: SnackbarHostState,
     viewModel: RegisterViewModel = hiltViewModel()
 ){
     val usernameState = viewModel.usernameState.value
     val emailState = viewModel.emailState.value
     val passwordState = viewModel.passwordState.value
+    val registerState = viewModel.registerState.value
+    val context = LocalContext.current
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when(event) {
+                is RegisterViewModel.UiEvent.SnackbarEvent -> {
+                    snackbarHostState.showSnackbar(
+                        message = event.uiText.asString(context))
+                }
+            }
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -125,6 +148,7 @@ fun RegisterScreen(
                 onClick = {
                     viewModel.onEvent(RegisterEvent.Register)
                 },
+                enabled = !registerState.isLoading,
                 modifier = Modifier
                     .align(Alignment.End),
                 shape = RoundedCornerShape(5.dp)
@@ -133,6 +157,9 @@ fun RegisterScreen(
                     text = stringResource(id = R.string.register),
                     color = MaterialTheme.colorScheme.onPrimary,
                 )
+            }
+            if(registerState.isLoading) {
+                CircularProgressIndicator()
             }
         }
         Text(

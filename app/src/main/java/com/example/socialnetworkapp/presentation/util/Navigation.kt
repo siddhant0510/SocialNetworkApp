@@ -1,6 +1,7 @@
 package com.example.socialnetworkapp.presentation.util
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
@@ -22,7 +23,8 @@ import com.example.socialnetworkapp.presentation.splash.SplashScreen
 
 @Composable
 fun Navigation(
-    navController: NavHostController
+    navController: NavHostController,
+    scaffoldState: SnackbarHostState
 ){
     //val navController = rememberNavController()
     NavHost(
@@ -37,7 +39,10 @@ fun Navigation(
             LoginScreen(navController = navController)
         }
         composable(Screen.RegisterScreen.route){
-            RegisterScreen(navController = navController)
+            RegisterScreen(
+                navController = navController,
+                scaffoldState = scaffoldState
+            )
         }
         composable(Screen.MainFeedScreen.route){
             MainFeedScreen(navController = navController)
