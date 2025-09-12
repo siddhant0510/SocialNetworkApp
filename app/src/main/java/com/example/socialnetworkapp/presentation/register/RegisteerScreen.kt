@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.SnackbarDuration
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.MaterialTheme
 //import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -57,7 +57,9 @@ fun RegisterScreen(
             when(event) {
                 is RegisterViewModel.UiEvent.SnackbarEvent -> {
                     snackbarHostState.showSnackbar(
-                        message = event.uiText.asString(context))
+                        message = event.uiText.asString(context),
+                        duration = SnackbarDuration.Long
+                    )
                 }
             }
         }
