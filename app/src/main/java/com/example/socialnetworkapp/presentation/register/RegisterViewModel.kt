@@ -1,18 +1,17 @@
 package com.example.socialnetworkapp.presentation.register
 
-import android.util.Patterns
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.domain.models.AuthError
 import com.example.socialnetworkapp.domain.usecase.RegisterUseCase
+import com.example.socialnetworkapp.presentation.register.RegisterViewModel.UiEvent.*
 import com.example.socialnetworkapp.presentation.util.states.PasswordTextFieldState
 import com.example.socialnetworkapp.presentation.util.states.StandardTextFieldState
-import com.example.socialnetworkapp.utli.Constants
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.UiText
+import com.example.socialnetworkapp.utli.UiText.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -61,98 +60,57 @@ class RegisterViewModel @Inject constructor(
                 )
             }
             is RegisterEvent.Register -> {
-                validateUsername(usernameState.value.text)
-                validateEmail(emailState.value.text)
-                validatePassword(passwordState.value.text)
-                registerIfNoErrors()
+                register()
             }
         }
     }
 
-    private fun registerIfNoErrors() {
-        if(emailState.value.error != null || usernameState.value.error != null || passwordState.value.error != null) {
-            return
-        }
+    private fun register() {
         viewModelScope.launch {
+            _usernameState.value = usernameState.value.copy(error = null)
+            _emailState.value = emailState.value.copy(error = null)
+            _passwordState.value = passwordState.value.copy(error = null)
             _registerState.value = RegisterState(isLoading = true)
-            val result = registerUseCase(
+            val registerResult = registerUseCase(
                 email = emailState.value.text,
                 username = usernameState.value.text,
                 password = passwordState.value.text
             )
-            when(result) {
+            if(registerResult.emailError != null) {
+                _emailState.value = emailState.value.copy(
+                    error = registerResult.emailError
+                )
+            }
+            if(registerResult.usernameError != null) {
+                _usernameState.value = _usernameState.value.copy(
+                    error = registerResult.usernameError
+                )
+            }
+            if(registerResult.passwordError != null) {
+                _passwordState.value = _passwordState.value.copy(
+                    error = registerResult.passwordError
+                )
+            }
+            when(registerResult.result) {
                 is Resource.Success -> {
                     _eventFlow.emit(
-                        UiEvent.SnackbarEvent(UiText.StringResource(R.string.success_registration))
+                        SnackbarEvent(StringResource(R.string.success_registration))
                     )
                     _registerState.value = RegisterState(isLoading = false)
                 }
                 is Resource.Error -> {
                     _eventFlow.emit(
-                        UiEvent.SnackbarEvent(result.uiText ?: UiText.unknownError())
+                        SnackbarEvent(registerResult.result.uiText ?: UiText.unknownError())
                     )
+                    _registerState.value = RegisterState(isLoading = false)
+                }
+                null -> {
                     _registerState.value = RegisterState(isLoading = false)
                 }
             }
         }
     }
-    private fun validateUsername(username: String) {
-        val trimmedUsername = username.trim()
-        if(trimmedUsername.isBlank()) {
-            _usernameState.value = _usernameState.value.copy(
-                error = AuthError.FieldEmpty
-            )
-            return
-        }
-        if(trimmedUsername.length < Constants.MIN_USERNAME_LENGTH) {
-            _usernameState.value = _usernameState.value.copy(
-                error = AuthError.InputTooShort
-            )
-            return
-        }
-        _usernameState.value = _usernameState.value.copy(error = null)
-    }
 
-    private fun validateEmail(email: String) {
-        val trimmedEmail = email.trim()
-        if(trimmedEmail.isBlank()) {
-            _emailState.value = _emailState.value.copy(
-                error = AuthError.FieldEmpty
-            )
-            return
-        }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailState.value = _emailState.value.copy(
-                error = AuthError.InvalidEmail
-            )
-            return
-        }
-        _emailState.value = _emailState.value.copy(error = null)
-    }
-
-    private fun validatePassword(password: String) {
-        if(password.isBlank()) {
-            _passwordState.value = _passwordState.value.copy(
-                error = AuthError.FieldEmpty
-            )
-            return
-        }
-        if(password.length < Constants.MIN_PASSWORD_LENGTH) {
-            _passwordState.value = _passwordState.value.copy(
-                error = AuthError.InputTooShort
-            )
-            return
-        }
-        val capitalLettersInPassword = password.any { it.isUpperCase() }
-        val numberInPassword = password.any { it.isDigit() }
-        if(!capitalLettersInPassword || !numberInPassword) {
-            _passwordState.value = _passwordState.value.copy(
-                error = AuthError.InvalidPassword
-            )
-            return
-        }
-        _passwordState.value = _passwordState.value.copy(error = null)
-    }
     sealed class UiEvent {
         data class SnackbarEvent(val uiText: UiText): UiEvent()
     }
