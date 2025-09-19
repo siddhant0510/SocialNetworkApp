@@ -35,7 +35,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -51,7 +50,6 @@ import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
 import com.example.socialnetworkapp.presentation.util.EditProfileError
 import com.example.socialnetworkapp.presentation.util.states.StandardTextFieldState
-import com.google.accompanist.flowlayout.MainAxisAlignment
 import kotlin.random.Random
 
 @Composable
@@ -105,7 +103,7 @@ fun EditProfileScreen(
                     text = viewModel.usernameState.value.text,
                     hint = stringResource(id = R.string.username),
                     error = when(viewModel.usernameState.value.error) {
-                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.this_field_cant_be_empty)
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
                         else -> ""
                     },
                     leadingIcon = Icons.Default.Person,
@@ -122,7 +120,7 @@ fun EditProfileScreen(
                     text = viewModel.githubTextFieldState.value.text,
                     hint = stringResource(id = R.string.git_hub_profile_url),
                     error = when(viewModel.githubTextFieldState.value.error) {
-                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.this_field_cant_be_empty)
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
                         else -> ""
                     },
                     leadingIcon = ImageVector.vectorResource(id = R.drawable.github),
@@ -139,7 +137,7 @@ fun EditProfileScreen(
                     text = viewModel.instagramTextFieldState.value.text,
                     hint = stringResource(id = R.string.instagram_profile_url),
                     error = when(viewModel.instagramTextFieldState.value.error) {
-                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.this_field_cant_be_empty)
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
                         else -> ""
                     },
                     leadingIcon = ImageVector.vectorResource(id = R.drawable.instagram),
@@ -156,7 +154,7 @@ fun EditProfileScreen(
                     text = viewModel.linkedInTextFiledState.value.text,
                     hint = stringResource(id = R.string.linked_in_profile_url),
                     error = when(viewModel.linkedInTextFiledState.value.error) {
-                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.this_field_cant_be_empty)
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
                         else -> ""
                     },
                     leadingIcon = ImageVector.vectorResource(id = R.drawable.linkedin),
@@ -173,7 +171,7 @@ fun EditProfileScreen(
                     text = viewModel.bioState.value.text,
                     hint = stringResource(id = R.string.bio),
                     error = when(viewModel.bioState.value.error) {
-                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.this_field_cant_be_empty)
+                        is EditProfileError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
                         else -> ""
                     },
                     singleLine = false,

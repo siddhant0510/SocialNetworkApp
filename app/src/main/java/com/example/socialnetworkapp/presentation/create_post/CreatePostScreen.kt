@@ -18,7 +18,6 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Description
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.Button
-import androidx.compose.material3.FabPosition.Companion.End
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -98,7 +96,7 @@ fun CreatePostScreen(
                 text = viewModel.descriptionState.value.text,
                 hint = stringResource(id = R.string.description),
                 error = when(viewModel.descriptionState.value.error) {
-                    is PostDescriptionError.FieldEmpty -> stringResource(id = R.string.this_field_cant_be_empty)
+                    is PostDescriptionError.FieldEmpty -> stringResource(id = R.string.error_field_empty)
                     else -> ""
                 },
                 singleLine = false,

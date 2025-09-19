@@ -94,7 +94,7 @@ fun RegisterScreen(
                 keyboardType = KeyboardType.Email,
                 error = when(emailState.error) {
                     is AuthError.FieldEmpty -> {
-                        stringResource(id = R.string.this_field_cant_be_empty)
+                        stringResource(id = R.string.error_field_empty)
                     }
                     is AuthError.InvalidEmail -> {
                         stringResource(id = R.string.not_a_valid_email)
@@ -111,7 +111,7 @@ fun RegisterScreen(
                 },
                 error = when(viewModel.usernameState.value.error) {
                     is AuthError.FieldEmpty -> {
-                        stringResource(id = R.string.this_field_cant_be_empty)
+                        stringResource(id = R.string.error_field_empty)
                     }
                     is AuthError.InputTooShort -> {
                         stringResource(id = R.string.input_too_short, Constants.MIN_USERNAME_LENGTH)
@@ -130,7 +130,7 @@ fun RegisterScreen(
                 keyboardType = KeyboardType.Password,
                 error = when(passwordState.error) {
                     is AuthError.FieldEmpty -> {
-                        stringResource(id = R.string.this_field_cant_be_empty)
+                        stringResource(id = R.string.error_field_empty)
                     }
                     is AuthError.InputTooShort -> {
                         stringResource(id = R.string.input_too_short)

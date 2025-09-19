@@ -1,7 +1,9 @@
 package com.example.socialnetworkapp.di
 
+import android.content.SharedPreferences
 import com.example.socialnetworkapp.data.repository.AuthRepositoryImpl
 import com.example.socialnetworkapp.domain.repository.AuthRepository
+import com.example.socialnetworkapp.domain.usecase.LoginUseCase
 import com.example.socialnetworkapp.domain.usecase.RegisterUseCase
 import com.example.socialnetworkapp.presentation.data.remote.AuthApi
 import dagger.Module
@@ -29,13 +31,19 @@ object AuthModule {
 
     @Provides
     @Singleton
-    fun provideAuthRepository(api: AuthApi): AuthRepository {
-        return AuthRepositoryImpl(api)
+    fun provideAuthRepository(api: AuthApi, sharedPreferences: SharedPreferences): AuthRepository {
+        return AuthRepositoryImpl(api, sharedPreferences)
     }
 
     @Provides
     @Singleton
     fun provideRegisterUseCase(repository: AuthRepository): RegisterUseCase {
         return RegisterUseCase(repository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLoginUseCase(repository: AuthRepository): LoginUseCase {
+        return LoginUseCase(repository)
     }
 }
