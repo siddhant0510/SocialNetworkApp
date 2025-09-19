@@ -35,6 +35,7 @@ import com.example.socialnetworkapp.domain.models.AuthError
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.presentation.util.asString
 import com.example.socialnetworkapp.utli.Constants
 import kotlinx.coroutines.flow.collectLatest
@@ -55,12 +56,13 @@ fun RegisterScreen(
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
-                is RegisterViewModel.UiEvent.SnackbarEvent -> {
-                    snackbarHostState.showSnackbar(
-                        message = event.uiText.asString(context),
-                        duration = SnackbarDuration.Long
-                    )
-                }
+                is UiEvent.SnackbarEvent -> {
+                snackbarHostState.showSnackbar(
+                    message = event.uiText.asString(context),
+                    duration = SnackbarDuration.Long
+                )
+            }
+                else -> Unit
             }
         }
     }

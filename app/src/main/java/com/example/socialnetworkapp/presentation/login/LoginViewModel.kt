@@ -5,8 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialnetworkapp.domain.usecase.LoginUseCase
-import com.example.socialnetworkapp.presentation.login.LoginViewModel.UiEvent.*
 import com.example.socialnetworkapp.presentation.util.Screen
+import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.presentation.util.states.StandardTextFieldState
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.UiText
@@ -63,12 +63,12 @@ class LoginViewModel @Inject constructor(
                     when(loginResult.result) {
                         is Resource.Success -> {
                             _eventFlow.emit(
-                                Navigate(Screen.MainFeedScreen.route)
+                                UiEvent.Navigate(Screen.MainFeedScreen.route)
                             )
                         }
                         is Resource.Error -> {
                             _eventFlow.emit(
-                                SnackbarEvent(
+                                UiEvent.SnackbarEvent(
                                     loginResult.result.uiText ?: UiText.unknownError()
                                 )
                             )
@@ -82,9 +82,5 @@ class LoginViewModel @Inject constructor(
 
             LoginEvent.TogglePasswordVisibility -> TODO()
         }
-    }
-    sealed class UiEvent {
-        data class SnackbarEvent(val uiText: UiText): UiEvent()
-        data class Navigate(val route: String): UiEvent()
     }
 }

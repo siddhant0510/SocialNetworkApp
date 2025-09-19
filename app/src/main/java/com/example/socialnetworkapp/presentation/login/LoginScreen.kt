@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-//import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.SnackbarHostState
@@ -35,6 +34,7 @@ import com.example.socialnetworkapp.presentation.login.LoginViewModel
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.util.Screen
+import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.presentation.util.asString
 import kotlinx.coroutines.flow.collectLatest
 
@@ -52,14 +52,15 @@ fun LoginScreen(
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
-                is LoginViewModel.UiEvent.SnackbarEvent -> {
+                is UiEvent.SnackbarEvent -> {
                     snackbarHostState.showSnackbar(
                         message = event.uiText.asString(context)
                     )
                 }
-                is LoginViewModel.UiEvent.Navigate -> {
+                is UiEvent.Navigate -> {
                     navController.navigate(event.route)
                 }
+                else -> Unit
             }
         }
     }

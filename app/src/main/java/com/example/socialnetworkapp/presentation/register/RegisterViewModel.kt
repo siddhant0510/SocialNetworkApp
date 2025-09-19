@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.usecase.RegisterUseCase
-import com.example.socialnetworkapp.presentation.register.RegisterViewModel.UiEvent.*
+import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.presentation.util.states.PasswordTextFieldState
 import com.example.socialnetworkapp.presentation.util.states.StandardTextFieldState
 import com.example.socialnetworkapp.utli.Resource
@@ -94,13 +94,13 @@ class RegisterViewModel @Inject constructor(
             when(registerResult.result) {
                 is Resource.Success -> {
                     _eventFlow.emit(
-                        SnackbarEvent(StringResource(R.string.success_registration))
+                        UiEvent.SnackbarEvent(StringResource(R.string.success_registration))
                     )
                     _registerState.value = RegisterState(isLoading = false)
                 }
                 is Resource.Error -> {
                     _eventFlow.emit(
-                        SnackbarEvent(registerResult.result.uiText ?: UiText.unknownError())
+                        UiEvent.SnackbarEvent(registerResult.result.uiText ?: UiText.unknownError())
                     )
                     _registerState.value = RegisterState(isLoading = false)
                 }
@@ -109,9 +109,5 @@ class RegisterViewModel @Inject constructor(
                 }
             }
         }
-    }
-
-    sealed class UiEvent {
-        data class SnackbarEvent(val uiText: UiText): UiEvent()
     }
 }
