@@ -6,7 +6,7 @@ import com.example.socialnetworkapp.domain.repository.AuthRepository
 import com.example.socialnetworkapp.domain.usecase.AuthenticateUseCase
 import com.example.socialnetworkapp.domain.usecase.LoginUseCase
 import com.example.socialnetworkapp.domain.usecase.RegisterUseCase
-import com.example.socialnetworkapp.presentation.data.remote.AuthApi
+import com.example.socialnetworkapp.presentation.data.data_source.remote.AuthApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module

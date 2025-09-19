@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation("androidx.paging:paging-compose:3.3.6")
 
     // Compose Core and UI
     implementation(platform(libs.androidx.compose.bom))
