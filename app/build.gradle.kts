@@ -73,9 +73,13 @@ dependencies {
     implementation(libs.androidx.foundation)
     implementation(libs.androidx.animation)
     implementation(libs.androidx.core.splashscreen)
+    implementation("androidx.activity:activity-compose:1.4.0-alpha02")
 
     implementation(libs.toolbar.compose)
     implementation("com.google.accompanist:accompanist-flowlayout:0.17.0")
+
+    // Coil
+    implementation("io.coil-kt:coil-compose:1.3.2")
 
     // Lottie animation compose
     implementation(libs.airbnb.lottie.compose)

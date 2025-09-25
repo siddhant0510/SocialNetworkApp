@@ -1,27 +1,88 @@
 package com.example.socialnetworkapp.data.repository
 
+import android.content.Context
+import android.net.Uri
+import android.os.Build
+import androidx.annotation.RequiresApi
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import coil.network.HttpException
 import com.example.socialnetworkapp.R
+import com.example.socialnetworkapp.data.data_source.remote.request.CreatePostRequest
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.domain.repository.PostRepository
+import com.example.socialnetworkapp.domain.util.getFileName
 import com.example.socialnetworkapp.presentation.data.data_source.remote.PostApi
-import com.example.socialnetworkapp.presentation.data.dto.request.LoginRequest
+import com.example.socialnetworkapp.presentation.data.paging.PostSource
 import com.example.socialnetworkapp.utli.Constants
 import com.example.socialnetworkapp.utli.Resource
+import com.example.socialnetworkapp.utli.SimpleResource
 import com.example.socialnetworkapp.utli.UiText
+import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import okio.IOException
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 class PostRepositoryImpl(
-    private val api: PostApi
+    private val api: PostApi,
+    private val gson: Gson,
+    private val appContext: Context
 ) : PostRepository {
 
-    override suspend fun getPostsForFollows(
-        page: Int,
-        pageSize: Int
-    ): Resource<List<Post>> {
+    override val posts: Flow<PagingData<Post>>
+        get() = Pager(PagingConfig(pageSize = Constants.PAGE_SIZE_POSTS)) {
+            PostSource(api)
+        }.flow
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    override suspend fun createPost(
+        description: String,
+        imageUri: Uri
+    ): SimpleResource {
+        val request = CreatePostRequest(description)
+        val file = withContext(Dispatchers.IO) {
+            appContext.contentResolver.openFileDescriptor(imageUri, "r")?.let { fd ->
+                val inputStream = FileInputStream(fd.fileDescriptor)
+                val file = File(
+                    appContext.cacheDir,
+                    appContext.contentResolver.getFileName(imageUri)
+                )
+                val outputStream = FileOutputStream(file)
+                inputStream.copyTo(outputStream)
+                file
+            }
+        } ?: return Resource.Error(
+            uiText = UiText.StringResource(R.string.error_file_not_found)
+        )
+
         return try{
-            val posts = api.getPostsForFollows(page, pageSize)
-            Resource.Success(posts)
+            val response = api.createPost(
+                postData = MultipartBody.Part
+                    .createFormData(
+                        "post_data",
+                        gson.toJson(request)
+                    ),
+                postImage = MultipartBody.Part
+                    .createFormData(
+                        name = "post_image",
+                        filename = file.name,
+                        body = file.asRequestBody()
+                    )
+            )
+            if(response.successful) {
+                Resource.Success(Unit)
+            } else {
+                response.message?.let { msg ->
+                    Resource.Error(UiText.DynamicString(msg))
+                } ?: Resource.Error(UiText.StringResource(R.string.error_unknow))
+            }
         } catch(e: IOException) {
             Resource.Error(
                 uiText = UiText.StringResource(R.string.error_couldnt_reach_server)

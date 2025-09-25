@@ -1,13 +1,15 @@
 package com.example.socialnetworkapp.domain.repository
 
+import android.net.Uri
+import androidx.paging.PagingData
 import com.example.socialnetworkapp.domain.models.Post
-import com.example.socialnetworkapp.utli.Constants
-import com.example.socialnetworkapp.utli.Resource
+import com.example.socialnetworkapp.utli.SimpleResource
+import kotlinx.coroutines.flow.Flow
+import java.io.File
 
 interface PostRepository {
 
-    suspend fun getPostsForFollows(
-        page: Int = 0,
-        pageSize: Int = Constants.PAGE_SIZE_POSTS
-    ) : Resource<List<Post>>
+    val posts: Flow<PagingData<Post>>
+
+    suspend fun createPost(description: String, imageUri: Uri): SimpleResource
 }

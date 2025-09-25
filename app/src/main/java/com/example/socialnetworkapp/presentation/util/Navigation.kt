@@ -1,6 +1,7 @@
 package com.example.socialnetworkapp.presentation.util
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material.ScaffoldState
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -48,7 +49,10 @@ fun Navigation(
             )
         }
         composable(Screen.MainFeedScreen.route){
-            MainFeedScreen(navController = navController)
+            MainFeedScreen(
+                navController = navController,
+                scaffoldState = scaffoldState
+            )
         }
         composable(Screen.ChatScreen.route){
             ChatScreen(navController = navController)

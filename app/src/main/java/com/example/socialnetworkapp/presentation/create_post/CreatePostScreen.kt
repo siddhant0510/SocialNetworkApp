@@ -1,5 +1,7 @@
 package com.example.socialnetworkapp.presentation.create_post
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
@@ -44,6 +47,12 @@ fun CreatePostScreen(
     navController: NavController,
     viewModel: CreatePostViewModel = hiltViewModel()
 ){
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) {
+        viewModel.onEvent(CreatePostEvent.PickImage(it))
+    }
+
     Column(
         modifier = Modifier.fillMaxSize().padding(top = 48.dp)
     ){
@@ -80,7 +89,9 @@ fun CreatePostScreen(
                         color = MaterialTheme.colorScheme.onBackground,
                         shape = MaterialTheme.shapes.medium
                     )
-                    .clickable { TODO() },
+                    .clickable {
+                        galleryLauncher.launch("image/*")
+                    },
                 contentAlignment = Alignment.Center
             ){
                 Icon(
@@ -102,14 +113,16 @@ fun CreatePostScreen(
                 singleLine = false,
                 leadingIcon = Icons.Default.Description,
                 onValueChange = {
-                    viewModel.setDescriptionState(
-                        StandardTextFieldState(text = it)
+                    viewModel.onEvent(
+                        CreatePostEvent.EnterDescription(it)
                     )
                 },
             )
             Spacer(modifier = Modifier.height(SpaceMedium))
             Button(
-                onClick = {},
+                onClick = {
+                    viewModel.onEvent(CreatePostEvent.PostImage)
+                },
                 modifier = Modifier
                     .align(Alignment.End),
                 shape = RoundedCornerShape(5.dp)

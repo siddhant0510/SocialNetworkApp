@@ -1,16 +1,14 @@
 package com.example.socialnetworkapp.domain.usecase
 
+import androidx.paging.PagingData
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.domain.repository.PostRepository
-import com.example.socialnetworkapp.utli.Resource
+import kotlinx.coroutines.flow.Flow
 
 class GetPostForFollowsUseCase(
     private val repository: PostRepository
 ) {
-    suspend operator fun invoke(
-        page: Int,
-        pageSize: Int
-    ): Resource<List<Post>> {
-        return repository.getPostsForFollows(page, pageSize)
+    operator fun invoke(): Flow<PagingData<Post>> {
+        return repository.posts
     }
 }

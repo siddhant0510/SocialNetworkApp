@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.ui.unit.Constraints
 import com.example.socialnetworkapp.utli.Constants
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,14 +36,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(token: String): OkHttpClient {
+    fun provideOkHttpClient(prefs: SharedPreferences): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor {
-                val modifiedRequest = it.request().newBuilder()
-                    .addHeader("Authorization", "Bearer $token")
-                    .build()
-                it.proceed(modifiedRequest)
-            }
+            .addInterceptor(AuthInterceptor(prefs))
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideGson(): Gson {
+        return Gson()
     }
 }
