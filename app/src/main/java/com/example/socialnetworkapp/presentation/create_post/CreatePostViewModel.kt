@@ -28,6 +28,9 @@ class CreatePostViewModel @Inject constructor(
                     text = event.value
                 )
             }
+            is CreatePostEvent.CropImage -> {
+                _chosenImageUri.value = event.uri
+            }
             is CreatePostEvent.PickImage -> {
                 _chosenImageUri.value = event.uri
             }

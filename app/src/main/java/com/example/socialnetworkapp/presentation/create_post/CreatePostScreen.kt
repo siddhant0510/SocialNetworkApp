@@ -1,7 +1,9 @@
 package com.example.socialnetworkapp.presentation.create_post
 
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -27,32 +29,45 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
+import com.example.socialnetworkapp.presentation.util.CropActivityResultContract
 import com.example.socialnetworkapp.presentation.util.PostDescriptionError
-import com.example.socialnetworkapp.presentation.util.states.StandardTextFieldState
 
 @Composable
 fun CreatePostScreen(
     navController: NavController,
     viewModel: CreatePostViewModel = hiltViewModel()
 ){
-    val galleryLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent()
+    val imageUri = viewModel.chosenImageUri.value
+
+    val cropActivityLauncher = rememberLauncherForActivityResult(
+        contract = CropActivityResultContract()
     ) {
-        viewModel.onEvent(CreatePostEvent.PickImage(it))
+        viewModel.onEvent(CreatePostEvent.CropImage(it))
     }
 
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let {
+            viewModel.onEvent(CreatePostEvent.PickImage(it))
+            cropActivityLauncher.launch(it)
+        }
+    }
     Column(
         modifier = Modifier.fillMaxSize().padding(top = 48.dp)
     ){
@@ -73,6 +88,17 @@ fun CreatePostScreen(
                         contentDescription = stringResource(id = R.string.create_post),
                         tint = MaterialTheme.colorScheme.onBackground
                     )
+                    imageUri?.let { uri ->
+                        Image(
+                            painter = rememberImagePainter(
+                                request = ImageRequest.Builder(LocalContext.current)
+                                    .data(uri)
+                                    .build()
+                            ),
+                            contentDescription = stringResource(id = R.string.post_image),
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                 }
             }
         )
@@ -82,8 +108,9 @@ fun CreatePostScreen(
         ){
             Box(
                 modifier = Modifier
-                    .aspectRatio(16f/ 9f)
+                    .aspectRatio(16f / 9f)
                     .fillMaxWidth()
+                    .clip(MaterialTheme.shapes.medium)
                     .border(
                         width = 2.dp,
                         color = MaterialTheme.colorScheme.onBackground,
@@ -93,13 +120,14 @@ fun CreatePostScreen(
                         galleryLauncher.launch("image/*")
                     },
                 contentAlignment = Alignment.Center
-            ){
+            ) {
                 Icon(
                     imageVector = Icons.Default.Add,
                     contentDescription = stringResource(id = R.string.add),
                     tint = MaterialTheme.colorScheme.onBackground
                 )
             }
+        }
             Spacer(modifier = Modifier.height(SpaceMedium))
             StandardTextField(
                 modifier = Modifier
@@ -139,4 +167,3 @@ fun CreatePostScreen(
             }
         }
     }
-}

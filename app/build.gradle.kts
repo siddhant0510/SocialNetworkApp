@@ -84,6 +84,9 @@ dependencies {
     // Lottie animation compose
     implementation(libs.airbnb.lottie.compose)
 
+    // uCrop
+    implementation("com.github.yalantis:ucrop:2.2.6")
+
     // Google Credential Manager
     implementation(libs.androidx.credentials.core)
     implementation(libs.androidx.credentials.compat)
