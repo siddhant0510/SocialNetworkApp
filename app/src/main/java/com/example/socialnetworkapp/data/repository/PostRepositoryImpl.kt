@@ -13,7 +13,7 @@ import com.example.socialnetworkapp.data.data_source.remote.request.CreatePostRe
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.domain.repository.PostRepository
 import com.example.socialnetworkapp.domain.util.getFileName
-import com.example.socialnetworkapp.presentation.data.data_source.remote.PostApi
+import com.example.socialnetworkapp.presentation.data.PostApi
 import com.example.socialnetworkapp.presentation.data.paging.PostSource
 import com.example.socialnetworkapp.utli.Constants
 import com.example.socialnetworkapp.utli.Resource

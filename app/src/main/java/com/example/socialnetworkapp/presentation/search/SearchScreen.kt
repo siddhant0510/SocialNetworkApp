@@ -1,17 +1,13 @@
 package com.example.socialnetworkapp.presentation.search
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
@@ -23,7 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.User
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
@@ -31,20 +26,20 @@ import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.presentation.componenets.UserProfileItem
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
-import com.example.socialnetworkapp.presentation.ui.theme.iconSizeMedium
-import com.example.socialnetworkapp.presentation.util.EditProfileError
+import com.example.socialnetworkapp.presentation.util.Screen
 import com.example.socialnetworkapp.presentation.util.states.StandardTextFieldState
 
 @Composable
 fun SearchScreen(
-    navController: NavController,
+    onNavigate: (String) -> Unit = {},
+    onNavigateUp: () -> Unit = {},
     viewModel: SearchViewModel = hiltViewModel()
 ){
     Column(
         modifier = Modifier.fillMaxSize().padding(top = 48.dp)
     ){
         StandardToolbar(
-            navController = navController,
+            onNavigateUp = onNavigateUp,
             showBackArrow = true,
             title = {
                 Text(
@@ -80,6 +75,7 @@ fun SearchScreen(
                 items(10) {
                     UserProfileItem(
                         user = User(
+                            userId = "77777777777777777777",
                             profilePictureUrl = "",
                             username = "Siddhant Kudale",
                             description = "This is description This is " +
@@ -94,6 +90,11 @@ fun SearchScreen(
                             Icon(
                                 imageVector = Icons.Default.PersonAdd,
                                 contentDescription = null
+                            )
+                        },
+                        onItemClick = {
+                            onNavigate(
+                                Screen.ProfileScreen.route + "?userId=77777777777777777777"
                             )
                         }
                     )

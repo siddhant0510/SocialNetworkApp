@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.MaterialTheme
-//import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.SnackbarHostState
@@ -43,7 +42,6 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun RegisterScreen(
     navController: NavController,
-    scaffoldState: SnackbarHostState,
     viewModel: RegisterViewModel = hiltViewModel()
 ){
     val usernameState = viewModel.usernameState.value
@@ -56,7 +54,7 @@ fun RegisterScreen(
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
-                is UiEvent.SnackbarEvent -> {
+                is UiEvent.ShowSnakbar -> {
                 snackbarHostState.showSnackbar(
                     message = event.uiText.asString(context),
                     duration = SnackbarDuration.Long

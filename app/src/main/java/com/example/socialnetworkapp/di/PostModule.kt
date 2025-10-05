@@ -6,7 +6,7 @@ import com.example.socialnetworkapp.domain.repository.PostRepository
 import com.example.socialnetworkapp.domain.usecase.CreatePostUseCase
 import com.example.socialnetworkapp.domain.usecase.GetPostForFollowsUseCase
 import com.example.socialnetworkapp.domain.usecase.PostUseCases
-import com.example.socialnetworkapp.presentation.data.data_source.remote.PostApi
+import com.example.socialnetworkapp.presentation.data.PostApi
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides

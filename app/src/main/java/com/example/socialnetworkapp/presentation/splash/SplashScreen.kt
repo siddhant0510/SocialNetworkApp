@@ -1,7 +1,6 @@
 package com.example.socialnetworkapp.presentation.splash
 
 import android.view.animation.OvershootInterpolator
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -14,9 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.presentation.util.Screen
 import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.utli.Constants.SPLASH_SCREEN_DURATION
 import kotlinx.coroutines.CoroutineDispatcher
@@ -27,8 +24,9 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun SplashScreen(
-    navController: NavController,
     dispatcher: CoroutineDispatcher = Dispatchers.Main,
+    onPopBackStack: () -> Unit = {},
+    onNavigate: (String) -> Unit = {},
     viewModel: SplashViewModel = hiltViewModel()
 ){
     val scale = remember  {
@@ -55,8 +53,8 @@ fun SplashScreen(
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
                 is UiEvent.Navigate -> {
-                    navController.popBackStack()
-                    navController.navigate(event.route)
+                    onPopBackStack()
+                    onNavigate(event.route)
                 }
                 else -> Unit
             }

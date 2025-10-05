@@ -1,4 +1,4 @@
-package com.example.socialnetworkapp.login
+package com.example.socialnetworkapp.presentation.login
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.SnackbarHostState
@@ -26,12 +26,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.AuthError
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
-import com.example.socialnetworkapp.presentation.login.LoginEvent
-import com.example.socialnetworkapp.presentation.login.LoginViewModel
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.util.Screen
@@ -41,8 +38,8 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun LoginScreen(
-    navController: NavController,
     snackbarHostState: SnackbarHostState,
+    onNavigate: (String) -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ){
     val emailState = viewModel.emailState.value
@@ -53,13 +50,13 @@ fun LoginScreen(
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
-                is UiEvent.SnackbarEvent -> {
+                is UiEvent.ShowSnakbar -> {
                     snackbarHostState.showSnackbar(
                         message = event.uiText.asString(context)
                     )
                 }
                 is UiEvent.Navigate -> {
-                    navController.navigate(event.route)
+                    onNavigate(event.route)
                 }
                 else -> Unit
             }
@@ -152,7 +149,7 @@ fun LoginScreen(
                 .align(Alignment.BottomCenter)
                 .padding(bottom = SpaceMedium)
                 .clickable {
-                    navController.navigate(
+                    onNavigate(
                         Screen.RegisterScreen.route
                     )
                 }

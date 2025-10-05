@@ -1,11 +1,10 @@
 package com.example.socialnetworkapp.presentation.data.paging
 
-import android.provider.SyncStateContract
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import coil.network.HttpException
 import com.example.socialnetworkapp.domain.models.Post
-import com.example.socialnetworkapp.presentation.data.data_source.remote.PostApi
+import com.example.socialnetworkapp.presentation.data.PostApi
 import com.example.socialnetworkapp.utli.Constants
 import okio.IOException
 

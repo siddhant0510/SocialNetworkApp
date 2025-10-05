@@ -94,13 +94,13 @@ class RegisterViewModel @Inject constructor(
             when(registerResult.result) {
                 is Resource.Success -> {
                     _eventFlow.emit(
-                        UiEvent.SnackbarEvent(StringResource(R.string.success_registration))
+                        UiEvent.ShowSnakbar(StringResource(R.string.success_registration))
                     )
                     _registerState.value = RegisterState(isLoading = false)
                 }
                 is Resource.Error -> {
                     _eventFlow.emit(
-                        UiEvent.SnackbarEvent(registerResult.result.uiText ?: UiText.unknownError())
+                        UiEvent.ShowSnakbar(registerResult.result.uiText ?: UiText.unknownError())
                     )
                     _registerState.value = RegisterState(isLoading = false)
                 }

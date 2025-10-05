@@ -6,7 +6,7 @@ import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.repository.AuthRepository
 import com.example.socialnetworkapp.presentation.data.dto.request.CreateAccountRequest
 import com.example.socialnetworkapp.presentation.data.dto.request.LoginRequest
-import com.example.socialnetworkapp.presentation.data.data_source.remote.AuthApi
+import com.example.socialnetworkapp.presentation.data.AuthApi
 import com.example.socialnetworkapp.utli.Constants
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.SimpleResource

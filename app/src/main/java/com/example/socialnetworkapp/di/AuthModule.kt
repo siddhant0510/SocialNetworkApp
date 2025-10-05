@@ -6,7 +6,7 @@ import com.example.socialnetworkapp.domain.repository.AuthRepository
 import com.example.socialnetworkapp.domain.usecase.AuthenticateUseCase
 import com.example.socialnetworkapp.domain.usecase.LoginUseCase
 import com.example.socialnetworkapp.domain.usecase.RegisterUseCase
-import com.example.socialnetworkapp.presentation.data.data_source.remote.AuthApi
+import com.example.socialnetworkapp.presentation.data.AuthApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

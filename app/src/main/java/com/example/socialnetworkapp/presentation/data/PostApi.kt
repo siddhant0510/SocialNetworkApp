@@ -1,9 +1,8 @@
-package com.example.socialnetworkapp.presentation.data.data_source.remote
+package com.example.socialnetworkapp.presentation.data
 
 import com.example.socialnetworkapp.data.dto.response.BasicApiResponse
 import com.example.socialnetworkapp.domain.models.Post
 import okhttp3.MultipartBody
-import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST

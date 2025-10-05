@@ -1,7 +1,5 @@
 package com.example.socialnetworkapp.presentation.activity
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -13,36 +11,32 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Activity
 import com.example.socialnetworkapp.domain.util.ActivityAction
 import com.example.socialnetworkapp.domain.util.DateFormatUtil
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
-import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlin.random.Random
-import java.lang.System
 
 //import com.example.socialnetworkapp.presentation.componenets.StandardScaffold
 
 @Composable
 fun ActivityScreen(
-    navController: NavController,
+    onNavigate: (String) -> Unit = {},
+    onNavigateUp: () -> Unit = {},
     viewModel: ActivityViewModel = hiltViewModel()
 ){
     Column(
         modifier = Modifier.fillMaxWidth().padding(top = 48.dp)
     ){
         StandardToolbar(
-            navController = navController,
+            onNavigateUp = onNavigateUp,
             title = {
                 Text(
                     text = stringResource(id = R.string.your_activity),

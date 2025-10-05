@@ -39,7 +39,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
@@ -54,16 +53,16 @@ import kotlin.random.Random
 
 @Composable
 fun EditProfileScreen(
-    navController: NavController,
+    onNavigate: (String) -> Unit = {},
+    onNavigateUp: () -> Unit = {},
     viewModel: EditProfileViewModel = hiltViewModel(),
     profilePictureSize: Dp = ProfilePictureSizeLarge
 ){
-    val bannerHeight = (LocalConfiguration.current.screenWidthDp / 2.5f).dp
     Column(
         modifier = Modifier.fillMaxSize().padding(top = 48.dp)
     ){
         StandardToolbar(
-            navController = navController,
+            onNavigateUp = onNavigateUp,
             showBackArrow = true,
             navActions = {
                 IconButton(onClick = {}) {

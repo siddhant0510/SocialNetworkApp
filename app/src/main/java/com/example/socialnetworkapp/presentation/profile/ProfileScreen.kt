@@ -15,11 +15,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -31,12 +30,12 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.User
 import com.example.socialnetworkapp.presentation.componenets.Post
@@ -44,19 +43,30 @@ import com.example.socialnetworkapp.presentation.profile.components.BannerSectio
 import com.example.socialnetworkapp.presentation.profile.components.ProfileHeaderSection
 import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeLarge
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
 import com.example.socialnetworkapp.presentation.util.Screen
+import com.example.socialnetworkapp.presentation.util.UiEvent
+import com.example.socialnetworkapp.presentation.util.asString
 import com.example.socialnetworkapp.presentation.util.toPx
+import kotlinx.coroutines.flow.collectLatest
 
 @SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun ProfileScreen(
-    navController: NavController,
+    onNavigate: (String) -> Unit = {},
+    onNavigateUp: () -> Unit = {},
+    snackbarHostState: SnackbarHostState,
     profilePictureSize: Dp = ProfilePictureSizeLarge,
     viewModel: ProfileViewModel = hiltViewModel()
 ){
     Column(modifier = Modifier.fillMaxWidth().padding(top = 48.dp)){
         val lazyListState = rememberLazyListState()
         val toolbarState = viewModel.toolbarState.value
+
+        val iconHorizontalCenterLength =
+            (LocalConfiguration.current.screenWidthDp.dp.toPx() / 4f -
+                    (profilePictureSize / 4f).toPx() -
+                    SpaceSmall.toPx()) / 2f
 
         val iconSizeExpanded = 40.dp
         val toolbarHeightCollapsed = 75.dp
@@ -74,6 +84,8 @@ fun ProfileScreen(
         val maxOffset = remember {
             toolbarHeightExpanded - toolbarHeightCollapsed
         }
+        val state = viewModel.state.value
+
         val nestedScrollConnection = remember {
             object : NestedScrollConnection{
                 override fun onPreScroll(available: Offset, source: NestedScrollSource) : Offset{
@@ -91,6 +103,22 @@ fun ProfileScreen(
                 }
             }
         }
+        val context = LocalContext.current
+
+        LaunchedEffect(key1 = true) {
+            viewModel.eventFlow.collectLatest { event ->
+                when(event) {
+                    is UiEvent.ShowSnakbar -> {
+                        snackbarHostState.showSnackbar(
+                            message = event.uiText.asString(context)
+                        )
+                    }
+
+                    is UiEvent.Navigate -> TODO()
+                    UiEvent.NavigateUp -> TODO()
+                }
+            }
+        }
 
         Box(
             modifier = Modifier
@@ -105,16 +133,23 @@ fun ProfileScreen(
                     Spacer(modifier = Modifier.height(toolbarHeightExpanded - profilePictureSize/2f))
                 }
                 item {
-                    ProfileHeaderSection(
-                        user = User(
-                            profilePictureUrl = "",
-                            username = "Siddhant Kudale",
-                            description = "This is description This is description This is description This is description This is description This is descriptionThis is description This is description",
-                            followerCount = 233,
-                            followingCount = 900,
-                            postCount = 23
+                    state.profile?.let { profile ->
+                        ProfileHeaderSection(
+                            user = User(
+                                userId = profile.userId,
+                                profilePictureUrl = profile.profilePictureUrl,
+                                username = profile.username,
+                                description = profile.bio,
+                                followerCount = profile.followerCount,
+                                followingCount = profile.followingCount,
+                                postCount = profile.postCount
+                            ),
+                            isOwnProfile = profile.isOwnProfile,
+                            onEditClick = {
+                                onNavigate(Screen.EditProfileScreen.route)
+                            }
                         )
-                    )
+                    }
                 }
                 items(20){
                     Spacer(
@@ -134,7 +169,7 @@ fun ProfileScreen(
                         ),
                         showProfileImage = false,
                         onPostClick = {
-                            navController.navigate(Screen.PostDetailsScreen.route)
+                            onNavigate(Screen.PostDetailsScreen.route)
                         },
                     )
                 }
@@ -143,49 +178,63 @@ fun ProfileScreen(
                 modifier = Modifier
                     .align(Alignment.TopCenter)
             ){
-                BannerSection(
-                    modifier = Modifier
-                        .height(
-                            (bannerHeight * toolbarState.expandedRatio).coerceIn(
-                                minimumValue = toolbarHeightCollapsed,
-                                maximumValue = bannerHeight
-                            )
+                state.profile?.let { profile ->
+                    BannerSection(
+                        modifier = Modifier
+                            .height(
+                                (bannerHeight * toolbarState.expandedRatio).coerceIn(
+                                    minimumValue = toolbarHeightCollapsed,
+                                    maximumValue = bannerHeight
+                                )
+                            ),
+                        leftIconModifier = Modifier
+                            .graphicsLayer {
+                                translationY = (1f - toolbarState.expandedRatio) *
+                                        -iconCollapsedOffsetY.toPx()
+                                translationX = (1f - toolbarState.expandedRatio) *
+                                        iconHorizontalCenterLength
+
+                            },
+                        rightIconModifier = Modifier
+                            .graphicsLayer {
+                                translationY = (1f - toolbarState.expandedRatio) *
+                                        -iconCollapsedOffsetY.toPx()
+                                translationX = (1f - toolbarState.expandedRatio) *
+                                        -iconHorizontalCenterLength
+                            },
+                        topSkillsUrls = profile.topSkills,
+                        shouldShowGitHub = profile.gitHubUrl != null,
+                        shouldShowInstagram = profile.instagramUrl != null,
+                        shouldShowLinkedIn = profile.linkedInUrl != null,
+                        bannerUrl = profile.bannerUrl,
+                    )
+                    Image(
+                        painter = rememberImagePainter(
+                            data = profile.profilePictureUrl,
                         ),
-                    leftIconModifier = Modifier
-                        .graphicsLayer {
-                            translationY = (1f - toolbarState.expandedRatio) *
-                                    -iconCollapsedOffsetY.toPx()
-                        },
-                    rightIconModifier = Modifier
-                        .graphicsLayer {
-                            translationY = (1f - toolbarState.expandedRatio) *
-                                    -iconCollapsedOffsetY.toPx()
-                        }
-                )
-                Image(
-                    painter = painterResource(id = R.drawable.philipp),
-                    contentDescription = stringResource(id = R.string.profile_image),
-                    modifier = Modifier
-                        .align(CenterHorizontally)
-                        .graphicsLayer {
-                            translationY = -profilePictureSize.toPx() / 2f -
-                                    (1f - toolbarState.expandedRatio) * imageCollapsedOffsetY.toPx()
-                            transformOrigin = TransformOrigin(
-                                pivotFractionX = 0.5f,
-                                pivotFractionY = 0f
+                        contentDescription = stringResource(id = R.string.profile_image),
+                        modifier = Modifier
+                            .align(CenterHorizontally)
+                            .graphicsLayer {
+                                translationY = -profilePictureSize.toPx() / 2f -
+                                        (1f - toolbarState.expandedRatio) * imageCollapsedOffsetY.toPx()
+                                transformOrigin = TransformOrigin(
+                                    pivotFractionX = 0.5f,
+                                    pivotFractionY = 0f
+                                )
+                                val scale = 0.5f + toolbarState.expandedRatio * 0.5f
+                                scaleX = scale
+                                scaleY = scale
+                            }
+                            .size(profilePictureSize)
+                            .clip(CircleShape)
+                            .border(
+                                width = 2.dp,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                shape = CircleShape
                             )
-                            val scale = 0.5f + toolbarState.expandedRatio * 0.5f
-                            scaleX = scale
-                            scaleY = scale
-                        }
-                        .size(profilePictureSize)
-                        .clip(CircleShape)
-                        .border(
-                            width = 2.dp,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            shape = CircleShape
-                        )
-                )
+                    )
+                }
             }
         }
     }

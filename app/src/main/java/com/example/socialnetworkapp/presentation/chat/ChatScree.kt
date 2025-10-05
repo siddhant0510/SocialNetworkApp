@@ -10,7 +10,10 @@ import androidx.navigation.NavController
 //import com.example.socialnetworkapp.presentation.componenets.StandardScaffold
 
 @Composable
-fun ChatScreen(navController: NavController){
+fun ChatScreen(
+    onNavigate: (String) -> Unit = {},
+    onNavigateUp: () -> Unit = {},
+){
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

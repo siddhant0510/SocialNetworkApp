@@ -24,7 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.paging.LoadState
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.presentation.componenets.Post
@@ -35,7 +34,8 @@ import kotlinx.coroutines.launch
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainFeedScreen(
-    navController: NavController,
+    onNavigate: (String) -> Unit = {},
+    onNavigateUp: () -> Unit = {},
     scaffoldState: SnackbarHostState,
     viewModel: MainFeedViewModel = hiltViewModel()
 ){
@@ -46,7 +46,7 @@ fun MainFeedScreen(
         modifier = Modifier.fillMaxWidth().padding(top = 48.dp)
     ){
         StandardToolbar(
-            navController = navController,
+            onNavigateUp = onNavigateUp,
             title = {
                 Text(
                     text = stringResource(id = R.string.your_feed),
@@ -55,10 +55,10 @@ fun MainFeedScreen(
                 )
             },
             modifier = Modifier.fillMaxWidth(),
-            showBackArrow = true,
+            showBackArrow = false,
             navActions = {
                 IconButton(onClick = {
-                    navController.navigate(Screen.SearchScreen.route)
+                    onNavigate(Screen.SearchScreen.route)
                 }) {
                     Icon(
                         imageVector = Icons.Default.Search,
@@ -92,7 +92,7 @@ fun MainFeedScreen(
                                 commentCount = post.commentCount ?: 0
                             ),
                             onPostClick = {
-                                navController.navigate(Screen.PostDetailsScreen.route)
+                                onNavigate(Screen.PostDetailsScreen.route)
                             }
                         )
                     }
