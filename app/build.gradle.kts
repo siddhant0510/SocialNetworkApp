@@ -80,6 +80,7 @@ dependencies {
 
     // Coil
     implementation("io.coil-kt:coil-compose:1.3.2")
+    implementation("io.coil-kt:coil-svg:1.3.2")
 
     // Lottie animation compose
     implementation(libs.airbnb.lottie.compose)

@@ -24,8 +24,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Skill
@@ -49,6 +52,7 @@ fun BannerSection(
     onInstagramClick: () -> Unit = {},
     onLinkedInClick: () -> Unit = {}
 ){
+    val context = LocalContext.current
     BoxWithConstraints(
         modifier = modifier
     ){
@@ -78,19 +82,49 @@ fun BannerSection(
                     )
                 )
         )
+//        Row(
+//            modifier = leftIconModifier
+//                .height(iconSize)
+//                .align(Alignment.BottomStart)
+//                .padding(SpaceSmall)
+//        ){
+//            topSkills.forEach { skill ->
+//                Spacer(modifier = Modifier.width(SpaceSmall))
+//                Image(
+//                    painter = rememberAsyncImagePainter(
+//                        Builder(LocalContext.current).data(
+//                        data = skill.imageUrl,
+//                        imageLoader = ImageLoader.Builder(LocalContext.current)
+//                            .componentRegistry {
+//                                add(SvgDecoder(LocalContext.current))
+//                            }
+//                            .build()
+//                    ).apply(block = { -> crossfade(true) }).build()),
+//                    contentDescription = null,
+//                    modifier = Modifier.height(iconSize)
+//                )
+//            }
+//        }
         Row(
             modifier = leftIconModifier
                 .height(iconSize)
                 .align(Alignment.BottomStart)
                 .padding(SpaceSmall)
-        ){
-            topSkills.forEach { skillUrl ->
+        ) {
+            topSkills.forEach { skill ->
                 Spacer(modifier = Modifier.width(SpaceSmall))
                 Image(
                     painter = rememberAsyncImagePainter(
-                        Builder(LocalContext.current).data(
-                        data = skillUrl.imageUrl
-                    ).apply(block = { -> crossfade(true) }).build()),
+                        Builder(context)
+                            .data(skill.imageUrl)
+                            .crossfade(true)
+                            .build(),
+                        imageLoader = ImageLoader.Builder(context)
+                            .components {
+                                add(SvgDecoder.Factory())
+                            }
+                            .build()
+                    ),
                     contentDescription = null,
                     modifier = Modifier.height(iconSize)
                 )
@@ -140,5 +174,4 @@ fun BannerSection(
             }
         }
     }
-
 }
