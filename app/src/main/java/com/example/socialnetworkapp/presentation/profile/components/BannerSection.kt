@@ -19,12 +19,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
+import com.example.socialnetworkapp.domain.models.Skill
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
 import com.example.socialnetworkapp.presentation.util.toPx
 
@@ -37,7 +41,7 @@ fun BannerSection(
     leftIconModifier: Modifier = Modifier,
     rightIconModifier: Modifier = Modifier,
     bannerUrl: String? = null,
-    topSkillsUrls: List<String> = emptyList(),
+    topSkills: List<Skill> = emptyList(),
     shouldShowGitHub: Boolean,
     shouldShowInstagram: Boolean,
     shouldShowLinkedIn: Boolean,
@@ -80,15 +84,13 @@ fun BannerSection(
                 .align(Alignment.BottomStart)
                 .padding(SpaceSmall)
         ){
-            topSkillsUrls.forEach { skillUrl ->
+            topSkills.forEach { skillUrl ->
                 Spacer(modifier = Modifier.width(SpaceSmall))
                 Image(
-                    painter = rememberImagePainter(
-                        data = skillUrl,
-                        builder = {
-                            crossfade(true)
-                        }
-                    ),
+                    painter = rememberAsyncImagePainter(
+                        Builder(LocalContext.current).data(
+                        data = skillUrl.imageUrl
+                    ).apply(block = { -> crossfade(true) }).build()),
                     contentDescription = null,
                     modifier = Modifier.height(iconSize)
                 )

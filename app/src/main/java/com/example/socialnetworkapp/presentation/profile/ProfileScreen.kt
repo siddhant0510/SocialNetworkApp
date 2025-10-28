@@ -35,7 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.User
 import com.example.socialnetworkapp.presentation.componenets.Post
@@ -114,8 +114,8 @@ fun ProfileScreen(
                         )
                     }
 
-                    is UiEvent.Navigate -> TODO()
-                    UiEvent.NavigateUp -> TODO()
+                    is UiEvent.Navigate -> Unit
+                    UiEvent.NavigateUp -> Unit
                 }
             }
         }
@@ -146,7 +146,7 @@ fun ProfileScreen(
                             ),
                             isOwnProfile = profile.isOwnProfile,
                             onEditClick = {
-                                onNavigate(Screen.EditProfileScreen.route)
+                                onNavigate(Screen.EditProfileScreen.route + "/${profile.userId}")
                             }
                         )
                     }
@@ -202,16 +202,14 @@ fun ProfileScreen(
                                 translationX = (1f - toolbarState.expandedRatio) *
                                         -iconHorizontalCenterLength
                             },
-                        topSkillsUrls = profile.topSkills,
+                        topSkills = profile.topSkills,
                         shouldShowGitHub = profile.gitHubUrl != null,
                         shouldShowInstagram = profile.instagramUrl != null,
                         shouldShowLinkedIn = profile.linkedInUrl != null,
                         bannerUrl = profile.bannerUrl,
                     )
                     Image(
-                        painter = rememberImagePainter(
-                            data = profile.profilePictureUrl,
-                        ),
+                        painter = rememberAsyncImagePainter(model = profile.profilePictureUrl),
                         contentDescription = stringResource(id = R.string.profile_image),
                         modifier = Modifier
                             .align(CenterHorizontally)

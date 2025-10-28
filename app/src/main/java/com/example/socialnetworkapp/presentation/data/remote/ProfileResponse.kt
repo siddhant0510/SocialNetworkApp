@@ -1,6 +1,7 @@
 package com.example.socialnetworkapp.presentation.data.remote
 
 import com.example.socialnetworkapp.domain.models.Profile
+import com.example.socialnetworkapp.presentation.edit_profile.SkillDto
 
 data class ProfileResponse(
     val userId: String,
@@ -11,7 +12,7 @@ data class ProfileResponse(
     val postCount: Int,
     val profilePictureUrl: String,
     val bannerUrl: String,
-    val topSkills: List<String>,
+    val topSkills: List<SkillDto>,
     val gitHubUrl: String?,
     val instagramUrl: String?,
     val linkedInUrl: String?,
@@ -28,7 +29,7 @@ data class ProfileResponse(
             postCount = postCount,
             profilePictureUrl = profilePictureUrl,
             bannerUrl = bannerUrl,
-            topSkills = topSkills,
+            topSkills = topSkills.map { it.toSkill() },
             gitHubUrl = gitHubUrl,
             instagramUrl = instagramUrl,
             linkedInUrl = linkedInUrl,
