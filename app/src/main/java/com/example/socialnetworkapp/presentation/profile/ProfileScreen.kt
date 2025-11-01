@@ -53,6 +53,7 @@ import kotlinx.coroutines.flow.collectLatest
 @SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun ProfileScreen(
+    userId: String,
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
     snackbarHostState: SnackbarHostState,
@@ -106,6 +107,7 @@ fun ProfileScreen(
         val context = LocalContext.current
 
         LaunchedEffect(key1 = true) {
+            viewModel.getProfile(userId)
             viewModel.eventFlow.collectLatest { event ->
                 when(event) {
                     is UiEvent.ShowSnakbar -> {

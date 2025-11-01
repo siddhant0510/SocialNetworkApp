@@ -30,10 +30,12 @@ import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import coil.request.ImageRequest.Builder
+import coil.util.CoilUtils
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Skill
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
 import com.example.socialnetworkapp.presentation.util.toPx
+import okhttp3.OkHttpClient
 
 @SuppressLint("UnusedBoxWithConstraintsScope")
 @Composable
@@ -111,6 +113,7 @@ fun BannerSection(
                 .align(Alignment.BottomStart)
                 .padding(SpaceSmall)
         ) {
+            val context = LocalContext.current
             topSkills.forEach { skill ->
                 Spacer(modifier = Modifier.width(SpaceSmall))
                 Image(

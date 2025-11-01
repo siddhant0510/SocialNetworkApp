@@ -5,6 +5,7 @@ import com.example.socialnetworkapp.domain.repository.ProfileRepository
 import com.example.socialnetworkapp.domain.usecase.GetProfileUseCase
 import com.example.socialnetworkapp.domain.usecase.GetSkillsUseCase
 import com.example.socialnetworkapp.domain.usecase.ProfileUseCases
+import com.example.socialnetworkapp.domain.usecase.SetSkillSelectedUseCase
 import com.example.socialnetworkapp.domain.usecase.UpdateProfileUseCase
 import com.example.socialnetworkapp.presentation.data.ProfileApi
 import com.google.gson.Gson
@@ -44,7 +45,8 @@ object ProfileModule {
         return ProfileUseCases(
             getProfile = GetProfileUseCase(repository),
             getSkills = GetSkillsUseCase(repository),
-            updateProfile = UpdateProfileUseCase(repository)
+            updateProfile = UpdateProfileUseCase(repository),
+            setSkillSelected = SetSkillSelectedUseCase()
         )
     }
 }

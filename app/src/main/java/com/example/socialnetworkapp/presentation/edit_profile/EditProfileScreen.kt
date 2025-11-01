@@ -109,7 +109,9 @@ fun EditProfileScreen(
                 }
 
                 is UiEvent.Navigate -> Unit
-                UiEvent.NavigateUp -> Unit
+                UiEvent.NavigateUp -> {
+                    onNavigateUp()
+                }
             }
         }
     }
@@ -145,12 +147,12 @@ fun EditProfileScreen(
             BannerEditSection(
                 bannerImage = rememberAsyncImagePainter(
                     model = Builder(LocalContext.current).data(
-                    data = profileState.profile?.bannerUrl
+                    data = viewModel.bannerUri.value ?: profileState.profile?.bannerUrl
                 ).apply(block = { -> crossfade(true) }).build()),
 
                 profileImage = rememberAsyncImagePainter(
-                    Builder(LocalContext.current).data(
-                    data = profileState.profile?.profilePictureUrl
+                    model = Builder(LocalContext.current).data(
+                    data = viewModel.profilePictureUri.value ?: profileState.profile?.profilePictureUrl
                 ).apply(block = { -> crossfade(true) }).build()),
                 profilePictureSize = profilePictureSize,
                 onBannerClick = {
@@ -264,11 +266,14 @@ fun EditProfileScreen(
                     horizontalArrangement = Arrangement.spacedBy(SpaceSmall),
                     verticalArrangement = Arrangement.spacedBy(SpaceSmall),
                 ) {
-                    viewModel.skills.value.skills.forEach{
+                    viewModel.skills.value.skills.forEach { skill ->
                         Chip(
-                            text = it.name,
-                            selected = it in viewModel.skills.value.selectedSkills
-                        ) { }
+                            text = skill.name,
+                            selected = viewModel.skills.value.selectedSkills.any { it.name == skill.name },
+                            onChipClick = {
+                                viewModel.onEvent(EditProfileEvent.SetSkillsSelected(skill))
+                            }
+                        )
                     }
                 }
             }

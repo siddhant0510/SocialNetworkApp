@@ -80,6 +80,7 @@ fun Navigation(
             )
         ){
             ProfileScreen(
+                userId = it.arguments?.getString("userId") ?: "",
                 onNavigateUp = navController::navigateUp,
                 onNavigate = navController::navigate,
                 snackbarHostState = snackbarHostState

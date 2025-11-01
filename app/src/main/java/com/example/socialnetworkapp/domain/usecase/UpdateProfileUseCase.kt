@@ -7,6 +7,8 @@ import com.example.socialnetworkapp.presentation.edit_profile.request.UpdateProf
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.SimpleResource
 import com.example.socialnetworkapp.utli.UiText
+import android.util.Patterns
+import com.example.socialnetworkapp.domain.util.ProfileConstants
 
 class UpdateProfileUseCase(
     private val repository: ProfileRepository
@@ -22,6 +24,27 @@ class UpdateProfileUseCase(
                 uiText = UiText.StringResource(R.string.error_username_empty)
             )
         }
+        val isValidGithubUrl = ProfileConstants.GITHUB_PROFILE_REGEX.matches(updateProfileData.gitHubUrl)
+        if(!isValidGithubUrl) {
+            return Resource.Error(
+                uiText = UiText.StringResource(R.string.error_invalid_github_url)
+            )
+        }
+
+        val isValidInstagramUrl = ProfileConstants.INSTAGRAM_PROFILE_REGEX.matches(updateProfileData.gitHubUrl)
+        if(!isValidInstagramUrl) {
+            return Resource.Error(
+                uiText = UiText.StringResource(R.string.error_invalid_instagram_url)
+            )
+        }
+
+        val isValidLinkedIn = ProfileConstants.LINKED_IN_PROFILE_REGEX.matches(updateProfileData.gitHubUrl)
+        if(!isValidLinkedIn) {
+            return Resource.Error(
+                uiText = UiText.StringResource(R.string.error_invalid_linked_in_url)
+            )
+        }
+
         return repository.updateProfile(
             updateProfileData = updateProfileData,
             profilePictureUri = profilePictureUri,
