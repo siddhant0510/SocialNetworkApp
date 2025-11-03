@@ -2,29 +2,38 @@ package com.example.socialnetworkapp.data.repository
 
 import android.net.Uri
 import androidx.core.net.toFile
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import coil.network.HttpException
 import com.example.socialnetworkapp.R
+import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.domain.models.Profile
 import com.example.socialnetworkapp.domain.models.Skill
 import com.example.socialnetworkapp.domain.repository.ProfileRepository
+import com.example.socialnetworkapp.presentation.data.PostApi
 import com.example.socialnetworkapp.presentation.data.ProfileApi
+import com.example.socialnetworkapp.presentation.data.paging.PostSource
 import com.example.socialnetworkapp.presentation.edit_profile.request.UpdateProfileData
+import com.example.socialnetworkapp.utli.Constants
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.SimpleResource
 import com.example.socialnetworkapp.utli.UiText
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okio.IOException
 
 class ProfileRepositoryImpl(
-    private val api: ProfileApi,
+    private val profileApi: ProfileApi,
+    private val postApi: PostApi,
     private val gson: Gson
 ) : ProfileRepository {
 
     override suspend fun getProfile(userId: String): Resource<Profile> {
         return try{
-            val response = api.getProfile(userId)
+            val response = profileApi.getProfile(userId)
             if(response.successful) {
                 Resource.Success(response.data?.toProfile())
             } else {
@@ -45,7 +54,7 @@ class ProfileRepositoryImpl(
 
     override suspend fun getSkills(): Resource<List<Skill>> {
         return try {
-            val response = api.getSkills()
+            val response = profileApi.getSkills()
             Resource.Success(
                 data = response.map { it.toSkill() }
             )
@@ -69,7 +78,7 @@ class ProfileRepositoryImpl(
         val profilePictureFile = profilePictureUri?.toFile()
 
         return try{
-            val response = api.updateProfile(
+            val response = profileApi.updateProfile(
                 bannerImage = bannerFile?.let {
                     MultipartBody.Part
                         .createFormData(
@@ -108,5 +117,11 @@ class ProfileRepositoryImpl(
                 uiText = UiText.StringResource(R.string.some_thing_went_wrong)
             )
         }
+    }
+
+    override fun getPostsPaged(userId: String): Flow<PagingData<Post>> {
+        return Pager(PagingConfig(pageSize = Constants.PAGE_SIZE_POSTS)) {
+            PostSource(postApi, PostSource.Source.Profile(userId))
+        }.flow
     }
 }

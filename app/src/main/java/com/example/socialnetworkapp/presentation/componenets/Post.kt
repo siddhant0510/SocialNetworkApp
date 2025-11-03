@@ -41,6 +41,10 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
+import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.presentation.ui.theme.HintGray
@@ -80,7 +84,10 @@ fun Post(
                 }
         ){
             Image(
-                painterResource(id = R.drawable.kermit),
+                painter = rememberAsyncImagePainter(
+                    Builder(LocalContext.current).data(
+                    data = post.imageUrl
+                ).apply(block = { -> crossfade(true) }).build()),
                 contentDescription = "Post1"
             )
             Column(
@@ -152,7 +159,10 @@ fun Post(
         }
         if(showProfileImage){
             Image(
-                painterResource(id = R.drawable.philipp),
+                painter = rememberAsyncImagePainter(
+                    Builder(LocalContext.current).data(
+                    data = post.profilePictureUrl
+                ).apply(block = { -> crossfade(true) }).build()),
                 contentDescription = "Profile picture",
                 modifier = Modifier
                     .offset(y = (ProfilePictureSizeMedium / 12f))

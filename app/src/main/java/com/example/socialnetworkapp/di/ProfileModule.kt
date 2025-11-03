@@ -2,11 +2,13 @@ package com.example.socialnetworkapp.di
 
 import com.example.socialnetworkapp.data.repository.ProfileRepositoryImpl
 import com.example.socialnetworkapp.domain.repository.ProfileRepository
+import com.example.socialnetworkapp.domain.usecase.GetPostForProfileUseCase
 import com.example.socialnetworkapp.domain.usecase.GetProfileUseCase
 import com.example.socialnetworkapp.domain.usecase.GetSkillsUseCase
 import com.example.socialnetworkapp.domain.usecase.ProfileUseCases
 import com.example.socialnetworkapp.domain.usecase.SetSkillSelectedUseCase
 import com.example.socialnetworkapp.domain.usecase.UpdateProfileUseCase
+import com.example.socialnetworkapp.presentation.data.PostApi
 import com.example.socialnetworkapp.presentation.data.ProfileApi
 import com.google.gson.Gson
 import dagger.Module
@@ -35,8 +37,8 @@ object ProfileModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(api: ProfileApi, gson: Gson): ProfileRepository {
-        return ProfileRepositoryImpl(api, gson)
+    fun provideProfileRepository(profileApi: ProfileApi, postApi: PostApi, gson: Gson): ProfileRepository {
+        return ProfileRepositoryImpl(profileApi, postApi, gson)
     }
 
     @Provides
@@ -46,7 +48,8 @@ object ProfileModule {
             getProfile = GetProfileUseCase(repository),
             getSkills = GetSkillsUseCase(repository),
             updateProfile = UpdateProfileUseCase(repository),
-            setSkillSelected = SetSkillSelectedUseCase()
+            setSkillSelected = SetSkillSelectedUseCase(),
+            getPostsForProfile = GetPostForProfileUseCase(repository)
         )
     }
 }

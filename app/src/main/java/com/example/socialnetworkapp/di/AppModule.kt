@@ -30,15 +30,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideJwtToken(sharedPreferences: SharedPreferences): String {
-        return sharedPreferences.getString(Constants.KEY_JWT_TOKEN, "") ?: ""
-    }
-
-    @Provides
-    @Singleton
     fun provideOkHttpClient(prefs: SharedPreferences): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor(AuthInterceptor(prefs))
+            .addInterceptor {
+                val token = prefs.getString(Constants.KEY_JWT_TOKEN, "")
+                val modifiedRequest = it.request().newBuilder()
+                    .addHeader("Authorization", "Bearer $token")
+                    .build()
+                it.proceed(modifiedRequest)
+            }
             .build()
     }
 

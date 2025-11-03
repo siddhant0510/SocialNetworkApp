@@ -38,7 +38,7 @@ class PostRepositoryImpl(
 
     override val posts: Flow<PagingData<Post>>
         get() = Pager(PagingConfig(pageSize = Constants.PAGE_SIZE_POSTS)) {
-            PostSource(api)
+            PostSource(api, PostSource.Source.Follows)
         }.flow
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -35,8 +35,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
 import com.example.socialnetworkapp.R
+import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.domain.models.User
 import com.example.socialnetworkapp.presentation.componenets.Post
 import com.example.socialnetworkapp.presentation.profile.components.BannerSection
@@ -61,6 +63,7 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel()
 ){
     Column(modifier = Modifier.fillMaxWidth().padding(top = 48.dp)){
+        val posts = viewModel.posts.collectAsLazyPagingItems()
         val lazyListState = rememberLazyListState()
         val toolbarState = viewModel.toolbarState.value
 
@@ -153,28 +156,28 @@ fun ProfileScreen(
                         )
                     }
                 }
-                items(20){
-                    Spacer(
-                        modifier = Modifier
-                            .height(SpaceMedium),
-                    )
+
+                items(
+                    count = posts.itemCount
+                ) { index ->
+                    val post = posts[index]
+                    Spacer(modifier = Modifier.height(SpaceMedium))
                     Post(
-                        post = com.example.socialnetworkapp.domain.models.Post(
-                            username = "Siddhant Kudale",
-                            imageUrl = "",
-                            profilePictureUrl = "",
-                            description = "This is a description This is a description " +
-                                    "This is a description This is a description This is " +
-                                    "a description This is a description This is a description...",
-                            likeCount = 17,
-                            commentCount = 7
+                        post = Post(
+                            username = post?.username ?: "",
+                            imageUrl = post?.imageUrl ?: "",
+                            profilePictureUrl = post?.profilePictureUrl ?: "",
+                            description = post?.description ?: "",
+                            likeCount = post?.likeCount ?: 0,
+                            commentCount = post?.commentCount ?: 0
                         ),
                         showProfileImage = false,
                         onPostClick = {
                             onNavigate(Screen.PostDetailsScreen.route)
-                        },
+                        }
                     )
                 }
+
             }
             Column (
                 modifier = Modifier
