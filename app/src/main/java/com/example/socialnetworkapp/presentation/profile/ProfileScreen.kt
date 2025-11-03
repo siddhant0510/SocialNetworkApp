@@ -55,10 +55,10 @@ import kotlinx.coroutines.flow.collectLatest
 @SuppressLint("ConfigurationScreenWidthHeight")
 @Composable
 fun ProfileScreen(
-    userId: String,
+    snackbarHostState: SnackbarHostState,
+    userId: String? = null,
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
-    snackbarHostState: SnackbarHostState,
     profilePictureSize: Dp = ProfilePictureSizeLarge,
     viewModel: ProfileViewModel = hiltViewModel()
 ){

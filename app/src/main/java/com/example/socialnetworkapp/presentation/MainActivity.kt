@@ -11,6 +11,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.socialnetworkapp.presentation.components.StandardScaffold
@@ -36,12 +37,7 @@ class MainActivity : ComponentActivity() {
                     val snackbarHostState = remember { SnackbarHostState() }
                     StandardScaffold(
                         navController = navController,
-                        showBottomBar = navBackStackEntry?.destination?.route in listOf(
-                            Screen.MainFeedScreen.route,
-                            Screen.ChatScreen.route,
-                            Screen.ActivityScreen.route,
-                            Screen.ProfileScreen.route
-                        ),
+                        showBottomBar = shouldShowBottomBar(navBackStackEntry),
                         state = snackbarHostState,
                         modifier = Modifier.fillMaxSize(),
                         onFabClick = {
@@ -50,9 +46,18 @@ class MainActivity : ComponentActivity() {
                     ) {
                         Navigation(navController, snackbarHostState)
                     }
-
                 }
             }
         }
+    }
+    private fun shouldShowBottomBar(backStackEntry: NavBackStackEntry?): Boolean {
+        val doesRouteMatch = backStackEntry?.destination?.route in listOf(
+            Screen.MainFeedScreen.route,
+            Screen.ChatScreen.route,
+            Screen.ActivityScreen.route
+        )
+        val isOwnProfile = backStackEntry?.destination?.route == "${Screen.ProfileScreen.route}?userId={userId}" &&
+                backStackEntry?.arguments?.getString("userId") == null
+        return doesRouteMatch || isOwnProfile
     }
 }

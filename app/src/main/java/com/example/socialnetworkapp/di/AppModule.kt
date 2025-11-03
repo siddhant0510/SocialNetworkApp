@@ -3,6 +3,7 @@ package com.example.socialnetworkapp.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.ui.unit.Constraints
+import com.example.socialnetworkapp.domain.usecase.GetOwnUserIdUseCase
 import com.example.socialnetworkapp.utli.Constants
 import com.google.gson.Gson
 import dagger.Module
@@ -46,5 +47,11 @@ object AppModule {
     @Singleton
     fun provideGson(): Gson {
         return Gson()
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetOwnUserIdUseCase(sharedPreferences: SharedPreferences): GetOwnUserIdUseCase {
+        return GetOwnUserIdUseCase(sharedPreferences)
     }
 }
