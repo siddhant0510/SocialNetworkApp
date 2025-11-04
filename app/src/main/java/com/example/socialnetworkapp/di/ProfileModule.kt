@@ -6,7 +6,9 @@ import com.example.socialnetworkapp.domain.usecase.GetPostForProfileUseCase
 import com.example.socialnetworkapp.domain.usecase.GetProfileUseCase
 import com.example.socialnetworkapp.domain.usecase.GetSkillsUseCase
 import com.example.socialnetworkapp.domain.usecase.ProfileUseCases
+import com.example.socialnetworkapp.domain.usecase.SearchUserUseCase
 import com.example.socialnetworkapp.domain.usecase.SetSkillSelectedUseCase
+import com.example.socialnetworkapp.domain.usecase.ToggleFollowStateForUserUseCase
 import com.example.socialnetworkapp.domain.usecase.UpdateProfileUseCase
 import com.example.socialnetworkapp.presentation.data.PostApi
 import com.example.socialnetworkapp.presentation.data.ProfileApi
@@ -49,7 +51,9 @@ object ProfileModule {
             getSkills = GetSkillsUseCase(repository),
             updateProfile = UpdateProfileUseCase(repository),
             setSkillSelected = SetSkillSelectedUseCase(),
-            getPostsForProfile = GetPostForProfileUseCase(repository)
+            getPostsForProfile = GetPostForProfileUseCase(repository),
+            searchUser = SearchUserUseCase(repository),
+            toggleFollowStateForUser = ToggleFollowStateForUserUseCase(repository)
         )
     }
 }

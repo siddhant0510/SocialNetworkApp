@@ -5,6 +5,7 @@ import androidx.paging.PagingData
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.domain.models.Profile
 import com.example.socialnetworkapp.domain.models.Skill
+import com.example.socialnetworkapp.domain.models.UserItem
 import com.example.socialnetworkapp.presentation.edit_profile.request.UpdateProfileData
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.SimpleResource
@@ -23,4 +24,10 @@ interface ProfileRepository {
     ): SimpleResource
 
     suspend fun getSkills(): Resource<List<Skill>>
+
+    suspend fun searchUser(query: String): Resource<List<UserItem>>
+
+    suspend fun followUser(userId: String): SimpleResource
+
+    suspend fun unfollowUser(userId: String): SimpleResource
 }

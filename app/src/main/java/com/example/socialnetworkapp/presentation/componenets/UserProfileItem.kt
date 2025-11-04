@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -22,14 +21,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.example.socialnetworkapp.R
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
+import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.domain.models.User
-import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeMedium
 import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeSmall
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
@@ -61,7 +61,10 @@ fun UserProfileItem (
             horizontalArrangement = Arrangement.SpaceBetween
         ){
             Image(
-                painter = painterResource(id = R.drawable.philipp),
+                painter = rememberAsyncImagePainter(
+                    Builder(LocalContext.current).data(
+                    data = user.profilePictureUrl
+                ).apply(block = { -> crossfade(true) }).build()),
                 contentDescription = null,
                 modifier = Modifier
                     .size(ProfilePictureSizeSmall)
