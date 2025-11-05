@@ -13,7 +13,7 @@ import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.presentation.main_feed.MainFeedScreen
 import com.example.socialnetworkapp.presentation.login.LoginScreen
 import com.example.socialnetworkapp.presentation.edit_profile.EditProfileScreen
-import com.example.socialnetworkapp.presentation.activity.ActivityScreen
+import com.example.socialnetworkapp.presentation.activity.presentation.ActivityScreen
 import com.example.socialnetworkapp.presentation.chat.ChatScreen
 import com.example.socialnetworkapp.presentation.create_post.CreatePostScreen
 import com.example.socialnetworkapp.presentation.person_list.PersonListScreen

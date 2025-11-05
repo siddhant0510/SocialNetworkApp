@@ -1,6 +1,5 @@
-package com.example.socialnetworkapp.presentation.activity
+package com.example.socialnetworkapp.presentation.activity.presentation
 
-//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,9 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Activity
-import com.example.socialnetworkapp.domain.util.ActivityAction
+import com.example.socialnetworkapp.domain.util.ActivityType
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
-import javax.annotation.meta.When
 
 @Composable
 fun ActivityItem(
@@ -43,20 +41,25 @@ fun ActivityItem(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ){
-            val fillerText = when(activity.actionType){
-                is ActivityAction.LikedPost ->
+            val fillerText = when(activity.activityType){
+                is ActivityType.LikedPost ->
                     stringResource(id = R.string.liked)
-                is ActivityAction.CommentedOnPost ->
+                is ActivityType.CommentedOnPost ->
                     stringResource(id = R.string.commented_on)
-                is ActivityAction.FollowedYou ->
+                is ActivityType.FollowedUser ->
                     stringResource(id = R.string.followed_you)
+                is ActivityType.LikedComment -> {
+                    stringResource(id = R.string.liked)
+                }
             }
-            val actionText = when(activity.actionType){
-                is ActivityAction.LikedPost ->
+            val actionText = when(activity.activityType){
+                is ActivityType.LikedPost ->
                     stringResource(id = R.string.your_post)
-                is ActivityAction.CommentedOnPost ->
+                is ActivityType.CommentedOnPost ->
                     stringResource(id = R.string.your_post)
-                is ActivityAction.FollowedYou -> ""
+                is ActivityType.FollowedUser -> ""
+                is ActivityType.LikedComment ->
+                    stringResource(id = R.string.your_comment)
             }
             Text(
                 text = buildAnnotatedString {
