@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -23,10 +25,12 @@ import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Activity
 import com.example.socialnetworkapp.domain.util.ActivityType
 import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
+import com.example.socialnetworkapp.presentation.util.Screen
 
 @Composable
 fun ActivityItem(
     activity: Activity,
+    onNavigate: (String) -> Unit = {},
     modifier: Modifier = Modifier,
 ){
     Card(
@@ -61,19 +65,53 @@ fun ActivityItem(
                 is ActivityType.LikedComment ->
                     stringResource(id = R.string.your_comment)
             }
-            Text(
-                text = buildAnnotatedString {
-                    val bodyStyle = SpanStyle(fontWeight = FontWeight.Bold)
-                    withStyle(bodyStyle){
-                        append(activity.username)
+
+            val annotatedText = buildAnnotatedString {
+                val bodyStyle = SpanStyle(fontWeight = FontWeight.Bold)
+                pushStringAnnotation(
+                    tag = "username",
+                    annotation = "username"
+                )
+                withStyle(bodyStyle) {
+                    append(activity.username)
+                }
+                pop()
+                append(" $fillerText ")
+                pushStringAnnotation(
+                    tag = "parent",
+                    annotation = "parent"
+                )
+                withStyle(bodyStyle) {
+                    append(actionText)
+                }
+            }
+            ClickableText(
+                text = annotatedText,
+                style = TextStyle(
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.onBackground
+                ),
+                onClick = { offset ->
+
+                    annotatedText.getStringAnnotations(
+                        tag = "username",
+                        start = offset,
+                        end = offset
+                    ).firstOrNull()?.let { annotation ->
+                        onNavigate(
+                            Screen.ProfileScreen.route + "?userId=${activity.userId}"
+                        )
                     }
-                    append(" $fillerText ")
-                    withStyle(bodyStyle){
-                        append(actionText)
+                    annotatedText.getStringAnnotations(
+                        tag = "parent",
+                        start = offset,
+                        end = offset
+                    ).firstOrNull()?.let { annotation ->
+                        onNavigate(
+                            Screen.PostDetailsScreen.route + "/${activity.parentId}"
+                        )
                     }
-                },
-                fontSize = 12.sp,
-                color = MaterialTheme.colorScheme.onBackground
+                }
             )
             Text(
                 text = activity.formatedTime,

@@ -66,7 +66,8 @@ fun ActivityScreen(
                                 formatedTime = activity.formatedTime,
                                 parentId = activity.parentId,
                                 username = activity.username
-                            )
+                            ),
+                            onNavigate = onNavigate
                         )
                     }
                 }
