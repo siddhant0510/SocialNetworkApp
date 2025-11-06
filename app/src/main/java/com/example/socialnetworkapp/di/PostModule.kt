@@ -1,12 +1,14 @@
 package com.example.socialnetworkapp.di
 
 import android.content.Context
-import com.example.socialnetworkapp.data.repository.PostRepositoryImpl
-import com.example.socialnetworkapp.domain.repository.PostRepository
-import com.example.socialnetworkapp.domain.usecase.CreatePostUseCase
-import com.example.socialnetworkapp.domain.usecase.GetPostForFollowsUseCase
-import com.example.socialnetworkapp.domain.usecase.PostUseCases
+import com.example.socialnetworkapp.presentation.feature_post.data.repository.PostRepositoryImpl
+import com.example.socialnetworkapp.presentation.feature_post.domain.repository.PostRepository
+import com.example.socialnetworkapp.presentation.feature_post.domain.use_case.CreatePostUseCase
+import com.example.socialnetworkapp.presentation.feature_post.domain.use_case.GetPostForFollowsUseCase
+import com.example.socialnetworkapp.presentation.feature_post.domain.use_case.PostUseCases
 import com.example.socialnetworkapp.presentation.data.PostApi
+import com.example.socialnetworkapp.presentation.feature_post.domain.use_case.GetCommentsForPostUseCase
+import com.example.socialnetworkapp.presentation.feature_post.domain.use_case.GetPostDetailsUseCase
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -48,7 +50,9 @@ object PostModule {
     fun providePostUseCases(repository: PostRepository): PostUseCases {
         return PostUseCases(
             getPostForFollowsUseCase = GetPostForFollowsUseCase(repository),
-            createPostUseCase = CreatePostUseCase(repository)
+            createPostUseCase = CreatePostUseCase(repository),
+            getPostDetails = GetPostDetailsUseCase(repository),
+            getCommentsForPost = GetCommentsForPostUseCase(repository)
         )
     }
 }

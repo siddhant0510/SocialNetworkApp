@@ -1,9 +1,9 @@
 package com.example.socialnetworkapp.di
 
-import com.example.socialnetworkapp.presentation.activity.data.remote.ActivityApi
-import com.example.socialnetworkapp.presentation.activity.data.repository.ActivityRepositoryImpl
-import com.example.socialnetworkapp.presentation.activity.domain.repository.ActivityRepository
-import com.example.socialnetworkapp.presentation.activity.domain.use_case.GetActivitiesUseCase
+import com.example.socialnetworkapp.presentation.feature_activity.data.remote.ActivityApi
+import com.example.socialnetworkapp.presentation.feature_activity.data.repository.ActivityRepositoryImpl
+import com.example.socialnetworkapp.presentation.feature_activity.domain.repository.ActivityRepository
+import com.example.socialnetworkapp.presentation.feature_activity.domain.use_case.GetActivitiesUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

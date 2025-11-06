@@ -31,7 +31,7 @@ import androidx.navigation.NavController
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.BottomNavItem
 import com.example.socialnetworkapp.presentation.componenets.StandardBottomNavItem
-import com.example.socialnetworkapp.presentation.util.Screen
+import com.example.socialnetworkapp.utli.Screen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
