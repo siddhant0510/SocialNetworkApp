@@ -1,18 +1,18 @@
 package com.example.socialnetworkapp.presentation.componenets
 
+//import androidx.compose.material.MaterialTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-//import androidx.compose.material.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -25,7 +25,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.presentation.ui.theme.iconSizeMedium
+import com.example.socialnetworkapp.theme.iconSizeMedium
 
 @Composable
 fun StandardTextField(
@@ -38,6 +38,7 @@ fun StandardTextField(
     style: TextStyle = TextStyle(
         color = MaterialTheme.colorScheme.onBackground
     ),
+    backgroundColor: Color = MaterialTheme.colorScheme.surface,
     leadingIcon: ImageVector? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
     isPasswordToggleDisplayed: Boolean = keyboardType == KeyboardType.Password,
@@ -63,6 +64,11 @@ fun StandardTextField(
                     style = MaterialTheme.typography.bodyLarge
                 )
             },
+//            colors = TextFieldDefaults.colors(
+//                focusedContainerColor = backgroundColor,
+//                unfocusedContainerColor = backgroundColor,
+//                disabledContainerColor = backgroundColor
+//            ),
             isError = error != "",
             keyboardOptions = KeyboardOptions(
                 keyboardType = keyboardType,

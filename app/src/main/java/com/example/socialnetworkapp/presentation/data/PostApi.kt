@@ -2,8 +2,10 @@ package com.example.socialnetworkapp.presentation.data
 
 import com.example.socialnetworkapp.data.dto.response.BasicApiResponse
 import com.example.socialnetworkapp.domain.models.Post
-import com.example.socialnetworkapp.presentation.feature_post.data.remote.dto.CommentDto
+import com.example.socialnetworkapp.feature_post.data.remote.dto.CommentDto
+import com.example.socialnetworkapp.feature_post.data.remote.request.CreateCommentRequest
 import okhttp3.MultipartBody
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -41,6 +43,11 @@ interface PostApi {
     suspend fun getCommentsForPost(
         @Query("postId") postId: String
     ): List<CommentDto>
+
+    @POST("/api/comment/create")
+    suspend fun createComment(
+        @Body request: CreateCommentRequest
+    ): BasicApiResponse<Unit>
 
     companion object {
         const val BASE_URL = "http://10.0.2.2:8001/"

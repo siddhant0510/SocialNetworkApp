@@ -17,9 +17,10 @@
         android:theme="@style/Theme.SocialNetworkApp"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/Theme.SocialNetworkApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

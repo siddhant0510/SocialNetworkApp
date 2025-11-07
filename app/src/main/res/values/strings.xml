@@ -79,4 +79,7 @@
     <string name="error_invalid_instagram_url">This is not valid Instagram Url</string>
     <string name="error_invalid_linked_in_url">This is not valid LinkedIn Url</string>
     <string name="your_comment">your comment\n</string>
+    <string name="send_comment">send comment</string>
+    <string name="enter_a_comment">Enter a comment...</string>
+    <string name="comment_posted">Successfully posted comment</string>
 </resources>

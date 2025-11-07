@@ -1,14 +1,15 @@
 package com.example.socialnetworkapp.di
 
 import android.content.Context
-import com.example.socialnetworkapp.presentation.feature_post.data.repository.PostRepositoryImpl
-import com.example.socialnetworkapp.presentation.feature_post.domain.repository.PostRepository
-import com.example.socialnetworkapp.presentation.feature_post.domain.use_case.CreatePostUseCase
-import com.example.socialnetworkapp.presentation.feature_post.domain.use_case.GetPostForFollowsUseCase
-import com.example.socialnetworkapp.presentation.feature_post.domain.use_case.PostUseCases
+import com.example.socialnetworkapp.feature_post.data.repository.PostRepositoryImpl
+import com.example.socialnetworkapp.feature_post.domain.repository.PostRepository
+import com.example.socialnetworkapp.feature_post.domain.use_case.CreateCommentUseCase
+import com.example.socialnetworkapp.feature_post.domain.use_case.CreatePostUseCase
+import com.example.socialnetworkapp.feature_post.domain.use_case.GetPostForFollowsUseCase
+import com.example.socialnetworkapp.feature_post.domain.use_case.PostUseCases
 import com.example.socialnetworkapp.presentation.data.PostApi
-import com.example.socialnetworkapp.presentation.feature_post.domain.use_case.GetCommentsForPostUseCase
-import com.example.socialnetworkapp.presentation.feature_post.domain.use_case.GetPostDetailsUseCase
+import com.example.socialnetworkapp.feature_post.domain.use_case.GetCommentsForPostUseCase
+import com.example.socialnetworkapp.feature_post.domain.use_case.GetPostDetailsUseCase
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -52,7 +53,8 @@ object PostModule {
             getPostForFollowsUseCase = GetPostForFollowsUseCase(repository),
             createPostUseCase = CreatePostUseCase(repository),
             getPostDetails = GetPostDetailsUseCase(repository),
-            getCommentsForPost = GetCommentsForPostUseCase(repository)
+            getCommentsForPost = GetCommentsForPostUseCase(repository),
+            createComment = CreateCommentUseCase(repository)
         )
     }
 }

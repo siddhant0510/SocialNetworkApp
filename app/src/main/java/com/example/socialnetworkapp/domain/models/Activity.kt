@@ -1,6 +1,6 @@
 package com.example.socialnetworkapp.domain.models
 
-import com.example.socialnetworkapp.presentation.feature_activity.domain.ActivityType
+import com.example.socialnetworkapp.feature_activity.domain.ActivityType
 
 data class Activity(
     val userId: String,

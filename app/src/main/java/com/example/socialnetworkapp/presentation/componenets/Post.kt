@@ -30,7 +30,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
@@ -42,17 +41,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
-import coil.request.ImageRequest
 import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Post
-import com.example.socialnetworkapp.presentation.ui.theme.HintGray
-import com.example.socialnetworkapp.presentation.ui.theme.MediumGray
-import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeMedium
-import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
-import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
-import com.example.socialnetworkapp.presentation.ui.theme.TextWhite
+import com.example.socialnetworkapp.theme.HintGray
+import com.example.socialnetworkapp.theme.MediumGray
+import com.example.socialnetworkapp.theme.ProfilePictureSizeMedium
+import com.example.socialnetworkapp.theme.SpaceMedium
+import com.example.socialnetworkapp.theme.SpaceSmall
+import com.example.socialnetworkapp.theme.TextWhite
 import com.example.socialnetworkapp.utli.Constants
 
 @Composable

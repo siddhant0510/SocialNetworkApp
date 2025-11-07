@@ -26,13 +26,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
-import coil.request.ImageRequest
 import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.domain.models.User
-import com.example.socialnetworkapp.presentation.ui.theme.ProfilePictureSizeSmall
-import com.example.socialnetworkapp.presentation.ui.theme.SpaceMedium
-import com.example.socialnetworkapp.presentation.ui.theme.SpaceSmall
+import com.example.socialnetworkapp.theme.ProfilePictureSizeSmall
+import com.example.socialnetworkapp.theme.SpaceMedium
+import com.example.socialnetworkapp.theme.SpaceSmall
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

@@ -9,18 +9,18 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.example.socialnetworkapp.presentation.feature_activity.presentation.ActivityScreen
-import com.example.socialnetworkapp.presentation.feature_chat.ChatScreen
-import com.example.socialnetworkapp.presentation.feature_post.presentation.create_post.CreatePostScreen
-import com.example.socialnetworkapp.presentation.feature_post.presentation.main_feed.MainFeedScreen
-import com.example.socialnetworkapp.presentation.feature_post.presentation.person_list.PersonListScreen
-import com.example.socialnetworkapp.presentation.feature_post.presentation.post_detail.PostDetailScreen
-import com.example.socialnetworkapp.presentation.feature_profile.presentation.edit_profile.EditProfileScreen
-import com.example.socialnetworkapp.presentation.feature_profile.presentation.profile.ProfileScreen
-import com.example.socialnetworkapp.presentation.feature_profile.presentation.search.SearchScreen
-import com.example.socialnetworkapp.presentation.feature_auth.presentation.login.LoginScreen
-import com.example.socialnetworkapp.presentation.feature_auth.presentation.register.RegisterScreen
-import com.example.socialnetworkapp.presentation.feature_auth.presentation.splash.SplashScreen
+import com.example.socialnetworkapp.feature_activity.presentation.ActivityScreen
+import com.example.socialnetworkapp.feature_chat.ChatScreen
+import com.example.socialnetworkapp.feature_post.presentation.create_post.CreatePostScreen
+import com.example.socialnetworkapp.feature_post.presentation.main_feed.MainFeedScreen
+import com.example.socialnetworkapp.feature_post.presentation.person_list.PersonListScreen
+import com.example.socialnetworkapp.feature_post.presentation.post_detail.PostDetailScreen
+import com.example.socialnetworkapp.feature_profile.presentation.edit_profile.EditProfileScreen
+import com.example.socialnetworkapp.feature_profile.presentation.profile.ProfileScreen
+import com.example.socialnetworkapp.feature_profile.presentation.search.SearchScreen
+import com.example.socialnetworkapp.feature_auth.presentation.login.LoginScreen
+import com.example.socialnetworkapp.feature_auth.presentation.register.RegisterScreen
+import com.example.socialnetworkapp.feature_auth.presentation.splash.SplashScreen
 import com.example.socialnetworkapp.utli.Screen
 
 @Composable
@@ -124,6 +124,7 @@ fun Navigation(
             )
         ){
             PostDetailScreen(
+                snackbarHostState = snackbarHostState,
                 onNavigateUp = navController::navigateUp,
                 onNavigate = navController::navigate
             )

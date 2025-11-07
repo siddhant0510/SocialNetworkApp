@@ -1,2 +1,2 @@
-package com.example.socialnetworkapp.domain
+package com.example.socialnetworkapp.core.domain
 
