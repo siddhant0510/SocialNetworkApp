@@ -50,9 +50,9 @@ import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.theme.SpaceLarge
 import com.example.socialnetworkapp.theme.SpaceMedium
 import com.example.socialnetworkapp.theme.SpaceSmall
-import com.example.socialnetworkapp.util.CropActivityResultContract
-import com.example.socialnetworkapp.util.UiEvent
-import com.example.socialnetworkapp.util.asString
+import com.example.socialnetworkapp.utilNew.CropActivityResultContract
+import com.example.socialnetworkapp.utilNew.UiEvent
+import com.example.socialnetworkapp.utilNew.asString
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest

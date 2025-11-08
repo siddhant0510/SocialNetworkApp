@@ -1,4 +1,4 @@
-package com.example.socialnetworkapp.util
+package com.example.socialnetworkapp.utilNew
 
 import android.content.Context
 import android.content.Intent

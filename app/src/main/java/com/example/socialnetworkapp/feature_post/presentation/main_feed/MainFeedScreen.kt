@@ -7,14 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.SnackbarHostState
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -25,7 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.presentation.componenets.Post
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
@@ -37,7 +36,7 @@ import kotlinx.coroutines.launch
 fun MainFeedScreen(
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
-    scaffoldState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState,
     viewModel: MainFeedViewModel = hiltViewModel()
 ){
     val posts = viewModel.posts.collectAsLazyPagingItems()
@@ -86,6 +85,8 @@ fun MainFeedScreen(
                         Post(
                             post = com.example.socialnetworkapp.domain.models.Post(
                                 id = post?.id ?: "",
+                                userId = post?.userId ?: "",
+                                isLiked = post?.isLiked ?: false,
                                 username = post.username ?: "",
                                 imageUrl = post.imageUrl ?: "",
                                 profilePictureUrl = post.profilePictureUrl ?: "",
@@ -95,6 +96,9 @@ fun MainFeedScreen(
                             ),
                             onPostClick = {
                                 onNavigate(Screen.PostDetailsScreen.route + "/${post?.id}")
+                            },
+                            onLikeClick = {
+
                             }
                         )
                     }
@@ -106,15 +110,15 @@ fun MainFeedScreen(
                 }
                 posts.apply {
                     when {
-                        LazyPagingItems.loadState.refresh !is LoadState.Loading -> {
+                        loadState.refresh !is LoadState.Loading -> {
                             viewModel.onEvent(MainFeedEvent.LoadedPage)
                         }
-                        LazyPagingItems.loadState.append is LoadState.Loading -> {
+                        loadState.append is LoadState.Loading -> {
                             viewModel.onEvent(MainFeedEvent.LoadMorePosts)
                         }
-                        LazyPagingItems.loadState.append is LoadState.Error -> {
+                        loadState.append is LoadState.Error -> {
                             scope.launch {
-                                scaffoldState.showSnackbar(
+                                snackbarHostState.showSnackbar(
                                     message = "Error"
                                 )
                             }

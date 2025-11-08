@@ -34,8 +34,8 @@ import com.example.socialnetworkapp.domain.models.AuthError
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
 import com.example.socialnetworkapp.theme.SpaceLarge
 import com.example.socialnetworkapp.theme.SpaceMedium
-import com.example.socialnetworkapp.util.UiEvent
-import com.example.socialnetworkapp.util.asString
+import com.example.socialnetworkapp.utilNew.UiEvent
+import com.example.socialnetworkapp.utilNew.asString
 import com.example.socialnetworkapp.utli.Constants
 import kotlinx.coroutines.flow.collectLatest
 

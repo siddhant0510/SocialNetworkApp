@@ -45,8 +45,8 @@ import com.example.socialnetworkapp.theme.ProfilePictureSizeMedium
 import com.example.socialnetworkapp.theme.SpaceLarge
 import com.example.socialnetworkapp.theme.SpaceMedium
 import com.example.socialnetworkapp.theme.SpaceSmall
-import com.example.socialnetworkapp.util.UiEvent
-import com.example.socialnetworkapp.util.asString
+import com.example.socialnetworkapp.utilNew.UiEvent
+import com.example.socialnetworkapp.utilNew.asString
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -129,10 +129,10 @@ fun PostDetailScreen(
                                         .padding(SpaceLarge)
                                 ) {
                                     ActionRow(
-                                        username = "Philipp Lackner",
+                                        username = state.post.username,
                                         modifier = Modifier.fillMaxWidth(),
-                                        onLikedClick = { isLiked ->
-
+                                        onLikedClick = {
+                                            viewModel.onEvent(PostDetailEvent.LikePost)
                                         },
                                         onCommentClick = {
 
@@ -140,9 +140,10 @@ fun PostDetailScreen(
                                         onShareClick = {
 
                                         },
-                                        onUsernameClick = { username ->
+                                        onUsernameClick = {
 
-                                        }
+                                        },
+                                        isLiked = state.post.isLiked
                                     )
                                     Spacer(modifier = Modifier.Companion.height(SpaceSmall))
                                     Text(
@@ -193,7 +194,10 @@ fun PostDetailScreen(
                             horizontal = SpaceLarge,
                             vertical = SpaceSmall
                         ),
-                    comment = comment
+                    comment = comment,
+                    onLikeClick = {
+                        viewModel.onEvent(PostDetailEvent.LikeComment(comment.id))
+                    }
                 )
             }
         }

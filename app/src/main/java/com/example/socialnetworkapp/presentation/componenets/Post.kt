@@ -28,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -57,7 +56,12 @@ fun Post(
     post: Post,
     modifier: Modifier = Modifier,
     showProfileImage: Boolean = true,
-    onPostClick: () -> Unit = {}
+    onPostClick: () -> Unit = {},
+    onLikeClick: () -> Unit = {},
+    onCommentClick: () -> Unit = {},
+    onShareClick: () -> Unit = {},
+    onUsernameClick: () -> Unit = {}
+
 ){
     Box(
         modifier = Modifier
@@ -95,18 +99,10 @@ fun Post(
                 ActionRow(
                     username = "Siddhant Kudale",
                     modifier = Modifier.fillMaxWidth(),
-                    onLikedClick = { isLiked ->
-
-                    },
-                    onCommentClick = {
-
-                    },
-                    onShareClick = {
-
-                    },
-                    onUsernameClick = { username ->
-
-                    }
+                    onLikedClick = onLikeClick,
+                    onCommentClick = onCommentClick,
+                    onShareClick = onShareClick,
+                    onUsernameClick = onUsernameClick
                 )
                 Spacer(modifier = Modifier.height(SpaceSmall))
                 Text(
@@ -176,7 +172,7 @@ fun EngagementButtons(
     modifier: Modifier = Modifier,
     isLiked: Boolean = false,
     iconSize: Dp = 30.dp,
-    onLikedClick: (Boolean) -> Unit = {},
+    onLikedClick: () -> Unit = {},
     onCommentClick: () -> Unit = {},
     onShareClick: () -> Unit = {}
 ){
@@ -186,13 +182,13 @@ fun EngagementButtons(
         modifier = modifier
     ){
         IconButton(
-            onClick = { onLikedClick(!isLiked) },
+            onClick = { onLikedClick() },
             modifier = Modifier.size(iconSize)
         ) {
             Icon(
                 imageVector = Icons.Filled.Favorite,
                 tint = if(isLiked){
-                    Color.Red
+                    MaterialTheme.colorScheme.primary
                 } else {
                     TextWhite
                 },
@@ -230,20 +226,20 @@ fun EngagementButtons(
 fun ActionRow(
     modifier: Modifier = Modifier,
     isLiked: Boolean = false,
-    onLikedClick: (Boolean) -> Unit = {},
+    onLikedClick: () -> Unit = {},
     onCommentClick: () -> Unit = {},
     onShareClick: () -> Unit = {},
-    username: String,
-    onUsernameClick: (String) -> Unit = {},
+    username: String?,
+    onUsernameClick: () -> Unit = {},
 
-){
+    ){
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier,
     ){
         Text(
-            text = username,
+            text = username.toString(),
             fontSize = 18.sp,
             style = TextStyle(
                 fontWeight = FontWeight.Bold,
@@ -251,7 +247,7 @@ fun ActionRow(
             ),
             modifier = Modifier
                 .clickable {
-                    onUsernameClick(username)
+                    onUsernameClick()
                 }
         )
         EngagementButtons(

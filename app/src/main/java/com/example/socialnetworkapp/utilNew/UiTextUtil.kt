@@ -1,9 +1,8 @@
-package com.example.socialnetworkapp.util
+package com.example.socialnetworkapp.utilNew
 
 import android.content.Context
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.utli.UiText
 
 @Composable

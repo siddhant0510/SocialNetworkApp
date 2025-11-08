@@ -47,8 +47,8 @@ import com.example.socialnetworkapp.theme.ProfilePictureSizeLarge
 import com.example.socialnetworkapp.theme.SpaceMedium
 import com.example.socialnetworkapp.theme.SpaceSmall
 import com.example.socialnetworkapp.utli.Screen
-import com.example.socialnetworkapp.util.UiEvent
-import com.example.socialnetworkapp.util.asString
+import com.example.socialnetworkapp.utilNew.UiEvent
+import com.example.socialnetworkapp.utilNew.asString
 import com.example.socialnetworkapp.utli.toPx
 import kotlinx.coroutines.flow.collectLatest
 
@@ -166,6 +166,8 @@ fun ProfileScreen(
                     Post(
                         post = Post(
                             id = post?.id ?: "",
+                            userId = post?.userId ?: "",
+                            isLiked = post?.isLiked ?: false,
                             username = post?.username ?: "",
                             imageUrl = post?.imageUrl ?: "",
                             profilePictureUrl = post?.profilePictureUrl ?: "",

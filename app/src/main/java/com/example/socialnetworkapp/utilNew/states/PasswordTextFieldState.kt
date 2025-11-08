@@ -1,4 +1,4 @@
-package com.example.socialnetworkapp.util.states
+package com.example.socialnetworkapp.utilNew.states
 
 data class PasswordTextFieldState(
     val text: String = "",

@@ -4,8 +4,10 @@ import com.example.socialnetworkapp.data.dto.response.BasicApiResponse
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.feature_post.data.remote.dto.CommentDto
 import com.example.socialnetworkapp.feature_post.data.remote.request.CreateCommentRequest
+import com.example.socialnetworkapp.feature_post.data.remote.request.LikeUpdateRequest
 import okhttp3.MultipartBody
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -47,6 +49,17 @@ interface PostApi {
     @POST("/api/comment/create")
     suspend fun createComment(
         @Body request: CreateCommentRequest
+    ): BasicApiResponse<Unit>
+
+    @POST("/api/like")
+    suspend fun likeParent(
+        @Body request: LikeUpdateRequest
+    ): BasicApiResponse<Unit>
+
+    @DELETE("/api/unlike")
+    suspend fun unlikedParent(
+        @Query("parentId") parentId: String,
+        @Query("parentType") parentType: Int
     ): BasicApiResponse<Unit>
 
     companion object {

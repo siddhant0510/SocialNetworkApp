@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.usecase.RegisterUseCase
-import com.example.socialnetworkapp.util.UiEvent
-import com.example.socialnetworkapp.util.states.PasswordTextFieldState
-import com.example.socialnetworkapp.util.states.StandardTextFieldState
+import com.example.socialnetworkapp.utilNew.UiEvent
+import com.example.socialnetworkapp.utilNew.states.PasswordTextFieldState
+import com.example.socialnetworkapp.utilNew.states.StandardTextFieldState
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.UiText
 import com.example.socialnetworkapp.utli.UiText.*
