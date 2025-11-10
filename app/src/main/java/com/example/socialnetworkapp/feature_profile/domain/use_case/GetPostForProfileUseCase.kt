@@ -1,14 +1,16 @@
 package com.example.socialnetworkapp.feature_profile.domain.use_case
 
-import androidx.paging.PagingData
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.feature_profile.domain.repository.ProfileRepository
-import kotlinx.coroutines.flow.Flow
+import com.example.socialnetworkapp.utli.Resource
 
 class GetPostForProfileUseCase(
     private val repository: ProfileRepository
 ) {
-    operator fun invoke(userId: String): Flow<PagingData<Post>> {
-        return repository.getPostsPaged(userId)
+    suspend operator fun invoke(userId: String, page: Int): Resource<List<Post>> {
+        return repository.getPostsPaged(
+            userId = userId,
+            page = page
+        )
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -28,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -89,7 +91,11 @@ fun Post(
                     Builder(LocalContext.current).data(
                     data = post.imageUrl
                 ).apply(block = { -> crossfade(true) }).build()),
-                contentDescription = "Post1"
+                contentDescription = "Post1",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(16f / 9f)
             )
             Column(
                 modifier = Modifier
@@ -112,7 +118,7 @@ fun Post(
                             color = HintGray
                         )) {
                             append(
-                                LocalContext.current.getString(
+                                " " + LocalContext.current.getString(
                                     R.string.read_mode
                                 )
                             )

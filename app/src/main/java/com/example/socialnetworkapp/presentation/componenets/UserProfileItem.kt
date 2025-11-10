@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -27,7 +26,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest.Builder
-import com.example.socialnetworkapp.domain.models.User
+import com.example.socialnetworkapp.domain.models.UserItem
 import com.example.socialnetworkapp.theme.ProfilePictureSizeSmall
 import com.example.socialnetworkapp.theme.SpaceMedium
 import com.example.socialnetworkapp.theme.SpaceSmall
@@ -35,11 +34,12 @@ import com.example.socialnetworkapp.theme.SpaceSmall
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun UserProfileItem (
-    user: User,
+    user: UserItem,
     modifier: Modifier = Modifier,
     actionIcon: @Composable () -> Unit = {},
     onItemClick: () -> Unit = {},
-    onActionItemClick: () -> Unit = {}
+    onActionItemClick: () -> Unit = {},
+    ownUserId: String = ""
 ) {
     Card(
         modifier = modifier,
@@ -71,8 +71,8 @@ fun UserProfileItem (
             Column(
                 modifier = Modifier
                     .fillMaxHeight()
-                    .fillMaxWidth(0.8f)
                     .padding(horizontal = SpaceSmall)
+                    .weight(1f)
             ){
                 Text(
                     text = user.username,
@@ -80,19 +80,20 @@ fun UserProfileItem (
                 )
                 Spacer(modifier = Modifier.height(SpaceSmall))
                 Text(
-                    text = user.description,
+                    text = user.bio,
                     style = MaterialTheme.typography.bodyMedium,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2
                 )
             }
-            Spacer(modifier = Modifier.height(SpaceSmall))
-            IconButton(
-                onClick = onActionItemClick,
-                modifier = Modifier
-                    .size(25.dp)
-            ) {
-                actionIcon()
+            if(user.userId != ownUserId) {
+                IconButton(
+                    onClick = onActionItemClick,
+                    modifier = Modifier
+                        .size(25.dp)
+                ) {
+                    actionIcon()
+                }
             }
         }
     }

@@ -54,7 +54,7 @@ fun Navigation(
             MainFeedScreen(
                 onNavigateUp = navController::navigateUp,
                 onNavigate = navController::navigate,
-                scaffoldState = snackbarHostState
+                snackbarHostState = snackbarHostState
             )
         }
         composable(Screen.ChatScreen.route){
@@ -129,10 +129,18 @@ fun Navigation(
                 onNavigate = navController::navigate
             )
         }
-        composable(Screen.PersonListScreen.route){
+        composable(
+            route = Screen.PersonListScreen.route + "/{parentId}",
+            arguments = listOf(
+                navArgument("parentId") {
+                    type = NavType.StringType
+                }
+            )
+        ) {
             PersonListScreen(
                 onNavigateUp = navController::navigateUp,
                 onNavigate = navController::navigate,
+                snackbarHostState = snackbarHostState
             )
         }
     }

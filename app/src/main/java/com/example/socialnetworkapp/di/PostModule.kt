@@ -7,10 +7,11 @@ import com.example.socialnetworkapp.feature_post.domain.use_case.CreateCommentUs
 import com.example.socialnetworkapp.feature_post.domain.use_case.CreatePostUseCase
 import com.example.socialnetworkapp.feature_post.domain.use_case.GetPostForFollowsUseCase
 import com.example.socialnetworkapp.feature_post.domain.use_case.PostUseCases
-import com.example.socialnetworkapp.presentation.data.PostApi
+import com.example.socialnetworkapp.feature_post.data.remote.PostApi
 import com.example.socialnetworkapp.feature_post.domain.use_case.GetCommentsForPostUseCase
+import com.example.socialnetworkapp.feature_post.domain.use_case.GetLikesForParentUseCase
 import com.example.socialnetworkapp.feature_post.domain.use_case.GetPostDetailsUseCase
-import com.example.socialnetworkapp.feature_post.domain.use_case.ToggleLikeForParentUseCase
+import com.example.socialnetworkapp.domain.usecase.ToggleLikeForParentUseCase
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -56,7 +57,8 @@ object PostModule {
             getPostDetails = GetPostDetailsUseCase(repository),
             getCommentsForPost = GetCommentsForPostUseCase(repository),
             createComment = CreateCommentUseCase(repository),
-            toggleLikeForParent = ToggleLikeForParentUseCase(repository)
+            toggleLikeForParent = ToggleLikeForParentUseCase(repository),
+            getLikesForParent = GetLikesForParentUseCase(repository)
         )
     }
 }

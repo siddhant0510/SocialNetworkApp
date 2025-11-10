@@ -1,5 +1,6 @@
 package com.example.socialnetworkapp.feature_post.presentation.person_list
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -9,26 +10,54 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PersonAdd
+import androidx.compose.material.icons.filled.PersonRemove
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.domain.models.User
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.presentation.componenets.UserProfileItem
 import com.example.socialnetworkapp.theme.SpaceLarge
 import com.example.socialnetworkapp.theme.SpaceMedium
+import com.example.socialnetworkapp.utilNew.UiEvent
+import com.example.socialnetworkapp.utilNew.asString
+import com.example.socialnetworkapp.utli.Screen
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun PersonListScreen(
+    snackbarHostState: SnackbarHostState,
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
+    viewModel: PersonListViewModel = hiltViewModel()
 ){
+    val state = viewModel.state.value
+    val context = LocalContext.current
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when(event) {
+                is UiEvent.ShowSnakbar -> {
+                    snackbarHostState.showSnackbar(
+                        message = event.uiText.asString(context)
+                    )
+                }
+
+                is UiEvent.Navigate -> Unit
+                UiEvent.NavigateUp -> Unit
+            }
+        }
+    }
     Column(
         modifier = Modifier.fillMaxSize().padding(top = 48.dp)
     ){
@@ -43,34 +72,43 @@ fun PersonListScreen(
                 )
             }
         )
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(SpaceLarge)
-        ){
-            items(10) {
-                UserProfileItem(
-                    user = User(
-                        userId = "123",
-                        profilePictureUrl = "",
-                        username = "Dan Know",
-                        description = "This is description This is " +
-                                "descriptionThis is descriptionThis is" +
-                                " descriptionThis is descriptionThis is" +
-                                " descriptionThis is descriptionThis is",
-                        followerCount = 234,
-                        followingCount = 223,
-                        postCount = 12
-                    ),
-                    actionIcon = {
-                        Icon(
-                            imageVector = Icons.Default.PersonAdd,
-                            contentDescription = null
-                        )
-                    }
-                )
-                Spacer(modifier = Modifier.Companion.height(SpaceMedium))
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            LazyColumn(
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(SpaceLarge)
+            ){
+                items(
+                    count = state.users.size
+                ) { index ->
+                    val user = state.users[index]
+                    UserProfileItem(
+                        user = user,
+                        actionIcon = {
+                            Icon(
+                                imageVector = if(user.isFollowing) {
+                                    Icons.Default.PersonRemove
+                                } else Icons.Default.PersonAdd,
+                                contentDescription = null
+                            )
+                        },
+                        onItemClick = {
+                            onNavigate(Screen.ProfileScreen.route + "?userId=${user.userId}")
+                        },
+                        onActionItemClick = {
+                            viewModel.onEvent(PersonListEvent.ToggleFollowStateForUser(user.userId))
+                        },
+                        ownUserId = viewModel.ownUserId.value
+                    )
+                    Spacer(modifier = Modifier.Companion.height(SpaceMedium))
+                }
             }
-
+            if(state.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.paging.PagingData
 import com.example.socialnetworkapp.domain.models.Comment
 import com.example.socialnetworkapp.domain.models.Post
+import com.example.socialnetworkapp.domain.models.UserItem
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.SimpleResource
 import kotlinx.coroutines.flow.Flow
@@ -23,4 +24,6 @@ interface PostRepository {
     suspend fun likeParent(parentId: String, parentType: Int): SimpleResource
 
     suspend fun unlikeParent(parentId: String, parentType: Int): SimpleResource
+
+    suspend fun getLikesForPostParent(parentId: String): Resource<List<UserItem>>
 }

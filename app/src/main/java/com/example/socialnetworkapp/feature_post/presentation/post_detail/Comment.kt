@@ -1,6 +1,7 @@
 package com.example.socialnetworkapp.feature_post.presentation.post_detail
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,7 +40,8 @@ import com.example.socialnetworkapp.theme.SpaceSmall
 fun Comment(
     modifier: Modifier = Modifier,
     comment: Comment,
-    onLikeClick: (Boolean) -> Unit = {}
+    onLikeClick: (Boolean) -> Unit = {},
+    onLikedByClick: () -> Unit = {}
 ) {
     Card(
         modifier = modifier,
@@ -102,7 +104,11 @@ fun Comment(
                         fontWeight = FontWeight.Bold,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                onLikedByClick()
+                            }
                     )
                 }
                 Spacer(modifier = Modifier.Companion.width(SpaceMedium))

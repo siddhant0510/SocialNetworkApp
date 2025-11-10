@@ -3,6 +3,7 @@ package com.example.socialnetworkapp.di
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.compose.ui.unit.Constraints
+import com.example.socialnetworkapp.domain.repository.ProfileRepository
 import com.example.socialnetworkapp.domain.usecase.GetOwnUserIdUseCase
 import com.example.socialnetworkapp.utli.Constants
 import com.google.gson.Gson

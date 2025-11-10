@@ -1,5 +1,7 @@
 package com.example.socialnetworkapp.di
 
+import com.example.socialnetworkapp.feature_post.data.remote.PostApi
+import com.example.socialnetworkapp.feature_profile.data.remote.ProfileApi
 import com.example.socialnetworkapp.feature_profile.data.repository.ProfileRepositoryImpl
 import com.example.socialnetworkapp.feature_profile.domain.repository.ProfileRepository
 import com.example.socialnetworkapp.feature_profile.domain.use_case.GetPostForProfileUseCase
@@ -10,8 +12,6 @@ import com.example.socialnetworkapp.feature_profile.domain.use_case.SearchUserUs
 import com.example.socialnetworkapp.feature_profile.domain.use_case.SetSkillSelectedUseCase
 import com.example.socialnetworkapp.feature_profile.domain.use_case.ToggleFollowStateForUserUseCase
 import com.example.socialnetworkapp.feature_profile.domain.use_case.UpdateProfileUseCase
-import com.example.socialnetworkapp.presentation.data.PostApi
-import com.example.socialnetworkapp.feature_profile.data.remote.ProfileApi
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -55,5 +55,11 @@ object ProfileModule {
             searchUser = SearchUserUseCase(repository),
             toggleFollowStateForUser = ToggleFollowStateForUserUseCase(repository)
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideToggleFollowForUserUseCase(repository: ProfileRepository): ToggleFollowStateForUserUseCase {
+        return ToggleFollowStateForUserUseCase(repository)
     }
 }

@@ -1,6 +1,7 @@
-package com.example.socialnetworkapp.presentation.data
+package com.example.socialnetworkapp.feature_post.data.remote
 
 import com.example.socialnetworkapp.data.dto.response.BasicApiResponse
+import com.example.socialnetworkapp.data.dto.response.UserItemDto
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.feature_post.data.remote.dto.CommentDto
 import com.example.socialnetworkapp.feature_post.data.remote.request.CreateCommentRequest
@@ -32,8 +33,8 @@ interface PostApi {
     @Multipart
     @POST("/api/post/create")
     suspend fun createPost(
-       @Part postData: MultipartBody.Part,
-       @Part postImage: MultipartBody.Part
+        @Part postData: MultipartBody.Part,
+        @Part postImage: MultipartBody.Part
     ): BasicApiResponse<Unit>
 
     @GET("/api/post/details")
@@ -61,6 +62,11 @@ interface PostApi {
         @Query("parentId") parentId: String,
         @Query("parentType") parentType: Int
     ): BasicApiResponse<Unit>
+
+    @GET("/api/like/parent")
+    suspend fun getLikesForParent(
+        @Query("parentId") parentId: String
+    ): List<UserItemDto>
 
     companion object {
         const val BASE_URL = "http://10.0.2.2:8001/"

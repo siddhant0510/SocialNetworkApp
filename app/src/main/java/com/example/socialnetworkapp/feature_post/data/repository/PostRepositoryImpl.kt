@@ -11,13 +11,14 @@ import coil.network.HttpException
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Comment
 import com.example.socialnetworkapp.domain.models.Post
+import com.example.socialnetworkapp.domain.models.UserItem
 import com.example.socialnetworkapp.domain.util.getFileName
 import com.example.socialnetworkapp.feature_post.data.paging.PostSource
 import com.example.socialnetworkapp.feature_post.data.remote.request.CreateCommentRequest
 import com.example.socialnetworkapp.feature_post.data.remote.request.CreatePostRequest
 import com.example.socialnetworkapp.feature_post.data.remote.request.LikeUpdateRequest
 import com.example.socialnetworkapp.feature_post.domain.repository.PostRepository
-import com.example.socialnetworkapp.presentation.data.PostApi
+import com.example.socialnetworkapp.feature_post.data.remote.PostApi
 import com.example.socialnetworkapp.utli.Constants
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.SimpleResource
@@ -216,6 +217,23 @@ class PostRepositoryImpl(
         } catch(e: HttpException) {
             Resource.Error(
                 uiText = UiText.StringResource(R.string.some_thing_went_wrong)
+            )
+        }
+    }
+
+    override suspend fun getLikesForPostParent(parentId: String): Resource<List<UserItem>> {
+        return try {
+            val response = api.getLikesForParent(
+                parentId = parentId
+            )
+            Resource.Success(response.map { it.toUserItem() })
+        } catch (e: IOException) {
+            Resource.Error(
+                uiText = UiText.StringResource(R.string.error_couldnt_reach_server)
+            )
+        } catch (e: HttpException) {
+            Resource.Error(
+                uiText = UiText.StringResource(R.string.oops_something_went_wrong)
             )
         }
     }

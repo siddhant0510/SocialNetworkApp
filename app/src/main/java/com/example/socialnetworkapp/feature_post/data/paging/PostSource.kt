@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import coil.network.HttpException
 import com.example.socialnetworkapp.domain.models.Post
-import com.example.socialnetworkapp.presentation.data.PostApi
+import com.example.socialnetworkapp.feature_post.data.remote.PostApi
 import com.example.socialnetworkapp.utli.Constants
 import okio.IOException
 

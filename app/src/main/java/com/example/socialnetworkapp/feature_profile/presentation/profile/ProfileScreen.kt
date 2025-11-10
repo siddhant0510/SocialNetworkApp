@@ -35,11 +35,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.rememberAsyncImagePainter
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.domain.models.User
+import com.example.socialnetworkapp.feature_post.presentation.person_list.PostEvent
 import com.example.socialnetworkapp.feature_profile.components.BannerSection
 import com.example.socialnetworkapp.feature_profile.components.ProfileHeaderSection
 import com.example.socialnetworkapp.presentation.componenets.Post
@@ -63,7 +63,7 @@ fun ProfileScreen(
     viewModel: ProfileViewModel = hiltViewModel()
 ){
     Column(modifier = Modifier.fillMaxWidth().padding(top = 48.dp)){
-        val posts = viewModel.posts.collectAsLazyPagingItems()
+        val pagingState = viewModel.pagingState.value
         val lazyListState = rememberLazyListState()
         val toolbarState = viewModel.toolbarState.value
 
@@ -110,6 +110,7 @@ fun ProfileScreen(
         val context = LocalContext.current
 
         LaunchedEffect(key1 = true) {
+            viewModel.setExpandedRatio(1f)
             viewModel.getProfile(userId)
             viewModel.eventFlow.collectLatest { event ->
                 when(event) {
@@ -117,6 +118,9 @@ fun ProfileScreen(
                         snackbarHostState.showSnackbar(
                             message = event.uiText.asString(context)
                         )
+                    }
+                    PostEvent.OnLiked -> {
+
                     }
 
                     is UiEvent.Navigate -> Unit
@@ -159,25 +163,21 @@ fun ProfileScreen(
                 }
 
                 items(
-                    count = posts.itemCount
-                ) { index ->
-                    val post = posts[index]
+                    count = pagingState.items.size
+                ) { i ->
+                    val post = pagingState.items[i]
+                    if(i >= pagingState.items.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
+                        viewModel.loadNextPosts()
+                    }
                     Spacer(modifier = Modifier.Companion.height(SpaceMedium))
                     Post(
-                        post = Post(
-                            id = post?.id ?: "",
-                            userId = post?.userId ?: "",
-                            isLiked = post?.isLiked ?: false,
-                            username = post?.username ?: "",
-                            imageUrl = post?.imageUrl ?: "",
-                            profilePictureUrl = post?.profilePictureUrl ?: "",
-                            description = post?.description ?: "",
-                            likeCount = post?.likeCount ?: 0,
-                            commentCount = post?.commentCount ?: 0
-                        ),
+                        post = post,
                         showProfileImage = false,
                         onPostClick = {
-                            onNavigate(Screen.PostDetailsScreen.route + "/${post?.id}")
+                            onNavigate(Screen.PostDetailsScreen.route + "/${post.id}")
+                        },
+                        onLikeClick = {
+                            viewModel.onEvent(ProfileEvent.LikedPost(post.id))
                         }
                     )
                 }

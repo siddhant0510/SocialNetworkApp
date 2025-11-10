@@ -2,10 +2,12 @@ package com.example.socialnetworkapp.feature_post.presentation.post_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -47,6 +49,7 @@ import com.example.socialnetworkapp.theme.SpaceMedium
 import com.example.socialnetworkapp.theme.SpaceSmall
 import com.example.socialnetworkapp.utilNew.UiEvent
 import com.example.socialnetworkapp.utilNew.asString
+import com.example.socialnetworkapp.utli.Screen
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -121,7 +124,9 @@ fun PostDetailScreen(
                                             data = state.post.imageUrl
                                         ).apply(block = { -> crossfade(true) }).build()),
                                     contentDescription = state.post.description,
-                                    modifier = Modifier.fillMaxWidth()
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .aspectRatio(16f / 9f)
                                 )
                                 Column(
                                     modifier = Modifier
@@ -157,7 +162,10 @@ fun PostDetailScreen(
                                             post.likeCount
                                         ),
                                         fontWeight = FontWeight.Bold,
-                                        style = MaterialTheme.typography.bodyMedium
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        modifier = Modifier.clickable {
+                                            onNavigate(Screen.PersonListScreen.route + "/${post.id}")
+                                        }
                                     )
                                 }
                             }
@@ -197,6 +205,9 @@ fun PostDetailScreen(
                     comment = comment,
                     onLikeClick = {
                         viewModel.onEvent(PostDetailEvent.LikeComment(comment.id))
+                    },
+                    onLikedByClick =  {
+                        onNavigate(Screen.PersonListScreen.route + "/${comment.id}")
                     }
                 )
             }

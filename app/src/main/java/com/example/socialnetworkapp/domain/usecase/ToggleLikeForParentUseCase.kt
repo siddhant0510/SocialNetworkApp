@@ -1,4 +1,4 @@
-package com.example.socialnetworkapp.feature_post.domain.use_case
+package com.example.socialnetworkapp.domain.usecase
 
 import com.example.socialnetworkapp.feature_post.domain.repository.PostRepository
 import com.example.socialnetworkapp.utli.SimpleResource

@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,9 +27,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.socialnetworkapp.R
+import com.example.socialnetworkapp.feature_post.presentation.person_list.PostEvent
 import com.example.socialnetworkapp.presentation.componenets.Post
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.utli.Screen
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -42,6 +45,16 @@ fun MainFeedScreen(
     val posts = viewModel.posts.collectAsLazyPagingItems()
     val state = viewModel.state.value
     val scope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = true) {
+        viewModel.eventFlow.collectLatest { event ->
+            when(event) {
+                is PostEvent.OnLiked -> {
+                    posts.refresh()
+                }
+            }
+        }
+    }
     Column(
         modifier = Modifier.fillMaxWidth().padding(top = 48.dp)
     ){
@@ -98,7 +111,7 @@ fun MainFeedScreen(
                                 onNavigate(Screen.PostDetailsScreen.route + "/${post?.id}")
                             },
                             onLikeClick = {
-
+                                viewModel.onEvent(MainFeedEvent.LikedPost(post?.id ?: ""))
                             }
                         )
                     }
