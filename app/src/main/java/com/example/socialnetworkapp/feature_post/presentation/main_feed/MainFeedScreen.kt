@@ -30,6 +30,7 @@ import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.feature_post.presentation.person_list.PostEvent
 import com.example.socialnetworkapp.presentation.componenets.Post
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
+import com.example.socialnetworkapp.theme.SpaceLarge
 import com.example.socialnetworkapp.utli.Screen
 import kotlinx.coroutines.flow.collectLatest
 
@@ -93,10 +94,16 @@ fun MainFeedScreen(
                         onPostClick = {
                             onNavigate(Screen.PostDetailsScreen.route + "/${post.id}")
                         },
+                        onCommentClick = {
+                            onNavigate(Screen.PostDetailsScreen.route + "/${post.id}?shouldShowKeyboard=true")
+                        },
                         onLikeClick = {
                             viewModel.onEvent(MainFeedEvent.LikedPost(post.id))
                         }
                     )
+                    if(i < pagingState.items.size - 1) {
+                        Spacer(modifier = Modifier.height(SpaceLarge))
+                    }
                 }
                 item {
                     Spacer(modifier = Modifier.height(90.dp))

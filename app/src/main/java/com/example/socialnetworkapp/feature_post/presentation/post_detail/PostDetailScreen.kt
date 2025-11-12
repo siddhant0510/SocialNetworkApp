@@ -1,5 +1,7 @@
 package com.example.socialnetworkapp.feature_post.presentation.post_detail
 
+import android.content.Context
+import android.view.inputmethod.InputMethodManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,10 +28,13 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,6 +43,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
+import com.example.socialnetworkapp.domain.util.showKeyboard
 import com.example.socialnetworkapp.presentation.componenets.ActionRow
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
@@ -57,13 +63,22 @@ fun PostDetailScreen(
     snackbarHostState: SnackbarHostState,
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
-    viewModel: PostDetailViewModel = hiltViewModel()
+    viewModel: PostDetailViewModel = hiltViewModel(),
+    shouldShowKeyboard: Boolean = false
 ) {
     val state = viewModel.state.value
     val commentTextFieldState = viewModel.commentTextFieldState.value
 
+    val focusedRequester = remember {
+        FocusRequester()
+    }
+
     val context = LocalContext.current
     LaunchedEffect(key1 = true) {
+        if(shouldShowKeyboard) {
+            context.showKeyboard()
+            focusedRequester.requestFocus()
+        }
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
                 is UiEvent.ShowSnakbar -> {
@@ -123,6 +138,7 @@ fun PostDetailScreen(
                                         Builder(LocalContext.current).data(
                                             data = state.post.imageUrl
                                         ).apply(block = { -> crossfade(true) }).build()),
+                                    contentScale = ContentScale.Crop,
                                     contentDescription = state.post.description,
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -140,7 +156,8 @@ fun PostDetailScreen(
                                             viewModel.onEvent(PostDetailEvent.LikePost)
                                         },
                                         onCommentClick = {
-
+                                            context.showKeyboard()
+                                            focusedRequester.requestFocus()
                                         },
                                         onShareClick = {
 
@@ -225,7 +242,8 @@ fun PostDetailScreen(
                     viewModel.onEvent(PostDetailEvent.EnteredComment(it))
                 },
                 modifier = Modifier.weight(1f),
-                hint = stringResource(id = R.string.enter_a_comment)
+                hint = stringResource(id = R.string.enter_a_comment),
+                focusRequester = focusedRequester
             )
             if(viewModel.commentState.value.isLoading) {
                 CircularProgressIndicator(

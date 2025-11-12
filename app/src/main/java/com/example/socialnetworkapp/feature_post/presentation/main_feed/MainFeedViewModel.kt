@@ -4,16 +4,14 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.cachedIn
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.feature_post.domain.use_case.PostUseCases
-import com.example.socialnetworkapp.feature_post.presentation.person_list.PostEvent
 import com.example.socialnetworkapp.presentation.PagingState
 import com.example.socialnetworkapp.utilNew.UiEvent
 import com.example.socialnetworkapp.utli.DefaultPaginator
 import com.example.socialnetworkapp.utli.Event
 import com.example.socialnetworkapp.utli.ParentType
-import com.example.socialnetworkapp.utli.Resource
+import com.example.socialnetworkapp.utli.PostLiker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -22,7 +20,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainFeedViewModel @Inject constructor(
-    private val postUseCases: PostUseCases
+    private val postUseCases: PostUseCases,
+    private val postLiker: PostLiker
 ) : ViewModel() {
 
     private val _eventFlow = MutableSharedFlow<Event>()
@@ -59,7 +58,7 @@ class MainFeedViewModel @Inject constructor(
     fun onEvent(event: MainFeedEvent) {
         when(event) {
             is MainFeedEvent.LikedPost -> {
-
+                toggleLikeForParent(event.postId)
             }
         }
     }
@@ -71,23 +70,25 @@ class MainFeedViewModel @Inject constructor(
     }
 
     private fun toggleLikeForParent(
-        parentId: String,
-        isLiked: Boolean
+        parentId: String
     ) {
         viewModelScope.launch {
-            val result = postUseCases.toggleLikeForParent(
+            postLiker.toggleLike(
+                posts = pagingState.value.items,
                 parentId = parentId,
-                parentType = ParentType.Post.type,
-                isLiked = isLiked
+                onRequest = { isLiked ->
+                    postUseCases.toggleLikeForParent(
+                        parentId = parentId,
+                        parentType = ParentType.Post.type,
+                        isLiked = isLiked
+                    )
+                },
+                onStateUpdated = { posts ->
+                    _pagingState.value = pagingState.value.copy(
+                        items = posts
+                    )
+                }
             )
-            when(result) {
-                is Resource.Success -> {
-                    _eventFlow.emit(PostEvent.OnLiked)
-                }
-                is Resource.Error -> {
-
-                }
-            }
         }
     }
 }
