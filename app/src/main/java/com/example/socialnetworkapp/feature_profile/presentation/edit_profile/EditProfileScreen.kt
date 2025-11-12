@@ -62,7 +62,6 @@ import com.example.socialnetworkapp.utilNew.CropActivityResultContract
 import com.example.socialnetworkapp.utilNew.UiEvent
 import com.example.socialnetworkapp.utilNew.asString
 import kotlinx.coroutines.flow.collectLatest
-import kotlin.collections.forEach
 
 @Composable
 fun EditProfileScreen(
@@ -86,17 +85,19 @@ fun EditProfileScreen(
     }
     val profilePictureGalleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
-    ) { uri ->
-        uri?.let {
-            cropProfilePictureLauncher.launch(it)
+    ) {
+        if(it == null) {
+            return@rememberLauncherForActivityResult
         }
+        cropProfilePictureLauncher.launch(it)
     }
     val bannerImageGalleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
-    ) {uri ->
-        uri?.let {
-            cropBannerImageLauncher.launch(it)
+    ) {
+        if(it == null) {
+            return@rememberLauncherForActivityResult
         }
+        cropBannerImageLauncher.launch(it)
     }
 
     val context = LocalContext.current

@@ -37,18 +37,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.domain.models.User
 import com.example.socialnetworkapp.feature_post.presentation.person_list.PostEvent
 import com.example.socialnetworkapp.feature_profile.components.BannerSection
 import com.example.socialnetworkapp.feature_profile.components.ProfileHeaderSection
 import com.example.socialnetworkapp.presentation.componenets.Post
 import com.example.socialnetworkapp.theme.ProfilePictureSizeLarge
-import com.example.socialnetworkapp.theme.SpaceMedium
 import com.example.socialnetworkapp.theme.SpaceSmall
-import com.example.socialnetworkapp.utli.Screen
 import com.example.socialnetworkapp.utilNew.UiEvent
 import com.example.socialnetworkapp.utilNew.asString
+import com.example.socialnetworkapp.utli.Screen
 import com.example.socialnetworkapp.utli.toPx
 import kotlinx.coroutines.flow.collectLatest
 
@@ -169,7 +167,6 @@ fun ProfileScreen(
                     if(i >= pagingState.items.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
                         viewModel.loadNextPosts()
                     }
-                    Spacer(modifier = Modifier.Companion.height(SpaceMedium))
                     Post(
                         post = post,
                         showProfileImage = false,
@@ -180,6 +177,9 @@ fun ProfileScreen(
                             viewModel.onEvent(ProfileEvent.LikedPost(post.id))
                         }
                     )
+                }
+                item {
+                    Spacer(modifier = Modifier.height(90.dp))
                 }
 
             }

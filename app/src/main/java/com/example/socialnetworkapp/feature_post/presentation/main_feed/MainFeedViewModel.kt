@@ -5,8 +5,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.feature_post.domain.use_case.PostUseCases
 import com.example.socialnetworkapp.feature_post.presentation.person_list.PostEvent
+import com.example.socialnetworkapp.presentation.PagingState
+import com.example.socialnetworkapp.utilNew.UiEvent
+import com.example.socialnetworkapp.utli.DefaultPaginator
 import com.example.socialnetworkapp.utli.Event
 import com.example.socialnetworkapp.utli.ParentType
 import com.example.socialnetworkapp.utli.Resource
@@ -21,31 +25,48 @@ class MainFeedViewModel @Inject constructor(
     private val postUseCases: PostUseCases
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(MainFeedState())
-    val state: State<MainFeedState> = _state
-
-    val posts = postUseCases.getPostForFollowsUseCase()
-        .cachedIn(viewModelScope)
-
     private val _eventFlow = MutableSharedFlow<Event>()
     val eventFlow = _eventFlow.asSharedFlow()
 
+    private val _pagingState = mutableStateOf<PagingState<Post>>(PagingState())
+    val pagingState: State<PagingState<Post>> = _pagingState
+
+    private val paginator = DefaultPaginator(
+        onLoadUpdated = { isLoading ->
+            _pagingState.value = pagingState.value.copy(
+                isLoading = isLoading
+            )
+        },
+        onRequest = { page ->
+            postUseCases.getPostForFollows(page = page)
+        },
+        onSuccess = { posts ->
+            _pagingState.value = pagingState.value.copy(
+                items = pagingState.value.items + posts,
+                endReached = posts.isEmpty(),
+                isLoading = false
+            )
+        },
+        onError = { uiText ->
+            _eventFlow.emit(UiEvent.ShowSnakbar(uiText = uiText))
+        }
+    )
+
+    init {
+        loadNextPosts()
+    }
+
     fun onEvent(event: MainFeedEvent) {
         when(event) {
-            is MainFeedEvent.LoadMorePosts -> {
-                _state.value = state.value.copy(
-                    isLoadingNewPosts = true
-                )
-            }
-            is MainFeedEvent.LoadedPage -> {
-                _state.value = state.value.copy(
-                    isLoadingFirstTime = false,
-                    isLoadingNewPosts = false
-                )
-            }
             is MainFeedEvent.LikedPost -> {
 
             }
+        }
+    }
+
+    fun loadNextPosts() {
+        viewModelScope.launch {
+            paginator.loadNextItems()
         }
     }
 

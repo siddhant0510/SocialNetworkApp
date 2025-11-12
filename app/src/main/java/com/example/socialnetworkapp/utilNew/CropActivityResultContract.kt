@@ -13,7 +13,7 @@ import java.io.File
 
 class CropActivityResultContract(
     private val aspectRatioX: Float,
-    private val aspectRatioY: Float
+    private val aspectRatioY: Float,
 ) : ActivityResultContract<Uri, Uri?>() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun createIntent(
@@ -21,7 +21,7 @@ class CropActivityResultContract(
         input: Uri
     ): Intent {
         return UCrop.of(
-            input,
+             input,
             Uri.fromFile(
                 File(
                     context.cacheDir,
@@ -37,8 +37,7 @@ class CropActivityResultContract(
         resultCode: Int,
         intent: Intent?
     ): Uri? {
-        if(intent == null) {
-            println("INTENT IS NULL")
+        if(intent == null || intent.hasExtra("error")) {
             return null
         }
         if(resultCode == RESULT_ERROR) {

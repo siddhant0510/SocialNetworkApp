@@ -4,28 +4,22 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import coil.network.HttpException
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Comment
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.domain.models.UserItem
 import com.example.socialnetworkapp.domain.util.getFileName
-import com.example.socialnetworkapp.feature_post.data.paging.PostSource
+import com.example.socialnetworkapp.feature_post.data.remote.PostApi
 import com.example.socialnetworkapp.feature_post.data.remote.request.CreateCommentRequest
 import com.example.socialnetworkapp.feature_post.data.remote.request.CreatePostRequest
 import com.example.socialnetworkapp.feature_post.data.remote.request.LikeUpdateRequest
 import com.example.socialnetworkapp.feature_post.domain.repository.PostRepository
-import com.example.socialnetworkapp.feature_post.data.remote.PostApi
-import com.example.socialnetworkapp.utli.Constants
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.SimpleResource
 import com.example.socialnetworkapp.utli.UiText
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -40,10 +34,27 @@ class PostRepositoryImpl(
     private val appContext: Context
 ) : PostRepository {
 
-    override val posts: Flow<PagingData<Post>>
-        get() = Pager(PagingConfig(pageSize = Constants.DEFAULT_PAGE_SIZE)) {
-            PostSource(api, PostSource.Source.Follows)
-        }.flow
+    override suspend fun getPostsForFollows(
+        page: Int,
+        pageSize: Int
+    ): Resource<List<Post>> {
+        return try {
+            val posts = api.getPostsForProfile(
+                page = page,
+                pageSize = pageSize,
+                userId = ""
+            )
+            Resource.Success(data = posts)
+        } catch (e: IOException) {
+            Resource.Error(
+                uiText = UiText.StringResource(R.string.error_couldnt_reach_server)
+            )
+        } catch (e: HttpException) {
+            Resource.Error(
+                uiText = UiText.StringResource(R.string.oops_something_went_wrong)
+            )
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun createPost(

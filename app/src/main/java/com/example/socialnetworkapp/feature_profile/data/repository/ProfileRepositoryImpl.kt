@@ -121,10 +121,14 @@ class ProfileRepositoryImpl(
         }
     }
 
-    override fun getPostsPaged(userId: String): Flow<PagingData<Post>> {
+    override suspend fun getPostsPaged(
+        page: Int,
+        pageSize: Int,
+        userId: String
+    ): Resource<List<Post>> {
         return Pager(PagingConfig(pageSize = Constants.DEFAULT_PAGE_SIZE)) {
             PostSource(postApi, PostSource.Source.Profile(userId))
-        }.flow
+        }.flow as Resource<List<Post>>
     }
 
     override suspend fun searchUser(query: String): Resource<List<UserItem>> {

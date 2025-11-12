@@ -3,8 +3,10 @@ package com.example.socialnetworkapp.feature_post.presentation.main_feed
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
@@ -24,15 +26,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.LoadState
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.feature_post.presentation.person_list.PostEvent
 import com.example.socialnetworkapp.presentation.componenets.Post
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.utli.Screen
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -42,15 +41,14 @@ fun MainFeedScreen(
     snackbarHostState: SnackbarHostState,
     viewModel: MainFeedViewModel = hiltViewModel()
 ){
-    val posts = viewModel.posts.collectAsLazyPagingItems()
-    val state = viewModel.state.value
+    val pagingState = viewModel.pagingState.value
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
                 is PostEvent.OnLiked -> {
-                    posts.refresh()
+
                 }
             }
         }
@@ -84,60 +82,30 @@ fun MainFeedScreen(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            if(state.isLoadingFirstTime) {
-                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-            }
             LazyColumn {
-                items(
-                    count = posts.itemCount,
-                    key = { index -> posts[index]?.hashCode() ?: index }
-                ) {
-                        index ->
-                    val post = posts[index]
-                    if (post != null) {
-                        Post(
-                            post = com.example.socialnetworkapp.domain.models.Post(
-                                id = post?.id ?: "",
-                                userId = post?.userId ?: "",
-                                isLiked = post?.isLiked ?: false,
-                                username = post.username ?: "",
-                                imageUrl = post.imageUrl ?: "",
-                                profilePictureUrl = post.profilePictureUrl ?: "",
-                                description = post.description ?: "",
-                                likeCount = post.likeCount ?: 0,
-                                commentCount = post.commentCount ?: 0
-                            ),
-                            onPostClick = {
-                                onNavigate(Screen.PostDetailsScreen.route + "/${post?.id}")
-                            },
-                            onLikeClick = {
-                                viewModel.onEvent(MainFeedEvent.LikedPost(post?.id ?: ""))
-                            }
-                        )
+                items(pagingState.items.size) { i ->
+                    val post = pagingState.items[i]
+                    if(i >= pagingState.items.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
+                        viewModel.loadNextPosts()
                     }
+                    Post(
+                        post = post,
+                        onPostClick = {
+                            onNavigate(Screen.PostDetailsScreen.route + "/${post.id}")
+                        },
+                        onLikeClick = {
+                            viewModel.onEvent(MainFeedEvent.LikedPost(post.id))
+                        }
+                    )
                 }
                 item {
-                    if(state.isLoadingNewPosts) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.BottomCenter))
-                    }
+                    Spacer(modifier = Modifier.height(90.dp))
                 }
-                posts.apply {
-                    when {
-                        loadState.refresh !is LoadState.Loading -> {
-                            viewModel.onEvent(MainFeedEvent.LoadedPage)
-                        }
-                        loadState.append is LoadState.Loading -> {
-                            viewModel.onEvent(MainFeedEvent.LoadMorePosts)
-                        }
-                        loadState.append is LoadState.Error -> {
-                            scope.launch {
-                                snackbarHostState.showSnackbar(
-                                    message = "Error"
-                                )
-                            }
-                        }
-                    }
-                }
+            }
+            if(pagingState.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center)
+                )
             }
         }
     }

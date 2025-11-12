@@ -6,6 +6,8 @@ import androidx.compose.ui.unit.Constraints
 import com.example.socialnetworkapp.domain.repository.ProfileRepository
 import com.example.socialnetworkapp.domain.usecase.GetOwnUserIdUseCase
 import com.example.socialnetworkapp.utli.Constants
+import com.example.socialnetworkapp.utli.DefaultPostLiker
+import com.example.socialnetworkapp.utli.PostLiker
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -42,6 +44,12 @@ object AppModule {
                 it.proceed(modifiedRequest)
             }
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun providePostLiker(): PostLiker {
+        return DefaultPostLiker()
     }
 
     @Provides
