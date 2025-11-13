@@ -24,7 +24,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.domain.models.UserItem
 import com.example.socialnetworkapp.theme.ProfilePictureSizeSmall
@@ -35,6 +37,7 @@ import com.example.socialnetworkapp.theme.SpaceSmall
 @Composable
 fun UserProfileItem (
     user: UserItem,
+    imageLoader: ImageLoader,
     modifier: Modifier = Modifier,
     actionIcon: @Composable () -> Unit = {},
     onItemClick: () -> Unit = {},
@@ -60,9 +63,9 @@ fun UserProfileItem (
         ){
             Image(
                 painter = rememberAsyncImagePainter(
-                    Builder(LocalContext.current).data(
-                    data = user.profilePictureUrl
-                ).apply(block = { -> crossfade(true) }).build()),
+                    model = user.profilePictureUrl,
+                    imageLoader = imageLoader
+                ),
                 contentDescription = null,
                 modifier = Modifier
                     .size(ProfilePictureSizeSmall)

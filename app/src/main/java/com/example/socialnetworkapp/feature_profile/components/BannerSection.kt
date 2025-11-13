@@ -43,6 +43,7 @@ fun BannerSection(
     leftIconModifier: Modifier = Modifier,
     rightIconModifier: Modifier = Modifier,
     bannerUrl: String? = null,
+    imageLoader: ImageLoader,
     topSkills: List<Skill> = emptyList(),
     shouldShowGitHub: Boolean,
     shouldShowInstagram: Boolean,
@@ -57,11 +58,9 @@ fun BannerSection(
     ){
 
         Image(
-            painter = rememberImagePainter(
-                data = bannerUrl,
-                builder = {
-                    crossfade(true)
-                }
+            painter = rememberAsyncImagePainter(
+                model = bannerUrl,
+                imageLoader = imageLoader
             ),
             contentDescription = stringResource(id = R.string.banner_image),
             contentScale = ContentScale.Crop,
@@ -115,15 +114,8 @@ fun BannerSection(
                 Spacer(modifier = Modifier.Companion.width(SpaceSmall))
                 Image(
                     painter = rememberAsyncImagePainter(
-                        Builder(context)
-                            .data(skill.imageUrl)
-                            .crossfade(true)
-                            .build(),
-                        imageLoader = ImageLoader.Builder(context)
-                            .components {
-                                add(SvgDecoder.Factory())
-                            }
-                            .build()
+                        model = skill.imageUrl,
+                        imageLoader = imageLoader
                     ),
                     contentDescription = null,
                     modifier = Modifier.height(iconSize)

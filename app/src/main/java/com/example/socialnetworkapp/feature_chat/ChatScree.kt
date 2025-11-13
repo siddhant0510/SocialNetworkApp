@@ -6,11 +6,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import coil.ImageLoader
 
 //import com.example.socialnetworkapp.presentation.componenets.StandardScaffold
 
 @Composable
 fun ChatScreen(
+    imageLoader: ImageLoader,
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
 ){

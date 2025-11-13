@@ -1,8 +1,12 @@
 package com.example.socialnetworkapp.di
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Constraints
+import coil.ImageLoader
+import coil.decode.SvgDecoder
 import com.example.socialnetworkapp.domain.repository.ProfileRepository
 import com.example.socialnetworkapp.domain.usecase.GetOwnUserIdUseCase
 import com.example.socialnetworkapp.utli.Constants
@@ -43,6 +47,14 @@ object AppModule {
                     .build()
                 it.proceed(modifiedRequest)
             }
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideImageLoader(app: Application): ImageLoader {
+        return ImageLoader.Builder(app)
+            .components { add(SvgDecoder.Factory()) }
             .build()
     }
 

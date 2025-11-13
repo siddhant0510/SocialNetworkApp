@@ -28,6 +28,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
@@ -39,6 +40,7 @@ import com.example.socialnetworkapp.theme.SpaceSmall
 @Composable
 fun Comment(
     modifier: Modifier = Modifier,
+    imageLoader: ImageLoader,
     comment: Comment,
     onLikeClick: (Boolean) -> Unit = {},
     onLikedByClick: () -> Unit = {}
@@ -64,9 +66,9 @@ fun Comment(
                 ) {
                     Image(
                         painter = rememberAsyncImagePainter(
-                            Builder(LocalContext.current).data(
-                                data = comment.profilePictureUrl
-                            ).apply(block = { -> crossfade(true) }).build()),
+                            model = comment.profilePictureUrl,
+                            imageLoader = imageLoader
+                        ),
                         contentDescription = null,
                         modifier = Modifier
                             .clip(CircleShape)

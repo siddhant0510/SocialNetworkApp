@@ -40,7 +40,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.util.showKeyboard
@@ -61,6 +63,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun PostDetailScreen(
     snackbarHostState: SnackbarHostState,
+    imageLoader: ImageLoader,
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
     viewModel: PostDetailViewModel = hiltViewModel(),
@@ -135,9 +138,9 @@ fun PostDetailScreen(
                             state.post?.let { post ->
                                 Image(
                                     painter = rememberAsyncImagePainter(
-                                        Builder(LocalContext.current).data(
-                                            data = state.post.imageUrl
-                                        ).apply(block = { -> crossfade(true) }).build()),
+                                        model = state.post.imageUrl,
+                                        imageLoader = imageLoader
+                                    ),
                                     contentScale = ContentScale.Crop,
                                     contentDescription = state.post.description,
                                     modifier = Modifier
@@ -189,9 +192,9 @@ fun PostDetailScreen(
                         }
                         Image(
                             painter = rememberAsyncImagePainter(
-                                Builder(LocalContext.current).data(
-                                    data = state.post?.profilePictureUrl
-                                ).apply(block = { -> crossfade(true) }).build()),
+                                model = state.post?.imageUrl,
+                                imageLoader = imageLoader
+                            ),
                             contentDescription = "Profile picture",
                             modifier = Modifier
                                 .offset(y = -(ProfilePictureSizeMedium / 6f))
@@ -219,6 +222,7 @@ fun PostDetailScreen(
                             horizontal = SpaceLarge,
                             vertical = SpaceSmall
                         ),
+                    imageLoader = imageLoader,
                     comment = comment,
                     onLikeClick = {
                         viewModel.onEvent(PostDetailEvent.LikeComment(comment.id))

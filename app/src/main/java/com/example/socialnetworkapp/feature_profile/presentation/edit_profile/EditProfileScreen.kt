@@ -47,8 +47,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.feature_profile.presentation.edit_profile.components.Chip
 import com.example.socialnetworkapp.feature_profile.presentation.util.EditProfileError
@@ -66,6 +66,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun EditProfileScreen(
     snackbarHostState: SnackbarHostState,
+    imageLoader: ImageLoader,
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
     viewModel: EditProfileViewModel = hiltViewModel(),
@@ -148,14 +149,14 @@ fun EditProfileScreen(
         ){
             BannerEditSection(
                 bannerImage = rememberAsyncImagePainter(
-                    model = Builder(LocalContext.current).data(
-                    data = viewModel.bannerUri.value ?: profileState.profile?.bannerUrl
-                ).apply(block = { -> crossfade(true) }).build()),
+                    model = viewModel.bannerUri.value ?: profileState.profile,
+                    imageLoader = imageLoader
+                ),
 
                 profileImage = rememberAsyncImagePainter(
-                    model = Builder(LocalContext.current).data(
-                    data = viewModel.profilePictureUri.value ?: profileState.profile?.profilePictureUrl
-                ).apply(block = { -> crossfade(true) }).build()),
+                    model = viewModel.profilePictureUri.value ?: profileState.profile,
+                    imageLoader = imageLoader
+                ),
                 profilePictureSize = profilePictureSize,
                 onBannerClick = {
                     bannerImageGalleryLauncher.launch("image/*")

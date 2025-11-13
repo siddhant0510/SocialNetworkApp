@@ -23,6 +23,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -41,6 +42,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
@@ -57,6 +59,8 @@ import com.example.socialnetworkapp.utli.Constants
 fun Post(
     post: Post,
     modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState,
+    imageLoader: ImageLoader,
     showProfileImage: Boolean = true,
     onPostClick: () -> Unit = {},
     onLikeClick: () -> Unit = {},
@@ -88,9 +92,9 @@ fun Post(
         ){
             Image(
                 painter = rememberAsyncImagePainter(
-                    Builder(LocalContext.current).data(
-                    data = post.imageUrl
-                ).apply(block = { -> crossfade(true) }).build()),
+                    model = post.imageUrl,
+                    imageLoader = imageLoader
+                ),
                 contentDescription = "Post1",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -160,9 +164,9 @@ fun Post(
         if(showProfileImage){
             Image(
                 painter = rememberAsyncImagePainter(
-                    Builder(LocalContext.current).data(
-                    data = post.profilePictureUrl
-                ).apply(block = { -> crossfade(true) }).build()),
+                    model = post.profilePictureUrl,
+                    imageLoader = imageLoader
+                ),
                 contentDescription = "Profile picture",
                 modifier = Modifier
                     .offset(y = (ProfilePictureSizeMedium / 12f))

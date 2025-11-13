@@ -35,7 +35,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
+import coil.decode.SvgDecoder
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.User
 import com.example.socialnetworkapp.feature_post.presentation.person_list.PostEvent
@@ -54,6 +56,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun ProfileScreen(
     snackbarHostState: SnackbarHostState,
+    imageLoader: ImageLoader,
     userId: String? = null,
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
@@ -169,6 +172,7 @@ fun ProfileScreen(
                     }
                     Post(
                         post = post,
+                        imageLoader = imageLoader,
                         showProfileImage = false,
                         onPostClick = {
                             onNavigate(Screen.PostDetailsScreen.route + "/${post.id}")
@@ -178,7 +182,8 @@ fun ProfileScreen(
                         },
                         onLikeClick = {
                             viewModel.onEvent(ProfileEvent.LikedPost(post.id))
-                        }
+                        },
+                        snackbarHostState = snackbarHostState
                     )
                 }
                 item {
@@ -214,6 +219,7 @@ fun ProfileScreen(
                                 translationX = (1f - toolbarState.expandedRatio) *
                                         -iconHorizontalCenterLength
                             },
+                        imageLoader = imageLoader,
                         topSkills = profile.topSkills,
                         shouldShowGitHub = profile.gitHubUrl != null && profile.gitHubUrl.isNotBlank(),
                         shouldShowInstagram = profile.instagramUrl != null && profile.instagramUrl.isNotBlank(),
@@ -221,7 +227,10 @@ fun ProfileScreen(
                         bannerUrl = profile.bannerUrl,
                     )
                     Image(
-                        painter = rememberAsyncImagePainter(model = profile.profilePictureUrl),
+                        painter = rememberAsyncImagePainter(
+                            model = profile.profilePictureUrl,
+                            imageLoader = imageLoader
+                        ),
                         contentDescription = stringResource(id = R.string.profile_image),
                         modifier = Modifier
                             .align(CenterHorizontally)

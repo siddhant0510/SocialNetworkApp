@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.ImageLoader
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.User
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
@@ -36,6 +37,7 @@ import com.example.socialnetworkapp.utli.Screen
 
 @Composable
 fun SearchScreen(
+    imageLoader: ImageLoader,
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
     viewModel: SearchViewModel = hiltViewModel()
@@ -82,6 +84,7 @@ fun SearchScreen(
                     items(state.userItems) { user ->
                         UserProfileItem(
                             user = user,
+                            imageLoader = imageLoader,
                             actionIcon = {
                                 if(user.isFollowing) {
                                     IconButton(

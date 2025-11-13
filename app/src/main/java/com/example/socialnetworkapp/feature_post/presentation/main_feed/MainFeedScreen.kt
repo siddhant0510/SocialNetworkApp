@@ -26,6 +26,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.ImageLoader
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.feature_post.presentation.person_list.PostEvent
 import com.example.socialnetworkapp.presentation.componenets.Post
@@ -37,9 +38,10 @@ import kotlinx.coroutines.flow.collectLatest
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MainFeedScreen(
+    imageLoader: ImageLoader,
+    snackbarHostState: SnackbarHostState,
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
-    snackbarHostState: SnackbarHostState,
     viewModel: MainFeedViewModel = hiltViewModel()
 ){
     val pagingState = viewModel.pagingState.value
@@ -91,6 +93,7 @@ fun MainFeedScreen(
                     }
                     Post(
                         post = post,
+                        imageLoader = imageLoader,
                         onUsernameClick = {
                             onNavigate(Screen.PostDetailsScreen.route + "/${post.id}")
                         },
@@ -102,7 +105,8 @@ fun MainFeedScreen(
                         },
                         onLikeClick = {
                             viewModel.onEvent(MainFeedEvent.LikedPost(post.id))
-                        }
+                        },
+                        snackbarHostState = snackbarHostState
                     )
                     if(i < pagingState.items.size - 1) {
                         Spacer(modifier = Modifier.height(SpaceLarge))

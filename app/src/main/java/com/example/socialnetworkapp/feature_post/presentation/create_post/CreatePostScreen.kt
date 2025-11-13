@@ -40,8 +40,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.rememberImagePainter
-import coil.request.ImageRequest
+import coil.ImageLoader
+import coil.compose.rememberAsyncImagePainter
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.feature_post.presentation.util.PostConstants
 import com.example.socialnetworkapp.feature_post.presentation.util.PostDescriptionError
@@ -61,6 +61,7 @@ import kotlinx.coroutines.launch
 @OptIn(DelicateCoroutinesApi::class)
 @Composable
 fun CreatePostScreen(
+    imageLoader: ImageLoader,
     onNavigateUp: () -> Unit = {},
     onNavigate: (String) -> Unit = {},
     scaffoldState: SnackbarHostState,
@@ -125,10 +126,9 @@ fun CreatePostScreen(
                     )
                     imageUri?.let { uri ->
                         Image(
-                            painter = rememberImagePainter(
-                                request = ImageRequest.Builder(LocalContext.current)
-                                    .data(uri)
-                                    .build()
+                            painter = rememberAsyncImagePainter(
+                                model = uri,
+                                imageLoader = imageLoader
                             ),
                             contentDescription = stringResource(id = R.string.post_image),
                             modifier = Modifier.fillMaxSize()
