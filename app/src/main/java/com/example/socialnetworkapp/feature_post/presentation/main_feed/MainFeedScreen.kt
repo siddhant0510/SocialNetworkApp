@@ -91,6 +91,9 @@ fun MainFeedScreen(
                     }
                     Post(
                         post = post,
+                        onUsernameClick = {
+                            onNavigate(Screen.PostDetailsScreen.route + "/${post.id}")
+                        },
                         onPostClick = {
                             onNavigate(Screen.PostDetailsScreen.route + "/${post.id}")
                         },
