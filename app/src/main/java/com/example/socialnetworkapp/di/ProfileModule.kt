@@ -1,5 +1,6 @@
 package com.example.socialnetworkapp.di
 
+import android.content.SharedPreferences
 import com.example.socialnetworkapp.feature_post.data.remote.PostApi
 import com.example.socialnetworkapp.feature_profile.data.remote.ProfileApi
 import com.example.socialnetworkapp.feature_profile.data.repository.ProfileRepositoryImpl
@@ -7,6 +8,7 @@ import com.example.socialnetworkapp.feature_profile.domain.repository.ProfileRep
 import com.example.socialnetworkapp.feature_profile.domain.use_case.GetPostForProfileUseCase
 import com.example.socialnetworkapp.feature_profile.domain.use_case.GetProfileUseCase
 import com.example.socialnetworkapp.feature_profile.domain.use_case.GetSkillsUseCase
+import com.example.socialnetworkapp.feature_profile.domain.use_case.LogoutUseCase
 import com.example.socialnetworkapp.feature_profile.domain.use_case.ProfileUseCases
 import com.example.socialnetworkapp.feature_profile.domain.use_case.SearchUserUseCase
 import com.example.socialnetworkapp.feature_profile.domain.use_case.SetSkillSelectedUseCase
@@ -39,8 +41,8 @@ object ProfileModule {
 
     @Provides
     @Singleton
-    fun provideProfileRepository(profileApi: ProfileApi, postApi: PostApi, gson: Gson): ProfileRepository {
-        return ProfileRepositoryImpl(profileApi, postApi, gson)
+    fun provideProfileRepository(profileApi: ProfileApi, postApi: PostApi, gson: Gson, sharedPreferences: SharedPreferences): ProfileRepository {
+        return ProfileRepositoryImpl(profileApi, postApi, gson, sharedPreferences)
     }
 
     @Provides
@@ -53,7 +55,8 @@ object ProfileModule {
             setSkillSelected = SetSkillSelectedUseCase(),
             getPostsForProfile = GetPostForProfileUseCase(repository),
             searchUser = SearchUserUseCase(repository),
-            toggleFollowStateForUser = ToggleFollowStateForUserUseCase(repository)
+            toggleFollowStateForUser = ToggleFollowStateForUserUseCase(repository),
+            logout = LogoutUseCase(repository)
         )
     }
 

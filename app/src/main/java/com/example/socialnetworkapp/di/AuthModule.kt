@@ -1,12 +1,12 @@
 package com.example.socialnetworkapp.di
 
 import android.content.SharedPreferences
-import com.example.socialnetworkapp.data.repository.AuthRepositoryImpl
-import com.example.socialnetworkapp.domain.repository.AuthRepository
 import com.example.socialnetworkapp.domain.usecase.AuthenticateUseCase
 import com.example.socialnetworkapp.domain.usecase.LoginUseCase
 import com.example.socialnetworkapp.domain.usecase.RegisterUseCase
-import com.example.socialnetworkapp.presentation.data.AuthApi
+import com.example.socialnetworkapp.feature_auth.data.repository.AuthRepositoryImpl
+import com.example.socialnetworkapp.feature_auth.domain.repository.AuthRepository
+import com.example.socialnetworkapp.feature_auth.data.remote.AuthApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

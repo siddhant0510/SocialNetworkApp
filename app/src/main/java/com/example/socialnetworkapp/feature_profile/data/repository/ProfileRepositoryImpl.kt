@@ -1,28 +1,28 @@
 package com.example.socialnetworkapp.feature_profile.data.repository
 
+import android.annotation.SuppressLint
+import android.content.SharedPreferences
 import android.net.Uri
 import androidx.core.net.toFile
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import coil.network.HttpException
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Post
 import com.example.socialnetworkapp.domain.models.UserItem
 import com.example.socialnetworkapp.feature_post.data.paging.PostSource
+import com.example.socialnetworkapp.feature_post.data.remote.PostApi
 import com.example.socialnetworkapp.feature_profile.FollowUpdateRequest
 import com.example.socialnetworkapp.feature_profile.data.remote.ProfileApi
 import com.example.socialnetworkapp.feature_profile.domain.model.Profile
 import com.example.socialnetworkapp.feature_profile.domain.model.Skill
 import com.example.socialnetworkapp.feature_profile.domain.model.UpdateProfileData
 import com.example.socialnetworkapp.feature_profile.domain.repository.ProfileRepository
-import com.example.socialnetworkapp.feature_post.data.remote.PostApi
 import com.example.socialnetworkapp.utli.Constants
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.SimpleResource
 import com.example.socialnetworkapp.utli.UiText
 import com.google.gson.Gson
-import kotlinx.coroutines.flow.Flow
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okio.IOException
@@ -30,7 +30,8 @@ import okio.IOException
 class ProfileRepositoryImpl(
     private val profileApi: ProfileApi,
     private val postApi: PostApi,
-    private val gson: Gson
+    private val gson: Gson,
+    private val sharedPreferences: SharedPreferences
 ) : ProfileRepository {
 
     override suspend fun getProfile(userId: String): Resource<Profile> {
@@ -192,5 +193,12 @@ class ProfileRepositoryImpl(
                 uiText = UiText.StringResource(R.string.some_thing_went_wrong)
             )
         }
+    }
+
+    @SuppressLint("CommitPrefEdits")
+    override fun logout() {
+        sharedPreferences.edit()
+            .remove(Constants.KEY_JWT_TOKEN)
+            .apply()
     }
 }

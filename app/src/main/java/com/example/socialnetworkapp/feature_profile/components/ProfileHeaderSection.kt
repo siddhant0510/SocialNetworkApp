@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ExitToApp
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,7 +34,8 @@ fun ProfileHeaderSection(
     modifier: Modifier = Modifier,
     isFollowing: Boolean = true,
     isOwnProfile: Boolean = true,
-    onEditClick: () -> Unit = {}
+    onEditClick: () -> Unit = {},
+    onLogoutClick: () -> Unit = {}
 ){
     Column (
         modifier = modifier
@@ -67,6 +69,17 @@ fun ProfileHeaderSection(
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = stringResource(id = R.string.edit)
+                    )
+                }
+                Spacer(modifier = Modifier.Companion.width(SpaceSmall))
+                IconButton(
+                    onClick = onLogoutClick,
+                    modifier = Modifier.size(30.dp),
+
+                    ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ExitToApp,
+                        contentDescription = stringResource(id = R.string.logout)
                     )
                 }
             }

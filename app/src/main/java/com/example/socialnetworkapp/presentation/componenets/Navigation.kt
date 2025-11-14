@@ -43,7 +43,13 @@ fun Navigation(
         }
         composable(Screen.LoginScreen.route){
             LoginScreen(
-                onNavigate = navController::navigate,
+                onNavigate = { },
+                onLogin = {
+                    navController.popBackStack(
+                        route = Screen.MainFeedScreen.route,
+                        inclusive = false
+                    )
+                },
                 snackbarHostState = snackbarHostState
             )
         }
@@ -85,7 +91,7 @@ fun Navigation(
         ){
             ProfileScreen(
                 userId = it.arguments?.getString("userId"),
-                onNavigateUp = navController::navigateUp,
+                onLogout = navController::navigateUp,
                 onNavigate = navController::navigate,
                 snackbarHostState = snackbarHostState,
                 imageLoader = imageLoader

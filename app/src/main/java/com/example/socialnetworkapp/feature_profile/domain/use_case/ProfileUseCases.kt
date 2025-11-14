@@ -7,5 +7,6 @@ data class ProfileUseCases(
     val setSkillSelected: SetSkillSelectedUseCase,
     val getPostsForProfile: GetPostForProfileUseCase,
     val searchUser: SearchUserUseCase,
-    val toggleFollowStateForUser: ToggleFollowStateForUserUseCase
+    val toggleFollowStateForUser: ToggleFollowStateForUserUseCase,
+    val logout: LogoutUseCase
 )

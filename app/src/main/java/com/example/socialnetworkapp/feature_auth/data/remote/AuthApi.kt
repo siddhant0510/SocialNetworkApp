@@ -1,4 +1,4 @@
-package com.example.socialnetworkapp.presentation.data
+package com.example.socialnetworkapp.feature_auth.data.remote
 
 import com.example.socialnetworkapp.data.dto.response.BasicApiResponse
 import com.example.socialnetworkapp.presentation.data.dto.request.CreateAccountRequest

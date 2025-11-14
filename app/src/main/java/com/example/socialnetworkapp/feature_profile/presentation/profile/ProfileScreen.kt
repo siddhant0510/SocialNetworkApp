@@ -2,18 +2,24 @@ package com.example.socialnetworkapp.feature_profile.presentation.profile
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -32,12 +38,13 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
-import coil.decode.SvgDecoder
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.User
 import com.example.socialnetworkapp.feature_post.presentation.person_list.PostEvent
@@ -45,6 +52,7 @@ import com.example.socialnetworkapp.feature_profile.components.BannerSection
 import com.example.socialnetworkapp.feature_profile.components.ProfileHeaderSection
 import com.example.socialnetworkapp.presentation.componenets.Post
 import com.example.socialnetworkapp.theme.ProfilePictureSizeLarge
+import com.example.socialnetworkapp.theme.SpaceMedium
 import com.example.socialnetworkapp.theme.SpaceSmall
 import com.example.socialnetworkapp.utilNew.UiEvent
 import com.example.socialnetworkapp.utilNew.asString
@@ -59,7 +67,7 @@ fun ProfileScreen(
     imageLoader: ImageLoader,
     userId: String? = null,
     onNavigate: (String) -> Unit = {},
-    onNavigateUp: () -> Unit = {},
+    onLogout: () -> Unit = {},
     profilePictureSize: Dp = ProfilePictureSizeLarge,
     viewModel: ProfileViewModel = hiltViewModel()
 ){
@@ -158,6 +166,9 @@ fun ProfileScreen(
                             isOwnProfile = profile.isOwnProfile,
                             onEditClick = {
                                 onNavigate(Screen.EditProfileScreen.route + "/${profile.userId}")
+                            },
+                            onLogoutClick = {
+                                viewModel.onEvent(ProfileEvent.ShowLogoutDialog)
                             }
                         )
                     }
@@ -253,6 +264,48 @@ fun ProfileScreen(
                                 shape = CircleShape
                             )
                     )
+                }
+            }
+
+            if(state.isLogoutDialogVisible) {
+                Dialog(onDismissRequest = {
+                    viewModel.onEvent(ProfileEvent.DismissLogOutDialog)
+                }) {
+                    Column(
+                        modifier = Modifier
+                            .background(
+                                color = MaterialTheme.colorScheme.surface,
+                                shape = MaterialTheme.shapes.medium
+                            )
+                            .padding(SpaceMedium)
+                    ) {
+                        Text(text = stringResource(R.string.do_you_want_to_logout))
+                        Spacer(modifier = Modifier.height(SpaceMedium))
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            modifier = Modifier.align(Alignment.End)
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.no).uppercase(),
+                                color = MaterialTheme.colorScheme.onBackground,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.clickable {
+                                    viewModel.onEvent(ProfileEvent.DismissLogOutDialog)
+                                }
+                            )
+                            Spacer(modifier = Modifier.width(SpaceMedium))
+                            Text(
+                                text = stringResource(id = R.string.yes).uppercase(),
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.clickable {
+                                    viewModel.onEvent(ProfileEvent.Logout)
+                                    viewModel.onEvent(ProfileEvent.DismissLogOutDialog)
+                                    onLogout()
+                                }
+                            )
+                        }
+                    }
                 }
             }
         }

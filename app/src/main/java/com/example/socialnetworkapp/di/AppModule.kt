@@ -7,7 +7,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.Constraints
 import coil.ImageLoader
 import coil.decode.SvgDecoder
-import com.example.socialnetworkapp.domain.repository.ProfileRepository
 import com.example.socialnetworkapp.domain.usecase.GetOwnUserIdUseCase
 import com.example.socialnetworkapp.utli.Constants
 import com.example.socialnetworkapp.utli.DefaultPostLiker
