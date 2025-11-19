@@ -57,6 +57,7 @@ import com.example.socialnetworkapp.theme.SpaceSmall
 import com.example.socialnetworkapp.utilNew.UiEvent
 import com.example.socialnetworkapp.utilNew.asString
 import com.example.socialnetworkapp.utli.Screen
+import com.example.socialnetworkapp.utli.sendSharePostIntent
 import com.example.socialnetworkapp.utli.toPx
 import kotlinx.coroutines.flow.collectLatest
 
@@ -193,6 +194,9 @@ fun ProfileScreen(
                         },
                         onLikeClick = {
                             viewModel.onEvent(ProfileEvent.LikedPost(post.id))
+                        },
+                        onShareClick = {
+                            context.sendSharePostIntent(post.id)
                         },
                         snackbarHostState = snackbarHostState
                     )

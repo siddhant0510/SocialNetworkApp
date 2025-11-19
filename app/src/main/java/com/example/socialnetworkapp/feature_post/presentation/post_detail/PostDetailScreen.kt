@@ -58,6 +58,7 @@ import com.example.socialnetworkapp.theme.SpaceSmall
 import com.example.socialnetworkapp.utilNew.UiEvent
 import com.example.socialnetworkapp.utilNew.asString
 import com.example.socialnetworkapp.utli.Screen
+import com.example.socialnetworkapp.utli.sendSharePostIntent
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -89,8 +90,9 @@ fun PostDetailScreen(
                         message = event.uiText.asString(context)
                     )
                 }
-                is UiEvent.Navigate -> TODO()
-                UiEvent.NavigateUp -> TODO()
+                is UiEvent.Navigate -> Unit
+                UiEvent.NavigateUp -> Unit
+                UiEvent.OnLogin -> Unit
             }
         }
     }
@@ -163,7 +165,7 @@ fun PostDetailScreen(
                                             focusedRequester.requestFocus()
                                         },
                                         onShareClick = {
-
+                                            context.sendSharePostIntent(post.id)
                                         },
                                         onUsernameClick = {
                                             onNavigate(Screen.ProfileScreen.route + "?userId=${post.userId}")

@@ -1,5 +1,6 @@
 package com.example.socialnetworkapp.presentation.componenets
 
+import android.content.Intent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
@@ -9,6 +10,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import coil.ImageLoader
 import com.example.socialnetworkapp.feature_activity.presentation.ActivityScreen
 import com.example.socialnetworkapp.feature_chat.ChatScreen
@@ -140,6 +142,12 @@ fun Navigation(
                 ) {
                     type = NavType.StringType
                     defaultValue = false
+                }
+            ),
+            deepLinks = listOf(
+                navDeepLink {
+                    action = Intent.ACTION_VIEW
+                    uriPattern = "https://pl-coding.com/{postId}"
                 }
             )
         ){

@@ -22,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -33,6 +34,7 @@ import com.example.socialnetworkapp.presentation.componenets.Post
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.theme.SpaceLarge
 import com.example.socialnetworkapp.utli.Screen
+import com.example.socialnetworkapp.utli.sendSharePostIntent
 import kotlinx.coroutines.flow.collectLatest
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -45,8 +47,7 @@ fun MainFeedScreen(
     viewModel: MainFeedViewModel = hiltViewModel()
 ){
     val pagingState = viewModel.pagingState.value
-    val scope = rememberCoroutineScope()
-
+    val context = LocalContext.current
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when(event) {
@@ -105,6 +106,9 @@ fun MainFeedScreen(
                         },
                         onLikeClick = {
                             viewModel.onEvent(MainFeedEvent.LikedPost(post.id))
+                        },
+                        onShareClick = {
+                            context.sendSharePostIntent(post.id)
                         },
                         snackbarHostState = snackbarHostState
                     )
