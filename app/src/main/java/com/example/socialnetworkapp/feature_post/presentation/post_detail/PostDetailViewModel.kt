@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialnetworkapp.R
+import com.example.socialnetworkapp.domain.usecase.AuthenticateUseCase
 import com.example.socialnetworkapp.feature_post.domain.use_case.PostUseCases
 import com.example.socialnetworkapp.feature_post.presentation.util.CommentError
 import com.example.socialnetworkapp.utilNew.UiEvent
@@ -21,6 +22,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostDetailViewModel @Inject constructor(
+    private val authenticate: AuthenticateUseCase,
     private val postUseCases: PostUseCases,
     private val savedStateHandel: SavedStateHandle,
 ): ViewModel() {
@@ -36,6 +38,8 @@ class PostDetailViewModel @Inject constructor(
 
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
+
+    private var isUserLoggedIn = false
 
     init {
         savedStateHandel.get<String>("postId")?.let { postId ->
@@ -70,9 +74,6 @@ class PostDetailViewModel @Inject constructor(
                     isLiked = isLiked
                 )
             }
-            is PostDetailEvent.SharePost -> {
-
-            }
             is PostDetailEvent.EnteredComment -> {
                 _commentTextFieldState.value = commentTextFieldState.value.copy(
                     text = event.comment,
@@ -88,6 +89,11 @@ class PostDetailViewModel @Inject constructor(
         isLiked: Boolean
     ) {
         viewModelScope.launch {
+            isUserLoggedIn = authenticate() is Resource.Success
+            if(!isUserLoggedIn) {
+                _eventFlow.emit(UiEvent.ShowSnakbar(UiText.StringResource(R.string.error_not_logged_in)))
+                return@launch
+            }
             val currentLikeCount = state.value.post?.likeCount ?: 0
             when(parentType) {
                 ParentType.Post.type -> {
@@ -156,6 +162,11 @@ class PostDetailViewModel @Inject constructor(
 
     private fun createComment(postId: String, comment: String) {
         viewModelScope.launch {
+            isUserLoggedIn = authenticate() is Resource.Success
+            if(!isUserLoggedIn) {
+                _eventFlow.emit(UiEvent.ShowSnakbar(UiText.StringResource(R.string.error_not_logged_in)))
+                return@launch
+            }
             _commentState.value = commentState.value.copy(
                 isLoading = true
             )
@@ -191,6 +202,11 @@ class PostDetailViewModel @Inject constructor(
 
     private fun loadPostDetails(postId: String) {
         viewModelScope.launch {
+            isUserLoggedIn = authenticate() is Resource.Success
+            if(!isUserLoggedIn) {
+                _eventFlow.emit(UiEvent.ShowSnakbar(UiText.StringResource(R.string.error_not_logged_in)))
+                return@launch
+            }
             _state.value = state.value.copy(
                 isLoadingPost = true
             )
