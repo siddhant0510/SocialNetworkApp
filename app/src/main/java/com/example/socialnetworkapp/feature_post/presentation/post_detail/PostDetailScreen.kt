@@ -1,13 +1,10 @@
 package com.example.socialnetworkapp.feature_post.presentation.post_detail
 
-import android.content.Context
-import android.view.inputmethod.InputMethodManager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,11 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -42,12 +35,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
-import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.util.showKeyboard
 import com.example.socialnetworkapp.presentation.componenets.ActionRow
-import com.example.socialnetworkapp.presentation.componenets.StandardTextField
+import com.example.socialnetworkapp.presentation.componenets.SendTextField
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.theme.MediumGray
 import com.example.socialnetworkapp.theme.ProfilePictureSizeExtraSmall
@@ -235,45 +226,17 @@ fun PostDetailScreen(
                 )
             }
         }
-        Row(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.surface)
-                .fillMaxWidth()
-                .padding(SpaceLarge),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            StandardTextField(
-                text = commentTextFieldState.text,
-                onValueChange = {
-                    viewModel.onEvent(PostDetailEvent.EnteredComment(it))
-                },
-                modifier = Modifier.weight(1f),
-                hint = stringResource(id = R.string.enter_a_comment),
-                focusRequester = focusedRequester
-            )
-            if(viewModel.commentState.value.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .padding(horizontal = 12.dp)
-                        .size(24.dp),
-                    strokeWidth = 2.dp
-                )
-            } else {
-                IconButton(
-                    onClick = {
-                        viewModel.onEvent(PostDetailEvent.Comment)
-                    },
-                    enabled = commentTextFieldState.error == null
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Send,
-                        tint = if(commentTextFieldState.error == null) {
-                            MaterialTheme.colorScheme.primary
-                        } else MaterialTheme.colorScheme.onSurface,
-                        contentDescription = stringResource(id = R.string.send_comment)
-                    )
-                }
-            }
-        }
+        SendTextField(
+            state = viewModel.commentTextFieldState.value,
+            onValueChange = {
+                viewModel.onEvent(PostDetailEvent.EnteredComment(it))
+            },
+            onSend = {
+                viewModel.onEvent(PostDetailEvent.Comment)
+            },
+            hint = stringResource(id = R.string.enter_a_comment),
+            isLoading = viewModel.commentState.value.isLoading,
+            focusedRequester = focusedRequester
+        )
     }
 }

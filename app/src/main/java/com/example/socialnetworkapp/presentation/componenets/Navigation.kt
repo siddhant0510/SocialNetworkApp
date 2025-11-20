@@ -13,7 +13,7 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import coil.ImageLoader
 import com.example.socialnetworkapp.feature_activity.presentation.ActivityScreen
-import com.example.socialnetworkapp.feature_chat.ChatScreen
+import com.example.socialnetworkapp.feature_chat.presentation.chat.ChatScreen
 import com.example.socialnetworkapp.feature_post.presentation.create_post.CreatePostScreen
 import com.example.socialnetworkapp.feature_post.presentation.main_feed.MainFeedScreen
 import com.example.socialnetworkapp.feature_post.presentation.person_list.PersonListScreen
@@ -24,6 +24,7 @@ import com.example.socialnetworkapp.feature_profile.presentation.search.SearchSc
 import com.example.socialnetworkapp.feature_auth.presentation.login.LoginScreen
 import com.example.socialnetworkapp.feature_auth.presentation.register.RegisterScreen
 import com.example.socialnetworkapp.feature_auth.presentation.splash.SplashScreen
+import com.example.socialnetworkapp.feature_chat.presentation.message.MessageScreen
 import com.example.socialnetworkapp.utli.Screen
 
 @Composable
@@ -70,6 +71,14 @@ fun Navigation(
         }
         composable(Screen.ChatScreen.route){
             ChatScreen(
+                onNavigateUp = navController::navigateUp,
+                onNavigate = navController::navigate,
+                imageLoader = imageLoader
+            )
+        }
+        composable(Screen.MessageScreen.route) {
+            MessageScreen(
+                chatId = "",
                 onNavigateUp = navController::navigateUp,
                 onNavigate = navController::navigate,
                 imageLoader = imageLoader
