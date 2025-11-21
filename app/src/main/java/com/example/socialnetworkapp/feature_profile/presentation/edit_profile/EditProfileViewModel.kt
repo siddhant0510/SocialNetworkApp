@@ -10,8 +10,8 @@ import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.feature_profile.domain.model.UpdateProfileData
 import com.example.socialnetworkapp.feature_profile.domain.use_case.ProfileUseCases
 import com.example.socialnetworkapp.feature_profile.presentation.profile.ProfileState
-import com.example.socialnetworkapp.utilNew.UiEvent
-import com.example.socialnetworkapp.utilNew.states.StandardTextFieldState
+import com.example.socialnetworkapp.presentation.util.UiEvent
+import com.example.socialnetworkapp.domain.state.StandardTextFieldState
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel

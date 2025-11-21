@@ -29,10 +29,10 @@ import coil.ImageLoader
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.presentation.componenets.UserProfileItem
-import com.example.socialnetworkapp.theme.SpaceLarge
-import com.example.socialnetworkapp.theme.SpaceMedium
-import com.example.socialnetworkapp.utilNew.UiEvent
-import com.example.socialnetworkapp.utilNew.asString
+import com.example.socialnetworkapp.presentation.theme.SpaceLarge
+import com.example.socialnetworkapp.presentation.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.util.UiEvent
+import com.example.socialnetworkapp.presentation.util.asString
 import com.example.socialnetworkapp.utli.Screen
 import kotlinx.coroutines.flow.collectLatest
 
@@ -57,6 +57,7 @@ fun PersonListScreen(
 
                 is UiEvent.Navigate -> Unit
                 UiEvent.NavigateUp -> Unit
+                UiEvent.OnLogin -> Unit
             }
         }
     }

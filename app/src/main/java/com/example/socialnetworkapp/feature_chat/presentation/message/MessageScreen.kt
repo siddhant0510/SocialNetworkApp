@@ -24,15 +24,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.feature_chat.domain.model.Chat
 import com.example.socialnetworkapp.feature_chat.domain.model.Message
 import com.example.socialnetworkapp.feature_chat.presentation.message.components.OwnMessage
 import com.example.socialnetworkapp.feature_chat.presentation.message.components.RemoteMessage
 import com.example.socialnetworkapp.presentation.componenets.SendTextField
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
-import com.example.socialnetworkapp.theme.ProfilePictureSizeSmall
-import com.example.socialnetworkapp.theme.SpaceMedium
-import kotlin.collections.listOf
+import com.example.socialnetworkapp.presentation.theme.ProfilePictureSizeSmall
+import com.example.socialnetworkapp.presentation.theme.SpaceMedium
 
 @Composable
 fun MessageScreen(

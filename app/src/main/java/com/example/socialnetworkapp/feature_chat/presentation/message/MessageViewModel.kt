@@ -3,8 +3,8 @@ package com.example.socialnetworkapp.feature_chat.presentation.message
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.example.socialnetworkapp.utilNew.UiEvent
-import com.example.socialnetworkapp.utilNew.states.StandardTextFieldState
+import com.example.socialnetworkapp.presentation.util.UiEvent
+import com.example.socialnetworkapp.domain.state.StandardTextFieldState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow

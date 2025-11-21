@@ -13,8 +13,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import coil.ImageLoader
 import com.example.socialnetworkapp.feature_chat.domain.model.Chat
-import com.example.socialnetworkapp.theme.SpaceLarge
-import com.example.socialnetworkapp.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.theme.SpaceLarge
+import com.example.socialnetworkapp.presentation.theme.SpaceMedium
 import com.example.socialnetworkapp.utli.Screen
 import kotlin.collections.listOf
 

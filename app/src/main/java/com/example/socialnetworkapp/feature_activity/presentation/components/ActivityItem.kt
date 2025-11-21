@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Activity
 import com.example.socialnetworkapp.feature_activity.domain.ActivityType
-import com.example.socialnetworkapp.theme.SpaceSmall
+import com.example.socialnetworkapp.presentation.theme.SpaceSmall
 import com.example.socialnetworkapp.utli.Screen
 
 @Composable

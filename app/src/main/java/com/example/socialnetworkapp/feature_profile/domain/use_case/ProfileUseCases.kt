@@ -1,5 +1,7 @@
 package com.example.socialnetworkapp.feature_profile.domain.use_case
 
+import com.example.socialnetworkapp.domain.usecase.ToggleFollowStateForUserUseCase
+
 data class ProfileUseCases(
     val getProfile: GetProfileUseCase,
     val updateProfile: UpdateProfileUseCase,

@@ -18,9 +18,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.feature_post.presentation.post_detail.PostDetailEvent
-import com.example.socialnetworkapp.theme.SpaceLarge
-import com.example.socialnetworkapp.utilNew.states.StandardTextFieldState
+import com.example.socialnetworkapp.presentation.theme.SpaceLarge
+import com.example.socialnetworkapp.domain.state.StandardTextFieldState
 
 @Composable
 fun SendTextField(

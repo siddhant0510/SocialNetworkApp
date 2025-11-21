@@ -15,7 +15,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.utilNew.UiEvent
+import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.utli.Constants.SPLASH_SCREEN_DURATION
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

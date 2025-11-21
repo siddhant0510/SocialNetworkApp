@@ -27,12 +27,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.ImageLoader
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.domain.models.User
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.presentation.componenets.UserProfileItem
-import com.example.socialnetworkapp.theme.SpaceLarge
-import com.example.socialnetworkapp.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.theme.SpaceLarge
+import com.example.socialnetworkapp.presentation.theme.SpaceMedium
 import com.example.socialnetworkapp.utli.Screen
 
 @Composable

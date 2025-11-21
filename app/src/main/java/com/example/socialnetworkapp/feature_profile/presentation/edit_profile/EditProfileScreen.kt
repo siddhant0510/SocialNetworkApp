@@ -54,13 +54,13 @@ import com.example.socialnetworkapp.feature_profile.presentation.edit_profile.co
 import com.example.socialnetworkapp.feature_profile.presentation.util.EditProfileError
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
-import com.example.socialnetworkapp.theme.ProfilePictureSizeLarge
-import com.example.socialnetworkapp.theme.SpaceLarge
-import com.example.socialnetworkapp.theme.SpaceMedium
-import com.example.socialnetworkapp.theme.SpaceSmall
-import com.example.socialnetworkapp.utilNew.CropActivityResultContract
-import com.example.socialnetworkapp.utilNew.UiEvent
-import com.example.socialnetworkapp.utilNew.asString
+import com.example.socialnetworkapp.presentation.theme.ProfilePictureSizeLarge
+import com.example.socialnetworkapp.presentation.theme.SpaceLarge
+import com.example.socialnetworkapp.presentation.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.theme.SpaceSmall
+import com.example.socialnetworkapp.presentation.util.CropActivityResultContract
+import com.example.socialnetworkapp.presentation.util.UiEvent
+import com.example.socialnetworkapp.presentation.util.asString
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -115,6 +115,8 @@ fun EditProfileScreen(
                 UiEvent.NavigateUp -> {
                     onNavigateUp()
                 }
+
+                UiEvent.OnLogin -> Unit
             }
         }
     }

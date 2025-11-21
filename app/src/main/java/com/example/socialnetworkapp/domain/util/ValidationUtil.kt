@@ -1,7 +1,7 @@
 package com.example.socialnetworkapp.domain.util
 
 import android.util.Patterns
-import com.example.socialnetworkapp.domain.models.AuthError
+import com.example.socialnetworkapp.feature_auth.presentation.util.AuthError
 import com.example.socialnetworkapp.utli.Constants
 
 object ValidationUtil {

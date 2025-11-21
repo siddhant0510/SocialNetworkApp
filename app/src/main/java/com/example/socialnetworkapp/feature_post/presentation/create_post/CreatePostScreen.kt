@@ -47,12 +47,12 @@ import com.example.socialnetworkapp.feature_post.presentation.util.PostConstants
 import com.example.socialnetworkapp.feature_post.presentation.util.PostDescriptionError
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
-import com.example.socialnetworkapp.theme.SpaceLarge
-import com.example.socialnetworkapp.theme.SpaceMedium
-import com.example.socialnetworkapp.theme.SpaceSmall
-import com.example.socialnetworkapp.utilNew.CropActivityResultContract
-import com.example.socialnetworkapp.utilNew.UiEvent
-import com.example.socialnetworkapp.utilNew.asString
+import com.example.socialnetworkapp.presentation.theme.SpaceLarge
+import com.example.socialnetworkapp.presentation.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.theme.SpaceSmall
+import com.example.socialnetworkapp.presentation.util.CropActivityResultContract
+import com.example.socialnetworkapp.presentation.util.UiEvent
+import com.example.socialnetworkapp.presentation.util.asString
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collectLatest
@@ -100,6 +100,7 @@ fun CreatePostScreen(
                 }
 
                 is UiEvent.Navigate -> Unit
+                UiEvent.OnLogin -> Unit
             }
         }
     }

@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialnetworkapp.domain.usecase.GetOwnUserIdUseCase
 import com.example.socialnetworkapp.feature_post.domain.use_case.PostUseCases
-import com.example.socialnetworkapp.feature_profile.domain.use_case.ToggleFollowStateForUserUseCase
-import com.example.socialnetworkapp.utilNew.UiEvent
+import com.example.socialnetworkapp.domain.usecase.ToggleFollowStateForUserUseCase
+import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel

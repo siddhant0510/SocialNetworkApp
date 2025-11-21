@@ -26,8 +26,8 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.example.socialnetworkapp.theme.HintGray
-import com.example.socialnetworkapp.theme.SpaceSmall
+import com.example.socialnetworkapp.presentation.theme.HintGray
+import com.example.socialnetworkapp.presentation.theme.SpaceSmall
 
 @Composable
 @Throws(IllegalArgumentException::class)

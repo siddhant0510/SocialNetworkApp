@@ -2,6 +2,7 @@ package com.example.socialnetworkapp.utli
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import com.example.socialnetworkapp.R
 
 fun Context.sendSharePostIntent(postId: String) {
@@ -14,10 +15,17 @@ fun Context.sendSharePostIntent(postId: String) {
                 "https://pl-coding.com/$postId"
             )
         )
-        type = "text/plan"
+        type = "text/plain"
     }
 
     if(intent.resolveActivity(packageManager) != null) {
         startActivity(Intent.createChooser(intent, "Select an app"))
     }
+}
+
+fun Context.openUrlInBrowser(url: String) {
+    val intent = Intent(Intent.ACTION_VIEW).apply {
+        data = Uri.parse(url)
+    }
+    startActivity(Intent.createChooser(intent, "Select an app"))
 }

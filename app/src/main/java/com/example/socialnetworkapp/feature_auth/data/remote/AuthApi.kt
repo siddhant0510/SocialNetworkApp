@@ -1,9 +1,9 @@
 package com.example.socialnetworkapp.feature_auth.data.remote
 
 import com.example.socialnetworkapp.data.dto.response.BasicApiResponse
-import com.example.socialnetworkapp.presentation.data.dto.request.CreateAccountRequest
-import com.example.socialnetworkapp.presentation.data.dto.request.LoginRequest
-import com.example.socialnetworkapp.presentation.data.dto.response.AuthResponse
+import com.example.socialnetworkapp.feature_auth.data.remote.request.CreateAccountRequest
+import com.example.socialnetworkapp.feature_auth.data.remote.request.LoginRequest
+import com.example.socialnetworkapp.feature_auth.data.remote.response.AuthResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET

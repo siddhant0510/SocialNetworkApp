@@ -24,18 +24,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Comment
-import com.example.socialnetworkapp.theme.ProfilePictureSizeExtraSmall
-import com.example.socialnetworkapp.theme.SpaceMedium
-import com.example.socialnetworkapp.theme.SpaceSmall
+import com.example.socialnetworkapp.presentation.theme.ProfilePictureSizeExtraSmall
+import com.example.socialnetworkapp.presentation.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.theme.SpaceSmall
 
 @Composable
 fun Comment(

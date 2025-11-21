@@ -27,9 +27,9 @@ import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import com.example.socialnetworkapp.domain.models.UserItem
-import com.example.socialnetworkapp.theme.ProfilePictureSizeSmall
-import com.example.socialnetworkapp.theme.SpaceMedium
-import com.example.socialnetworkapp.theme.SpaceSmall
+import com.example.socialnetworkapp.presentation.theme.ProfilePictureSizeSmall
+import com.example.socialnetworkapp.presentation.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.theme.SpaceSmall
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

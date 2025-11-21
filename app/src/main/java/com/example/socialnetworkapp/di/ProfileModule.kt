@@ -3,8 +3,8 @@ package com.example.socialnetworkapp.di
 import android.content.SharedPreferences
 import com.example.socialnetworkapp.feature_post.data.remote.PostApi
 import com.example.socialnetworkapp.feature_profile.data.remote.ProfileApi
-import com.example.socialnetworkapp.feature_profile.data.repository.ProfileRepositoryImpl
-import com.example.socialnetworkapp.feature_profile.domain.repository.ProfileRepository
+import com.example.socialnetworkapp.data.repository.ProfileRepositoryImpl
+import com.example.socialnetworkapp.domain.repository.ProfileRepository
 import com.example.socialnetworkapp.feature_profile.domain.use_case.GetPostForProfileUseCase
 import com.example.socialnetworkapp.feature_profile.domain.use_case.GetProfileUseCase
 import com.example.socialnetworkapp.feature_profile.domain.use_case.GetSkillsUseCase
@@ -12,7 +12,7 @@ import com.example.socialnetworkapp.feature_profile.domain.use_case.LogoutUseCas
 import com.example.socialnetworkapp.feature_profile.domain.use_case.ProfileUseCases
 import com.example.socialnetworkapp.feature_profile.domain.use_case.SearchUserUseCase
 import com.example.socialnetworkapp.feature_profile.domain.use_case.SetSkillSelectedUseCase
-import com.example.socialnetworkapp.feature_profile.domain.use_case.ToggleFollowStateForUserUseCase
+import com.example.socialnetworkapp.domain.usecase.ToggleFollowStateForUserUseCase
 import com.example.socialnetworkapp.feature_profile.domain.use_case.UpdateProfileUseCase
 import com.google.gson.Gson
 import dagger.Module

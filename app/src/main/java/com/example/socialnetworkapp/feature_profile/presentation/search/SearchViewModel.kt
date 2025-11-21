@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialnetworkapp.feature_profile.domain.use_case.ProfileUseCases
 import com.example.socialnetworkapp.feature_profile.domain.util.ProfileConstants
-import com.example.socialnetworkapp.utilNew.UiEvent
-import com.example.socialnetworkapp.utilNew.states.StandardTextFieldState
+import com.example.socialnetworkapp.presentation.util.UiEvent
+import com.example.socialnetworkapp.domain.state.StandardTextFieldState
+import com.example.socialnetworkapp.feature_auth.presentation.util.AuthError
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -99,9 +100,7 @@ class SearchViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _searchFieldState.value = searchFieldState.value.copy(
-                        error = SearchError(
-                            message = result.uiText ?: UiText.unknownError()
-                        )
+                        error = AuthError.FieldEmpty
                     )
                     _searchState.value = searchState.value.copy(
                         isLoading = false

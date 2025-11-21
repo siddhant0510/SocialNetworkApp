@@ -27,13 +27,13 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.domain.models.AuthError
+import com.example.socialnetworkapp.feature_auth.presentation.util.AuthError
 import com.example.socialnetworkapp.presentation.componenets.StandardTextField
-import com.example.socialnetworkapp.theme.SpaceLarge
-import com.example.socialnetworkapp.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.theme.SpaceLarge
+import com.example.socialnetworkapp.presentation.theme.SpaceMedium
 import com.example.socialnetworkapp.utli.Screen
-import com.example.socialnetworkapp.utilNew.UiEvent
-import com.example.socialnetworkapp.utilNew.asString
+import com.example.socialnetworkapp.presentation.util.UiEvent
+import com.example.socialnetworkapp.presentation.util.asString
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

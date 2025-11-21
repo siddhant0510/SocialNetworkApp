@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialnetworkapp.domain.usecase.AuthenticateUseCase
 import com.example.socialnetworkapp.utli.Screen
-import com.example.socialnetworkapp.utilNew.UiEvent
+import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.utli.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow

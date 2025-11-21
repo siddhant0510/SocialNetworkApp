@@ -1,7 +1,7 @@
 package com.example.socialnetworkapp.feature_profile.domain.use_case
 
 import com.example.socialnetworkapp.domain.models.Post
-import com.example.socialnetworkapp.feature_profile.domain.repository.ProfileRepository
+import com.example.socialnetworkapp.domain.repository.ProfileRepository
 import com.example.socialnetworkapp.utli.Resource
 
 class GetPostForProfileUseCase(

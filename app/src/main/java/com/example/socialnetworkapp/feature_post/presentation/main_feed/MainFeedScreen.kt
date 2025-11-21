@@ -19,7 +19,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -32,7 +31,7 @@ import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.feature_post.presentation.person_list.PostEvent
 import com.example.socialnetworkapp.presentation.componenets.Post
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
-import com.example.socialnetworkapp.theme.SpaceLarge
+import com.example.socialnetworkapp.presentation.theme.SpaceLarge
 import com.example.socialnetworkapp.utli.Screen
 import com.example.socialnetworkapp.utli.sendSharePostIntent
 import kotlinx.coroutines.flow.collectLatest

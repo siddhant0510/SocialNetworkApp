@@ -11,7 +11,7 @@ import com.example.socialnetworkapp.feature_post.data.remote.PostApi
 import com.example.socialnetworkapp.feature_post.domain.use_case.GetCommentsForPostUseCase
 import com.example.socialnetworkapp.feature_post.domain.use_case.GetLikesForParentUseCase
 import com.example.socialnetworkapp.feature_post.domain.use_case.GetPostDetailsUseCase
-import com.example.socialnetworkapp.domain.usecase.ToggleLikeForParentUseCase
+import com.example.socialnetworkapp.feature_post.domain.use_case.ToggleLikeForParentUseCase
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides

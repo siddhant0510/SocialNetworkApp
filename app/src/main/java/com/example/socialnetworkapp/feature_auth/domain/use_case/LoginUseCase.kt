@@ -1,8 +1,8 @@
-package com.example.socialnetworkapp.domain.usecase
+package com.example.socialnetworkapp.feature_auth.domain.use_case
 
-import com.example.socialnetworkapp.domain.models.AuthError
-import com.example.socialnetworkapp.domain.models.LoginResult
-import com.example.socialnetworkapp.domain.repository.AuthRepository
+import com.example.socialnetworkapp.feature_auth.presentation.util.AuthError
+import com.example.socialnetworkapp.feature_auth.domain.models.LoginResult
+import com.example.socialnetworkapp.feature_auth.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class LoginUseCase @Inject constructor(

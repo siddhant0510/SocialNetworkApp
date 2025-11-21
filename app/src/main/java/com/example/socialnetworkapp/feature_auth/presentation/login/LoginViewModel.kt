@@ -4,10 +4,10 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.socialnetworkapp.domain.usecase.LoginUseCase
+import com.example.socialnetworkapp.feature_auth.domain.use_case.LoginUseCase
 import com.example.socialnetworkapp.utli.Screen
-import com.example.socialnetworkapp.utilNew.UiEvent
-import com.example.socialnetworkapp.utilNew.states.StandardTextFieldState
+import com.example.socialnetworkapp.presentation.util.UiEvent
+import com.example.socialnetworkapp.domain.state.StandardTextFieldState
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.UiText
 import dagger.hilt.android.lifecycle.HiltViewModel

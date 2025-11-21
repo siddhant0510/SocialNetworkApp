@@ -9,8 +9,9 @@ import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.usecase.AuthenticateUseCase
 import com.example.socialnetworkapp.feature_post.domain.use_case.PostUseCases
 import com.example.socialnetworkapp.feature_post.presentation.util.CommentError
-import com.example.socialnetworkapp.utilNew.UiEvent
-import com.example.socialnetworkapp.utilNew.states.StandardTextFieldState
+import com.example.socialnetworkapp.presentation.util.UiEvent
+import com.example.socialnetworkapp.domain.state.StandardTextFieldState
+import com.example.socialnetworkapp.feature_auth.presentation.util.AuthError
 import com.example.socialnetworkapp.utli.ParentType
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.UiText
@@ -30,7 +31,7 @@ class PostDetailViewModel @Inject constructor(
     private val _state = mutableStateOf(PostDetailState())
     val state: State<PostDetailState> = _state
 
-    private val _commentTextFieldState = mutableStateOf(StandardTextFieldState(error = CommentError.FieldEmpty))
+    private val _commentTextFieldState = mutableStateOf(StandardTextFieldState(error = AuthError.FieldEmpty))
     val commentTextFieldState: State<StandardTextFieldState> = _commentTextFieldState
 
     private val _commentState = mutableStateOf(CommentState())
@@ -77,7 +78,7 @@ class PostDetailViewModel @Inject constructor(
             is PostDetailEvent.EnteredComment -> {
                 _commentTextFieldState.value = commentTextFieldState.value.copy(
                     text = event.comment,
-                    error = if (event.comment.isBlank()) CommentError.FieldEmpty else null
+                    error = if (event.comment.isBlank()) AuthError.FieldEmpty else null
                 )
             }
         }
@@ -184,7 +185,7 @@ class PostDetailViewModel @Inject constructor(
                     )
                     _commentTextFieldState.value = commentTextFieldState.value.copy(
                         text = "",
-                        error = CommentError.FieldEmpty
+                        error = AuthError.FieldEmpty
                     )
                     loadCommentsForPost(postId)
                 }

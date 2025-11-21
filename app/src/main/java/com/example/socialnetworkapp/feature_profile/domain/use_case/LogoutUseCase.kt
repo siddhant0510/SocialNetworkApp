@@ -1,6 +1,6 @@
 package com.example.socialnetworkapp.feature_profile.domain.use_case
 
-import com.example.socialnetworkapp.feature_profile.domain.repository.ProfileRepository
+import com.example.socialnetworkapp.domain.repository.ProfileRepository
 
 class LogoutUseCase(
     private val repository: ProfileRepository

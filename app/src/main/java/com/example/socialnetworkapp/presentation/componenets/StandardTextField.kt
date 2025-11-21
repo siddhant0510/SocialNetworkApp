@@ -15,21 +15,21 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRestorer
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.theme.iconSizeMedium
+import com.example.socialnetworkapp.presentation.theme.iconSizeMedium
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun StandardTextField(
     modifier: Modifier = Modifier,
@@ -124,7 +124,7 @@ fun StandardTextField(
             ),
             modifier = Modifier
                 .fillMaxWidth()
-                .focusRestorer(focusRequester = focusRequester),
+                //.focusRestorer(focusRequester = focusRequester),
         )
         if(error.isNotEmpty()){
             Text(

@@ -22,7 +22,7 @@ import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Activity
 import com.example.socialnetworkapp.feature_activity.presentation.components.ActivityItem
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
-import com.example.socialnetworkapp.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.theme.SpaceMedium
 
 @Composable
 fun ActivityScreen(

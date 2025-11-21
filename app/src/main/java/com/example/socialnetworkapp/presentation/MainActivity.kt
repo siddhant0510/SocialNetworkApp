@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
@@ -18,7 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import coil.ImageLoader
 import com.example.socialnetworkapp.presentation.componenets.Navigation
 import com.example.socialnetworkapp.presentation.components.StandardScaffold
-import com.example.socialnetworkapp.theme.SocialNetworkAppTheme
+import com.example.socialnetworkapp.presentation.theme.SocialNetworkAppTheme
 import com.example.socialnetworkapp.utli.Screen
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject

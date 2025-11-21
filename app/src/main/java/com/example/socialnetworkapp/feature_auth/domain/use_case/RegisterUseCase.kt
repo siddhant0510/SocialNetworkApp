@@ -1,8 +1,8 @@
 package com.example.socialnetworkapp.domain.usecase
 
-import com.example.socialnetworkapp.domain.models.RegisterResult
-import com.example.socialnetworkapp.domain.repository.AuthRepository
+import com.example.socialnetworkapp.feature_auth.domain.models.RegisterResult
 import com.example.socialnetworkapp.domain.util.ValidationUtil
+import com.example.socialnetworkapp.feature_auth.domain.repository.AuthRepository
 
 class RegisterUseCase(
     private val repository: AuthRepository

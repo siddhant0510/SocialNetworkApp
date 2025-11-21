@@ -44,15 +44,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
-import coil.request.ImageRequest.Builder
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.domain.models.Post
-import com.example.socialnetworkapp.theme.HintGray
-import com.example.socialnetworkapp.theme.MediumGray
-import com.example.socialnetworkapp.theme.ProfilePictureSizeMedium
-import com.example.socialnetworkapp.theme.SpaceMedium
-import com.example.socialnetworkapp.theme.SpaceSmall
-import com.example.socialnetworkapp.theme.TextWhite
+import com.example.socialnetworkapp.presentation.theme.HintGray
+import com.example.socialnetworkapp.presentation.theme.MediumGray
+import com.example.socialnetworkapp.presentation.theme.ProfilePictureSizeMedium
+import com.example.socialnetworkapp.presentation.theme.SpaceMedium
+import com.example.socialnetworkapp.presentation.theme.SpaceSmall
+import com.example.socialnetworkapp.presentation.theme.TextWhite
 import com.example.socialnetworkapp.utli.Constants
 
 @Composable

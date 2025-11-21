@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.example.socialnetworkapp.theme.SpaceSmall
+import com.example.socialnetworkapp.presentation.theme.SpaceSmall
 
 @Composable
 fun Chip(

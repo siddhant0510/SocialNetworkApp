@@ -10,7 +10,7 @@ import com.example.socialnetworkapp.domain.usecase.GetOwnUserIdUseCase
 import com.example.socialnetworkapp.feature_post.domain.use_case.PostUseCases
 import com.example.socialnetworkapp.feature_profile.domain.use_case.ProfileUseCases
 import com.example.socialnetworkapp.presentation.PagingState
-import com.example.socialnetworkapp.utilNew.UiEvent
+import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.utli.DefaultPaginator
 import com.example.socialnetworkapp.utli.Event
 import com.example.socialnetworkapp.utli.ParentType

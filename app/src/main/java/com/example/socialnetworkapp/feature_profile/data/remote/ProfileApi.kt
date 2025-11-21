@@ -2,7 +2,7 @@ package com.example.socialnetworkapp.feature_profile.data.remote
 
 import com.example.socialnetworkapp.data.dto.response.BasicApiResponse
 import com.example.socialnetworkapp.data.dto.response.UserItemDto
-import com.example.socialnetworkapp.feature_profile.FollowUpdateRequest
+import com.example.socialnetworkapp.feature_profile.data.remote.request.FollowUpdateRequest
 import com.example.socialnetworkapp.feature_profile.data.remote.response.ProfileResponse
 import com.example.socialnetworkapp.feature_profile.data.remote.response.SkillDto
 import okhttp3.MultipartBody

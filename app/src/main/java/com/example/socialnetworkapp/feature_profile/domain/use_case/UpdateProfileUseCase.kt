@@ -3,7 +3,7 @@ package com.example.socialnetworkapp.feature_profile.domain.use_case
 import android.net.Uri
 import com.example.socialnetworkapp.R
 import com.example.socialnetworkapp.feature_profile.domain.model.UpdateProfileData
-import com.example.socialnetworkapp.feature_profile.domain.repository.ProfileRepository
+import com.example.socialnetworkapp.domain.repository.ProfileRepository
 import com.example.socialnetworkapp.feature_profile.domain.util.ProfileConstants
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.SimpleResource
