@@ -1,7 +1,7 @@
 package com.example.socialnetworkapp.di
 
 import android.content.SharedPreferences
-import com.example.socialnetworkapp.domain.usecase.AuthenticateUseCase
+import com.example.socialnetworkapp.feature_auth.domain.use_case.AuthenticateUseCase
 import com.example.socialnetworkapp.feature_auth.domain.use_case.LoginUseCase
 import com.example.socialnetworkapp.domain.usecase.RegisterUseCase
 import com.example.socialnetworkapp.feature_auth.data.repository.AuthRepositoryImpl

@@ -135,6 +135,14 @@ dependencies {
     implementation(libs.ktor.client.websockets)
     implementation(libs.ktor.client.logging)
 
+    // Scarlet
+    implementation("com.tinder.scarlet:scarlet:0.1.12")
+    implementation("com.tinder.scarlet:websocket-okhttp:0.1.12")
+    implementation("com.tinder.scarlet:lifecycle-android:0.1.12")
+    implementation("com.tinder.scarlet:message-adapter-gson:0.1.12")
+    implementation("com.tinder.scarlet:stream-adapter-coroutines:0.1.12")
+
+
     // Logging (Timber)
     implementation(libs.timber)
 

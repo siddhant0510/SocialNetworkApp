@@ -2,7 +2,7 @@ package com.example.socialnetworkapp.feature_auth.presentation.splash
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.socialnetworkapp.domain.usecase.AuthenticateUseCase
+import com.example.socialnetworkapp.feature_auth.domain.use_case.AuthenticateUseCase
 import com.example.socialnetworkapp.utli.Screen
 import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.utli.Resource

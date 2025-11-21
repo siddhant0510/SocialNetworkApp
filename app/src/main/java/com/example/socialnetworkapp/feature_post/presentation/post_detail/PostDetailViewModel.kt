@@ -6,9 +6,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.domain.usecase.AuthenticateUseCase
+import com.example.socialnetworkapp.feature_auth.domain.use_case.AuthenticateUseCase
 import com.example.socialnetworkapp.feature_post.domain.use_case.PostUseCases
-import com.example.socialnetworkapp.feature_post.presentation.util.CommentError
 import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.domain.state.StandardTextFieldState
 import com.example.socialnetworkapp.feature_auth.presentation.util.AuthError

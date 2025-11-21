@@ -1,4 +1,4 @@
-package com.example.socialnetworkapp.domain.usecase
+package com.example.socialnetworkapp.feature_auth.domain.use_case
 
 import com.example.socialnetworkapp.feature_auth.domain.repository.AuthRepository
 import com.example.socialnetworkapp.utli.SimpleResource
@@ -8,6 +8,6 @@ class AuthenticateUseCase(
 ) {
 
     suspend operator fun invoke(): SimpleResource {
-        // return repository.authenticate()
+        return repository.authenticate()
     }
 }
