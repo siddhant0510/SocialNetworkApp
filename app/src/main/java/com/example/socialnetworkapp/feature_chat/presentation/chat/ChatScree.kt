@@ -11,8 +11,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import coil.ImageLoader
-import com.example.socialnetworkapp.feature_chat.domain.model.Chat
+import com.example.socialnetworkapp.feature_chat.data.remote.data.ChatDto
 import com.example.socialnetworkapp.presentation.theme.SpaceLarge
 import com.example.socialnetworkapp.presentation.theme.SpaceMedium
 import com.example.socialnetworkapp.utli.Screen
@@ -24,17 +25,11 @@ fun ChatScreen(
     imageLoader: ImageLoader,
     onNavigate: (String) -> Unit = {},
     onNavigateUp: () -> Unit = {},
+    viewModel: ChatViewModel = hiltViewModel()
 ){
-    val chats = remember {
-        listOf(
-            Chat(
-                username = "Sid Rox",
-                remoteUserProfileUrl = "",
-                lastMessage = "Hello, this is the last message for sid",
-                lastMessageFormatedTime = "10:00 am"
-            )
-        )
-    }
+    val chats = viewModel.state.value.chats
+    val isLoading = viewModel.state.value.isLoading
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -49,7 +44,7 @@ fun ChatScreen(
                     item = chat,
                     imageLoader = imageLoader,
                     onItemClick = {
-                        onNavigate(Screen.MessageScreen.route)
+                        onNavigate(Screen.MessageScreen.route + "/${chat.chatId}/${chat.remoteUserId}")
                     }
                 )
                 Spacer(modifier = Modifier.height(SpaceLarge))

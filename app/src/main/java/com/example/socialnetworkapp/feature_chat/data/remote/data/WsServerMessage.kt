@@ -1,10 +1,10 @@
-package com.example.socialnetworkapp.feature_chat.data.remote.ws.data
+package com.example.socialnetworkapp.feature_chat.data.remote.data
 
 import com.example.socialnetworkapp.feature_chat.domain.model.Message
 import java.text.DateFormat
 import java.util.Date
 
-data class WsMessage(
+data class WsServerMessage(
     val fromId: String,
     val toId: String,
     val text: String,

@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
+import com.example.socialnetworkapp.feature_chat.data.remote.data.ChatDto
 import com.example.socialnetworkapp.feature_chat.domain.model.Chat
 import com.example.socialnetworkapp.presentation.theme.ProfilePictureSizeSmall
 import com.example.socialnetworkapp.presentation.theme.SpaceMedium
@@ -61,7 +62,7 @@ fun ChatItem(
         ){
             Image(
                 painter = rememberAsyncImagePainter(
-                    model = item.remoteUserProfileUrl,
+                    model = item.remoteUserProfilePictureUrl,
                     imageLoader = imageLoader
                 ),
                 contentDescription = null,
@@ -78,26 +79,30 @@ fun ChatItem(
                 Row(
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = item.username,
-                        style = MaterialTheme.typography.bodyLarge.copy(
-                            fontWeight = FontWeight.Bold
-                        ),
-                        modifier = Modifier.weight(1f)
-                    )
+                    item.remoteUsername?.let {
+                        Text(
+                            text = it,
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                fontWeight = FontWeight.Bold
+                            ),
+                            modifier = Modifier.weight(1f)
+                        )
+                    }
                     Spacer(modifier = Modifier.width(SpaceSmall))
-                    Text(text = item.lastMessageFormatedTime)
+                    Text(text = item.timestamp.toString())
                 }
                 Spacer(modifier = Modifier.height(SpaceSmall))
-                Text(
-                    text = item.lastMessage,
-                    style = MaterialTheme.typography.bodyMedium,
-                    overflow = TextOverflow.Ellipsis,
-                    maxLines = 2,
-                    modifier = Modifier.heightIn(
-                        min = MaterialTheme.typography.bodyMedium.fontSize.value.dp * 3f
+                item.lastMessage?.let {
+                    Text(
+                        text = it,
+                        style = MaterialTheme.typography.bodyMedium,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 2,
+                        modifier = Modifier.heightIn(
+                            min = MaterialTheme.typography.bodyMedium.fontSize.value.dp * 3f
+                        )
                     )
-                )
+                }
             }
         }
     }

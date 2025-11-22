@@ -5,13 +5,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.domain.state.StandardTextFieldState
+import com.example.socialnetworkapp.feature_chat.domain.use_case.ChatUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class MessageViewModel @Inject constructor() : ViewModel() {
+class MessageViewModel @Inject constructor(
+    private val chatUseCases: ChatUseCases
+) : ViewModel() {
 
     private val _messageTextFieldState = mutableStateOf(StandardTextFieldState())
     val messageTextFieldState: State<StandardTextFieldState> = _messageTextFieldState

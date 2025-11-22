@@ -47,16 +47,14 @@ fun MessageScreen(
                 toId = "",
                 text = "Hello World!",
                 formattedTime = "19:34",
-                chatId = "",
-                id = ""
+                chatId = ""
             ),
             Message(
                 fromId = "",
                 toId = "",
                 text = "Hello World!",
                 formattedTime = "19:34",
-                chatId = "",
-                id = ""
+                chatId = ""
             )
         )
     }

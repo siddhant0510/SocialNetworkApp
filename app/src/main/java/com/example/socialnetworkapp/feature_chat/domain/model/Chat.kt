@@ -1,8 +1,10 @@
 package com.example.socialnetworkapp.feature_chat.domain.model
 
 data class Chat(
-    val username: String,
-    val remoteUserProfileUrl: String,
-    val lastMessage: String,
-    val lastMessageFormatedTime: String
+    val chatId: String,
+    val remoteUserId: String?,
+    val remoteUsername: String?,
+    val remoteUserProfilePictureUrl: String?,
+    val lastMessage: String?,
+    val timestamp: Long?
 )
