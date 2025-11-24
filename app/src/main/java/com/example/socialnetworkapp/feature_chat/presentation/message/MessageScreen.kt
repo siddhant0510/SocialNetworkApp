@@ -34,6 +34,7 @@ import java.nio.charset.Charset
 
 @Composable
 fun MessageScreen(
+    remoteUserId: String,
     remoteUsername: String,
     encodedRemoteProfilePictureUrl: String,
     imageLoader: ImageLoader,
@@ -79,24 +80,27 @@ fun MessageScreen(
                     .padding(SpaceMedium)
             ) {
                 items(count = pagingState.items.size) { i ->
-                    val messages = pagingState.items[i]
+                    val message = pagingState.items[i]
                     if(i >= pagingState.items.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
                         viewModel.loadNextMessages()
                     }
-                    RemoteMessage(
-                        message = "This is the first message.",
-                        formatedTime = "12:09",
-                        color = MaterialTheme.colorScheme.surface,
-                        textColor = MaterialTheme.colorScheme.onBackground
-                    )
-                    Spacer(modifier = Modifier.height(SpaceMedium))
-                    OwnMessage(
-                        message = "So this is my first message",
-                        formatedTime = "12:10",
-                        color = Color.White,
-                        textColor = MaterialTheme.colorScheme.background
-                    )
-                    Spacer(modifier = Modifier.height(SpaceMedium))
+                    if(message.fromId == remoteUserId) {
+                        RemoteMessage(
+                            message = message.text,
+                            formatedTime = message.formatedTime,
+                            color = MaterialTheme.colorScheme.surface,
+                            textColor = MaterialTheme.colorScheme.onBackground
+                        )
+                        Spacer(modifier = Modifier.height(SpaceMedium))
+                    } else {
+                        OwnMessage(
+                            message = message.text,
+                            formatedTime = message.formatedTime,
+                            color = Color.White,
+                            textColor = MaterialTheme.colorScheme.background
+                        )
+                        Spacer(modifier = Modifier.height(SpaceMedium))
+                    }
                 }
             }
             SendTextField(

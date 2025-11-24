@@ -94,9 +94,11 @@ fun Navigation(
                 }
             )
         ) {
+            val remoteUserId = it.arguments?.getString("remoteUserId")!!
             val remoteUsername = it.arguments?.getString("remoteUsername")!!
             val remoteProfilePictureUrl = it.arguments?.getString("remoteUserProfilePictureUrl")!!
             MessageScreen(
+                remoteUserId = remoteUserId,
                 remoteUsername = remoteUsername,
                 encodedRemoteProfilePictureUrl = remoteProfilePictureUrl,
                 onNavigateUp = navController::navigateUp,

@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.domain.state.StandardTextFieldState
+import com.example.socialnetworkapp.feature_chat.domain.model.Message
 import com.example.socialnetworkapp.feature_chat.domain.use_case.ChatUseCases
 import com.example.socialnetworkapp.presentation.PagingState
 import com.example.socialnetworkapp.utli.DefaultPaginator
@@ -36,8 +37,8 @@ class MessageViewModel @Inject constructor(
     private val _eventFlow = MutableSharedFlow<UiEvent>()
     val eventFlow = _eventFlow.asSharedFlow()
 
-    private val _pagingState = mutableStateOf(PagingState<Any>())
-    val pagingState: State<PagingState<Any>> = _pagingState
+    private val _pagingState = mutableStateOf<PagingState<Message>>(PagingState())
+    val pagingState: State<PagingState<Message>> = _pagingState
 
     private val paginator = DefaultPaginator(
         onLoadUpdated = { isLoading ->
@@ -65,6 +66,7 @@ class MessageViewModel @Inject constructor(
     init {
         loadNextMessages()
         observeChatEvents()
+        observeChatMessage()
     }
 
     private fun observeChatMessage() {
@@ -81,7 +83,7 @@ class MessageViewModel @Inject constructor(
             .onEach { event ->
                 when(event) {
                     is WebSocket.Event.OnConnectionOpened<*> -> {
-                        observeChatMessage()
+
                     }
 
                     else -> Unit
