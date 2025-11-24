@@ -9,6 +9,7 @@ import com.example.socialnetworkapp.feature_chat.data.repository.ChatRepositoryI
 import com.example.socialnetworkapp.feature_chat.domain.repository.ChatRepository
 import com.example.socialnetworkapp.feature_chat.domain.use_case.ChatUseCases
 import com.example.socialnetworkapp.feature_chat.domain.use_case.GetChatsForUser
+import com.example.socialnetworkapp.feature_chat.domain.use_case.GetMessagesForChat
 import com.example.socialnetworkapp.feature_chat.domain.use_case.ObserveChatEvents
 import com.example.socialnetworkapp.feature_chat.domain.use_case.ObserveMessages
 import com.example.socialnetworkapp.feature_chat.domain.use_case.SendMessage
@@ -58,7 +59,8 @@ object ChatModule {
             sendMessage = SendMessage(repository),
             observeChatEvents = ObserveChatEvents(repository),
             observeMessages = ObserveMessages(repository),
-            getChatsForUser = GetChatsForUser(repository)
+            getChatsForUser = GetChatsForUser(repository),
+            getMessagesForChat = GetMessagesForChat(repository)
         )
     }
 

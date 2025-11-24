@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -24,41 +23,28 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import com.example.socialnetworkapp.R
-import com.example.socialnetworkapp.feature_chat.domain.model.Message
 import com.example.socialnetworkapp.feature_chat.presentation.message.components.OwnMessage
 import com.example.socialnetworkapp.feature_chat.presentation.message.components.RemoteMessage
 import com.example.socialnetworkapp.presentation.componenets.SendTextField
 import com.example.socialnetworkapp.presentation.componenets.StandardToolbar
 import com.example.socialnetworkapp.presentation.theme.ProfilePictureSizeSmall
 import com.example.socialnetworkapp.presentation.theme.SpaceMedium
+import okio.ByteString.Companion.decodeBase64
+import java.nio.charset.Charset
 
 @Composable
 fun MessageScreen(
-    chatId: String,
+    remoteUsername: String,
+    encodedRemoteProfilePictureUrl: String,
     imageLoader: ImageLoader,
     onNavigateUp: () -> Unit = {},
     onNavigate: (String) -> Unit = {},
     viewModel: MessageViewModel = hiltViewModel()
 ) {
-    val messages = remember {
-        listOf(
-            Message(
-                fromId = "",
-                toId = "",
-                text = "Hello World!",
-                formattedTime = "19:34",
-                chatId = ""
-            ),
-            Message(
-                fromId = "",
-                toId = "",
-                text = "Hello World!",
-                formattedTime = "19:34",
-                chatId = ""
-            )
-        )
+    val decodedRemoteProfilePictureUrl = remember {
+        encodedRemoteProfilePictureUrl.decodeBase64()?.string(Charset.defaultCharset())
     }
-
+    val pagingState = viewModel.pagingState.value
     Column(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -68,7 +54,7 @@ fun MessageScreen(
             title = {
                 Image(
                     painter = rememberAsyncImagePainter(
-                        model = "",
+                        model = decodedRemoteProfilePictureUrl,
                         imageLoader = imageLoader
                     ),
                     contentDescription = null,
@@ -78,7 +64,7 @@ fun MessageScreen(
                 )
                 Spacer(modifier = Modifier.width(SpaceMedium))
                 Text(
-                    text = "Sid",
+                    text = remoteUsername,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onBackground
                 )
@@ -92,17 +78,21 @@ fun MessageScreen(
                     .weight(1f)
                     .padding(SpaceMedium)
             ) {
-                items(messages) { message ->
+                items(count = pagingState.items.size) { i ->
+                    val messages = pagingState.items[i]
+                    if(i >= pagingState.items.size - 1 && !pagingState.endReached && !pagingState.isLoading) {
+                        viewModel.loadNextMessages()
+                    }
                     RemoteMessage(
-                        message = message.text,
-                        formatedTime = message.formattedTime,
+                        message = "This is the first message.",
+                        formatedTime = "12:09",
                         color = MaterialTheme.colorScheme.surface,
                         textColor = MaterialTheme.colorScheme.onBackground
                     )
                     Spacer(modifier = Modifier.height(SpaceMedium))
                     OwnMessage(
-                        message = message.text,
-                        formatedTime = message.formattedTime,
+                        message = "So this is my first message",
+                        formatedTime = "12:10",
                         color = Color.White,
                         textColor = MaterialTheme.colorScheme.background
                     )

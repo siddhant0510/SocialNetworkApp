@@ -10,6 +10,8 @@ interface ChatRepository {
 
     suspend fun getChatForUser(): Resource<List<Chat>>
 
+    suspend fun getMessagesForChat(chatId: String, page: Int, pageSize: Int): Resource<List<Message>>
+
     fun observeChatEvents(): Flow<WebSocket.Event>
 
     fun observeMessage(): Flow<Message>
