@@ -1,5 +1,6 @@
 package com.example.socialnetworkapp.feature_chat.data.remote.util
 
+import com.example.socialnetworkapp.feature_chat.data.remote.data.WsClientMessage
 import com.example.socialnetworkapp.feature_chat.data.remote.data.WsServerMessage
 import com.google.gson.Gson
 import com.tinder.scarlet.Message
@@ -34,14 +35,14 @@ class CustomGsonMessageAdapter<T> private constructor(
 
     override fun toMessage(data: T): Message {
         val clazz = when(data) {
-            is WsServerMessage -> WsServerMessage::class.java
+            is WsClientMessage -> WsClientMessage::class.java
             else -> Any::class.java
         }
         val type = when(data) {
-            is WsServerMessage -> WebSocketObject.MESSAGE.ordinal
+            is WsClientMessage -> WebSocketObject.MESSAGE.ordinal
             else -> -1
         }
-        val socketString = "$type#{gson.toJson(data, clazz)}"
+        val socketString = "$type#${gson.toJson(data, clazz)}"
         return Message.Text(socketString)
     }
 
@@ -49,7 +50,7 @@ class CustomGsonMessageAdapter<T> private constructor(
         private val gson: Gson = DEFAULT_GSON
     ) : MessageAdapter.Factory {
 
-        override fun create(type: Type, annotation: Array<Annotation>): MessageAdapter<*> {
+        override fun create(type: Type, annotations: Array<Annotation>): MessageAdapter<*> {
             return CustomGsonMessageAdapter<Any>(gson)
         }
 

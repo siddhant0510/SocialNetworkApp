@@ -6,10 +6,10 @@ class SendMessage(
     private val repository: ChatRepository
 ) {
 
-    operator fun invoke(toId: String, text: String, chatId: String) {
+    operator fun invoke(toId: String, text: String, chatId: String?) {
         if(text.isBlank()) {
             return
         }
-        repository.sendMessage(toId, text, chatId)
+        repository.sendMessage(toId, text.trim(), chatId)
     }
 }

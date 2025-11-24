@@ -77,10 +77,11 @@ fun Navigation(
             )
         }
         composable(
-            Screen.MessageScreen.route + "/{chatId}/{remoteUserId}/{remoteUsername}/{remoteProfilePictureUrl}",
+            Screen.MessageScreen.route + "/{remoteUserId}/{remoteUsername}/{remoteProfilePictureUrl}?chatId={chatId}",
             arguments = listOf(
                 navArgument("chatId") {
                     type = NavType.StringType
+                    nullable = true
                 },
                 navArgument("remoteUserId") {
                     type = NavType.StringType
