@@ -4,7 +4,6 @@ import android.app.Application
 import com.example.socialnetworkapp.feature_chat.data.remote.ChatApi
 import com.example.socialnetworkapp.feature_chat.data.remote.ChatService
 import com.example.socialnetworkapp.feature_chat.data.remote.util.CustomGsonMessageAdapter
-import com.example.socialnetworkapp.feature_chat.data.remote.util.FlowStreamAdapter
 import com.example.socialnetworkapp.feature_chat.data.repository.ChatRepositoryImpl
 import com.example.socialnetworkapp.feature_chat.domain.repository.ChatRepository
 import com.example.socialnetworkapp.feature_chat.domain.use_case.ChatUseCases
@@ -13,10 +12,13 @@ import com.example.socialnetworkapp.feature_chat.domain.use_case.GetMessagesForC
 import com.example.socialnetworkapp.feature_chat.domain.use_case.ObserveChatEvents
 import com.example.socialnetworkapp.feature_chat.domain.use_case.ObserveMessages
 import com.example.socialnetworkapp.feature_chat.domain.use_case.SendMessage
+import com.example.socialnetworkapp.utli.Constants
 import com.google.gson.Gson
 import com.tinder.scarlet.Scarlet
 import com.tinder.scarlet.lifecycle.android.AndroidLifecycle
+import com.tinder.scarlet.retry.LinearBackoffStrategy
 import com.tinder.scarlet.websocket.okhttp.newWebSocketFactory
+import com.tinder.streamadapter.coroutines.CoroutinesStreamAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,14 +37,15 @@ object ChatModule {
 
     @Provides
     @Singleton
-    fun provideScarlet(app: Application, gson: Gson, client: OkHttpClient): Scarlet {
+    fun provideScarlet(gson: Gson, client: OkHttpClient): Scarlet {
         return Scarlet.Builder()
             .addMessageAdapterFactory(CustomGsonMessageAdapter.Factory())
-            .addStreamAdapterFactory(FlowStreamAdapter.Factory)
+            .addStreamAdapterFactory(CoroutinesStreamAdapterFactory())
             .webSocketFactory(
                 client.newWebSocketFactory("ws://192.168.0.2:8001/api/chats/message")
             )
-            .lifecycle(AndroidLifecycle.ofApplicationForeground(app))
+            //.lifecycle(AndroidLifecycle.ofApplicationForeground(app))
+            .backoffStrategy(LinearBackoffStrategy(Constants.RECONNECT_INTERVAL))
             .build()
     }
 

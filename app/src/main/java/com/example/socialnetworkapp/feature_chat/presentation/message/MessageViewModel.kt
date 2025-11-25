@@ -5,11 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.domain.state.StandardTextFieldState
 import com.example.socialnetworkapp.feature_chat.domain.model.Message
 import com.example.socialnetworkapp.feature_chat.domain.use_case.ChatUseCases
 import com.example.socialnetworkapp.presentation.PagingState
+import com.example.socialnetworkapp.presentation.util.UiEvent
 import com.example.socialnetworkapp.utli.DefaultPaginator
 import com.example.socialnetworkapp.utli.Resource
 import com.example.socialnetworkapp.utli.UiText
@@ -70,12 +70,14 @@ class MessageViewModel @Inject constructor(
     }
 
     private fun observeChatMessage() {
-        chatUseCases.observeMessages()
-            .onEach { message ->
-                _state.value = state.value.copy(
-                    messages = state.value.messages + message
-                )
-            }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            chatUseCases.observeMessages()
+                .collect { message ->
+                   _pagingState.value = pagingState.value.copy(
+                       items = pagingState.value.items + message
+                   )
+                }
+        }
     }
 
     private fun observeChatEvents() {

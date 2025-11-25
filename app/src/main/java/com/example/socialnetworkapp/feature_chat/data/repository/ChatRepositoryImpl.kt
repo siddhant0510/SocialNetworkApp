@@ -13,6 +13,7 @@ import com.example.socialnetworkapp.utli.UiText
 import com.tinder.scarlet.WebSocket
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.receiveAsFlow
 import okio.IOException
 
 class ChatRepositoryImpl(
@@ -59,12 +60,13 @@ class ChatRepositoryImpl(
     }
 
     override fun observeChatEvents(): Flow<WebSocket.Event> {
-        return chatService.observeEvents()
+        return chatService.observeEvents().receiveAsFlow()
     }
 
     override fun observeMessage(): Flow<Message> {
         return chatService
             .observeMessages()
+            .receiveAsFlow()
             .map { it.toMessage() }
     }
 
