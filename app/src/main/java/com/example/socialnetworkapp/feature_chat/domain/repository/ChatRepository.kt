@@ -8,6 +8,8 @@ import kotlinx.coroutines.flow.Flow
 
 interface ChatRepository {
 
+    fun initialize()
+
     suspend fun getChatForUser(): Resource<List<Chat>>
 
     suspend fun getMessagesForChat(chatId: String, page: Int, pageSize: Int): Resource<List<Message>>
