@@ -198,7 +198,8 @@ class ProfileRepositoryImpl(
     @SuppressLint("CommitPrefEdits")
     override fun logout() {
         sharedPreferences.edit()
-            .remove(Constants.KEY_JWT_TOKEN)
+            .putString(Constants.KEY_JWT_TOKEN, "")
+            .putString(Constants.KEY_USER_ID, "")
             .apply()
     }
 }
