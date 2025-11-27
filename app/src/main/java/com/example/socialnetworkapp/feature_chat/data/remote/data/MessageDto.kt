@@ -1,8 +1,9 @@
 package com.example.socialnetworkapp.feature_chat.data.remote.data
 
 import com.example.socialnetworkapp.feature_chat.domain.model.Message
-import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 data class MessageDto(
     val fromId: String,
@@ -17,8 +18,7 @@ data class MessageDto(
             fromId = fromId,
             toId = toId,
             text = text,
-            formatedTime = DateFormat
-                .getDateInstance(DateFormat.DEFAULT)
+            formatedTime = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
                 .format(Date(timestamp)),
             chatId = chatId
         )
