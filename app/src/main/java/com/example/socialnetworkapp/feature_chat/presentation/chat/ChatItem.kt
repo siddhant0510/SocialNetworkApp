@@ -32,6 +32,8 @@ import com.example.socialnetworkapp.feature_chat.domain.model.Chat
 import com.example.socialnetworkapp.presentation.theme.ProfilePictureSizeSmall
 import com.example.socialnetworkapp.presentation.theme.SpaceMedium
 import com.example.socialnetworkapp.presentation.theme.SpaceSmall
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -81,7 +83,7 @@ fun ChatItem(
                 ) {
                     item.remoteUsername?.let {
                         Text(
-                            text = it,
+                            text = item.remoteUsername,
                             style = MaterialTheme.typography.bodyLarge.copy(
                                 fontWeight = FontWeight.Bold
                             ),
@@ -89,17 +91,20 @@ fun ChatItem(
                         )
                     }
                     Spacer(modifier = Modifier.width(SpaceSmall))
-                    Text(text = item.timestamp.toString())
+                    Text(
+                        text = SimpleDateFormat("MMM dd, HH:mm", Locale.getDefault())
+                            .format(item.timestamp)
+                    )
                 }
                 Spacer(modifier = Modifier.height(SpaceSmall))
                 item.lastMessage?.let {
                     Text(
-                        text = it,
+                        text = item.lastMessage,
                         style = MaterialTheme.typography.bodyMedium,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 2,
                         modifier = Modifier.heightIn(
-                            min = MaterialTheme.typography.bodyMedium.fontSize.value.dp * 3f
+                            min = MaterialTheme.typography.bodyMedium.fontSize.value.dp * 2.5f
                         )
                     )
                 }
