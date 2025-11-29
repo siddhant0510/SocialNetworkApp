@@ -35,7 +35,7 @@ fun Navigation(
 ){
     NavHost(
         navController = navController,
-        startDestination = Screen.SplashScreen.route,
+        startDestination = Screen.LoginScreen.route,
         modifier = Modifier.fillMaxSize()
     ) {
         composable(Screen.SplashScreen.route){
@@ -46,13 +46,19 @@ fun Navigation(
         }
         composable(Screen.LoginScreen.route){
             LoginScreen(
-                onNavigate = { },
+                onNavigate =  navController::navigate,
                 onLogin = {
                     navController.popBackStack(
-                        route = Screen.MainFeedScreen.route,
+                        route = Screen.LoginScreen.route,
                         inclusive = false
                     )
+                    navController.navigate(route = Screen.MainFeedScreen.route)
                 },
+//                onLogin = {
+//                    navController.navigate(Screen.MainFeedScreen.route) {
+//                        popUpTo(Screen.LoginScreen.route) { inclusive = true }
+//                    }
+//                },
                 snackbarHostState = snackbarHostState
             )
         }
@@ -77,7 +83,7 @@ fun Navigation(
             )
         }
         composable(
-            Screen.MessageScreen.route + "/{remoteUserId}/{remoteUsername}/{remoteProfilePictureUrl}?chatId={chatId}",
+            Screen.MessageScreen.route + "/{remoteUserId}/{remoteUsername}/{remoteUserProfilePictureUrl}?chatId={chatId}",
             arguments = listOf(
                 navArgument("chatId") {
                     type = NavType.StringType

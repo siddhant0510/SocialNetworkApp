@@ -22,9 +22,10 @@ interface AuthApi {
     ): BasicApiResponse<AuthResponse>
 
     @GET("/api/user/authenticate")
-    suspend fun authenticate(): Response<Unit>
+    suspend fun authenticate()
 
     companion object {
-        const val BASE_URL = "http://10.0.2.2:8001/"
+        //const val BASE_URL = "http://127.0.0.1:8081"
+        const val BASE_URL = "http://10.0.2.2:8081"
     }
 }

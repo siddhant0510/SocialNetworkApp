@@ -42,6 +42,11 @@ class LoginViewModel @Inject constructor(
                     text = event.password
                 )
             }
+            is LoginEvent.TogglePasswordVisibility -> {
+                _loginState.value = loginState.value.copy(
+                    isPasswordVisible = !loginState.value.isPasswordVisible
+                )
+            }
             is LoginEvent.Login -> {
                 viewModelScope.launch {
                     _loginState.value = loginState.value.copy(isLoading = true)
@@ -62,9 +67,6 @@ class LoginViewModel @Inject constructor(
                     }
                     when(loginResult.result) {
                         is Resource.Success -> {
-                            _eventFlow.emit(
-                                UiEvent.Navigate(Screen.MainFeedScreen.route)
-                            )
                             _eventFlow.emit(UiEvent.OnLogin)
                         }
                         is Resource.Error -> {
@@ -74,14 +76,10 @@ class LoginViewModel @Inject constructor(
                                 )
                             )
                         }
-                        null -> {
-
-                        }
+                        else -> Unit
                     }
                 }
             }
-
-            LoginEvent.TogglePasswordVisibility -> TODO()
         }
     }
 }

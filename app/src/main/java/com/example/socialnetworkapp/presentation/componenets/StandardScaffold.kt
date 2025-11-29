@@ -21,10 +21,12 @@ import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -100,7 +102,16 @@ fun StandardScaffold(
                 }
             }
         },
-        snackbarHost = { SnackbarHost(state) },
+        //snackbarHost = { SnackbarHost(state) },
+        snackbarHost = {
+            SnackbarHost(state) { snackbarData ->
+                Snackbar(
+                    snackbarData = snackbarData,
+                    containerColor = Color.Black,
+                    contentColor = Color.White
+                )
+            }
+        },
         floatingActionButton = {
             if(showBottomBar){
                 FloatingActionButton(
