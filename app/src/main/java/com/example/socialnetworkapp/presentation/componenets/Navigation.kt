@@ -50,15 +50,10 @@ fun Navigation(
                 onLogin = {
                     navController.popBackStack(
                         route = Screen.LoginScreen.route,
-                        inclusive = false
+                        inclusive = true
                     )
                     navController.navigate(route = Screen.MainFeedScreen.route)
                 },
-//                onLogin = {
-//                    navController.navigate(Screen.MainFeedScreen.route) {
-//                        popUpTo(Screen.LoginScreen.route) { inclusive = true }
-//                    }
-//                },
                 snackbarHostState = snackbarHostState
             )
         }

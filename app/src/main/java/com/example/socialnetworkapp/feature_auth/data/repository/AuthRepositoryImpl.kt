@@ -62,7 +62,6 @@ class AuthRepositoryImpl(
                 response.message?.let { msg ->
                     Resource.Error(UiText.DynamicString(msg))
                 } ?: Resource.Error(UiText.StringResource(R.string.error_unknown))
-                // Resource.Error(UiText.StringResource(R.string.error_unknow))
             }
         } catch(e: IOException) {
             Resource.Error(

@@ -91,4 +91,5 @@
     <string name="enter_a_message">Enter a message</string>
     <string name="error_unknown">Unknown error occured</string>
     <string name="message">Message\n</string>
+    <string name="error_impl_unknown">Error for Implementation</string>
 </resources>
