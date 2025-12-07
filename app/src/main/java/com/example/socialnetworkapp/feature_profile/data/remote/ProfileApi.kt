@@ -30,7 +30,7 @@ interface ProfileApi {
         @Part updateProfileData: MultipartBody.Part
     ): BasicApiResponse<Unit>
 
-    @GET("/api/user/profile")
+    @GET("/api/skills/get")
     suspend fun getSkills(): List<SkillDto>
 
     @GET("/api/user/search")
@@ -49,6 +49,6 @@ interface ProfileApi {
     ): BasicApiResponse<Unit>
 
     companion object {
-        const val BASE_URL = "http://10.0.2.2:8001/"
+        const val BASE_URL = "http://10.0.2.2:8081/"
     }
 }

@@ -92,4 +92,5 @@
     <string name="error_unknown">Unknown error occured</string>
     <string name="message">Message\n</string>
     <string name="error_impl_unknown">Error for Implementation</string>
+    <string name="not_authenticated">Not authenticated</string>
 </resources>

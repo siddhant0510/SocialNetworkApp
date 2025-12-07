@@ -125,7 +125,9 @@ fun Navigation(
         ){
             ProfileScreen(
                 userId = it.arguments?.getString("userId"),
-                onLogout = navController::navigateUp,
+                onLogout = {
+                    navController.navigate(route = Screen.LoginScreen.route)
+                },
                 onNavigate = navController::navigate,
                 snackbarHostState = snackbarHostState,
                 imageLoader = imageLoader
@@ -172,7 +174,7 @@ fun Navigation(
                 navArgument(
                     name = "shouldShowKeyboard"
                 ) {
-                    type = NavType.StringType
+                    type = NavType.BoolType
                     defaultValue = false
                 }
             ),
