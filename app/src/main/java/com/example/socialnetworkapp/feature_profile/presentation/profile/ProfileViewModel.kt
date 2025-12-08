@@ -100,7 +100,7 @@ class ProfileViewModel @Inject constructor(
             }
             ProfileEvent.ShowLogoutDialog -> {
                 _state.value = state.value.copy(
-                    isLogoutDialogVisible = false
+                    isLogoutDialogVisible = true
                 )
             }
         }
